@@ -1,0 +1,56 @@
+\babel@toc {spanish}{}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Sistema de navegaci\IeC {\'o}n GPS de un veh\IeC {\'\i }culo.\relax }}{2}{figure.caption.4}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Comparativa de la deforestaci\IeC {\'o}n del medio ambiente con el paso del tiempo.\relax }}{2}{figure.caption.5}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Detecci\IeC {\'o}n de derrames de petroleo sobre superficies marinas utilizando informaci\IeC {\'o}n GPS.\relax }}{3}{figure.caption.6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Red de sat\IeC {\'e}lites GPS que vuelan alrededor de la Tierra.\relax }}{8}{figure.caption.7}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Representaci\IeC {\'o}n de la latitud y la longitud en el planeta tierra.\relax }}{9}{figure.caption.8}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Triangulaci\IeC {\'o}n para la obtener de la posici\IeC {\'o}n de un objetivo con base en tres referencias.\relax }}{11}{figure.caption.12}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Separaci\IeC {\'o}n de capas de la informaci\IeC {\'o}n que un GIS provee.\relax }}{11}{figure.caption.13}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Esquema de un sistema distribuido.\relax }}{12}{figure.caption.14}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Esquema de un sistema que se comunica empleando una arquitectura P2P.\relax }}{15}{figure.caption.21}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Pila de capas definidas por el modelo TCP/IP.\relax }}{16}{figure.caption.22}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Los Sockets son el mecanismo que se utiliza como intermediario entre la capa de transporte y la de aplicaci\IeC {\'o}n.\relax }}{20}{figure.caption.30}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Diagrama que muestra el proceso que sigue un explorador web (cliente) para desplegar una p\IeC {\'a}gina, comunic\IeC {\'a}ndose con el servidos v\IeC {\'\i }a HTTP.\relax }}{21}{figure.caption.32}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Esquema de un sistema SOA b\IeC {\'a}sico que indica el desacoplamiento entre los servicios ofrecidos.\relax }}{23}{figure.caption.35}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Representaci\IeC {\'o}n abstracta de la arquitectura MVC.\relax }}{27}{figure.caption.40}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Patr\IeC {\'o}n de dise\IeC {\~n}o Modelo-Vista-Presentador.\relax }}{28}{figure.caption.42}
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Descriptor UML b\IeC {\'a}sico de la implementaci\IeC {\'o}n del patr\IeC {\'o}n Singleton.\relax }}{29}{figure.caption.44}
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Diagrama de Clases para la situaci\IeC {\'o}n que ejemplifica el uso del patr\IeC {\'o}n Factory Method.\relax }}{30}{figure.caption.46}
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Aplicaci\IeC {\'o}n del patr\IeC {\'o}n Observer a un sistema de gr\IeC {\'a}ficas en tiempo real.\relax }}{31}{figure.caption.48}
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Ejemplo gr\IeC {\'a}fico del almacenamiento de informaci\IeC {\'o}n en una estructura tabular.\relax }}{32}{figure.caption.50}
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Ejemplo de un diagrama Entidad-Relaci\IeC {\'o}n.\relax }}{33}{figure.caption.51}
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Distribuci\IeC {\'o}n y conexi\IeC {\'o}n entre documentos organizados en una base de datos orientada a documentos.\relax }}{34}{figure.caption.53}
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Grafo utilizado para modelar una situaci\IeC {\'o}n real en una base de datos.\relax }}{35}{figure.caption.54}
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Diagrama que muestra la ubicaci\IeC {\'o}n de la JVM en el proceso de ejecuci\IeC {\'o}n de aplicaciones, permitiendo ejecutar la misma aplicaci\IeC {\'o}n sobre cualquier plataforma.\relax }}{36}{figure.caption.55}
+\contentsline {figure}{\numberline {2.21}{\ignorespaces Diagrama acerca del funcionamiento de un Servlet.\relax }}{37}{figure.caption.57}
+\contentsline {figure}{\numberline {2.22}{\ignorespaces Muestra de los componentes sint\IeC {\'a}cticos del lenguaje XML.\relax }}{38}{figure.caption.59}
+\contentsline {figure}{\numberline {2.23}{\ignorespaces Ejemplo de la conversi\IeC {\'o}n de un documento XML a un \IeC {\'a}rbol por medio del modelo DOM.\relax }}{40}{figure.caption.62}
+\contentsline {figure}{\numberline {2.24}{\ignorespaces Gram\IeC {\'a}tica descriptora del formato de texto JSON.\relax }}{41}{figure.caption.64}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Mapa de una ciudad que remarca la ubicaci\IeC {\'o}n de los parabuses oficiales.\relax }}{45}{figure.caption.70}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Abstracci\IeC {\'o}n gr\IeC {\'a}fica de la informaci\IeC {\'o}n sobre el transporte p\IeC {\'u}blico expresada en la figura \ref {parabuses_mapa}, seg\IeC {\'u}n el esquema propuesto.\relax }}{46}{figure.caption.71}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Simulaci\IeC {\'o}n de la formaci\IeC {\'o}n de rutas sobre un grafo.\relax }}{46}{figure.caption.72}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces M\IeC {\'o}dulos principales del sistema de monitoreo.\relax }}{47}{figure.caption.73}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagrama de flujo general de los pasos que sigue la aplicaci\IeC {\'o}n rastreadora.\relax }}{48}{figure.caption.74}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Ubicaci\IeC {\'o}n de una unidad de transporte sobre un segmento de l\IeC {\'\i }nea de la ruta.\relax }}{49}{figure.caption.75}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Interfaz REST entre el modelo de datos y los clientes que entrega informaci\IeC {\'o}n en formatos KML y JSON, seg\IeC {\'u}n sea necesario.\relax }}{50}{figure.caption.77}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Esquema de la entrega de informaci\IeC {\'o}n bajo demanda por rutas de transporte.\relax }}{52}{figure.caption.80}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Despliegue de informaci\IeC {\'o}n geogr\IeC {\'a}fica en tiempo real sobre la web y m\IeC {\'o}viles.\relax }}{53}{figure.caption.82}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama del funcionamiento general de las aplicaciones que interact\IeC {\'u}an con el usuario final del sistema.\relax }}{54}{figure.caption.83}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema de interacci\IeC {\'o}n entre la aplicaci\IeC {\'o}n m\IeC {\'o}vil y el usuario final.\relax }}{57}{figure.caption.84}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquemas \textit {Wireframe} m\IeC {\'o}viles que plasman el contenido y estructura de las primeras escenas para el usuario.\relax }}{57}{figure.caption.85}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Esquemas \textit {Wireframe} m\IeC {\'o}viles que representan el contenido de la \IeC {\'u}ltima escena de interacci\IeC {\'o}n con el usuario.\relax }}{59}{figure.caption.86}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Arquitectura de la aplicaci\IeC {\'o}n m\IeC {\'o}vil.\relax }}{61}{figure.caption.87}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Esquema que plasma el proceso de activaci\IeC {\'o}n de procesos de acuerdo a los eventos disparados por el ciclo de vida definido por Android.\relax }}{62}{figure.caption.88}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Casos a tomar en cuenta al calcular la distancia desde la posici\IeC {\'o}n de un autob\IeC {\'u}s a un parab\IeC {\'u}s con alerta.\relax }}{63}{figure.caption.92}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Comunicaci\IeC {\'o}n entre procesos basada en el patr\IeC {\'o}n de dise\IeC {\~n}o Observer-Observable.\relax }}{65}{figure.caption.94}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Modelo wireframe b\IeC {\'a}sico de la interfaz web equivalente a la aplicaci\IeC {\'o}n m\IeC {\'o}vil.\relax }}{66}{figure.caption.95}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Arbol generado por el modelo DOM al procesar el archivo descriptor KML.\relax }}{67}{figure.caption.96}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Vistas de la selecci\IeC {\'o}n de la ciudad de inter\IeC {\'e}s.\relax }}{68}{figure.caption.98}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Vistas de la selecci\IeC {\'o}n de la ruta a visualizar.\relax }}{69}{figure.caption.100}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Vistas que muestra la construcci\IeC {\'o}n de una ruta sobre un mapa din\IeC {\'a}mico basado en GoogleMaps.\relax }}{70}{figure.caption.102}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Pantallas en las que se plasma la manera en que se muestra la informaci\IeC {\'o}n y opciones de un parab\IeC {\'u}s seleccionado.\relax }}{71}{figure.caption.104}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Vistas que muestran la manera en que se despliega una alerta en ambas plataformas.\relax }}{72}{figure.caption.106}

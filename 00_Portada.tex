@@ -1,0 +1,125 @@
+%\vspace*{-1in}
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=8cm]{figuras/LogoITV.eps}
+%\end{center}
+%\end{figure}
+%
+%INSTITUTO TECNOLÓGICO DE VERACRUZ\\
+%\vspace*{0.15in}
+%OPCIÓN I: TESIS PROFESIONAL\\
+%\vspace*{0.4in}
+%\begin{large}
+%TÍTULO DE LA TESIS:\\
+%\end{large}
+%\vspace*{0.2in}
+%\begin{Large}
+%\textbf{SEGUIMIENTO DE OBJETOS EN VIDEO USANDO FILTROS DE PARTÍCULAS Y ALGORITMOS ESTOCÁSTICOS}\\
+%
+%\end{Large}
+%
+%\vspace*{0.3in}
+%
+%\begin{large}
+%Presentado por:\\ Mario Iván Jaen Márquez\\
+%
+%\end{large}
+%\vspace*{0.2in}
+%
+%\begin{large}
+%Asesores: \\
+%\vspace*{0.5in}
+%\rule{80mm}{0.1mm}\\
+%Dr. Arturo Hernández Aguirre \\
+%
+%\vspace*{0.5in}
+%\rule{80mm}{0.1mm}\\
+%M. C. Rafael Rivera López \\
+%\end{large}
+
+%\end{center}
+
+%%
+%% Esqueleto para la portada de las tesis para
+%% la Facultad de Ciencias de la UNAM
+%%
+
+
+%\usepackage[papersize={17cm,23cm},total={11.5cm,17cm},left=66pt,top=2cm,offset={2cm,2.5cm}]{geometry}
+%\usepackage[letter,center]{crop}%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Comandos para la portada
+
+\thispagestyle{empty}
+
+\newcommand{\titulo}[1]{\def\eltitulo{#1}}
+%* la carrera corresponde al tí­tulo otorgado -Matemático-
+%* NO AL NOMBRE DE LA CARRERA -Matemáticas- --RRP
+\newcommand{\carrera}[1]{\def\lacarrera{#1}}
+\newcommand{\nombre}[1]{\def\elnombre{#1}}    %* Del alumno
+\newcommand{\director}[1]{\def\eldirector{#1}}  %* De tesis
+\newcommand{\codirector}[1]{\def\elcodirector{#1}}  %* De tesis
+\newcommand{\fecha}[1]{\def\lafecha{#1}}
+
+%% Llena los siguientes datos (usa MAYÚSCULAS)
+%%Estos datos aparecerán en la portada y los encabezados
+\titulo{Desarrollo de un Sistema para el Rastreo del Transporte Urbano basado en sensores GPS: Módulo de Visualización de Información}
+\nombre{{Emilio Ernesto Hernandez Huerfano}}
+\carrera{Ingeniero en Sistemas Computacionales}
+\director{{Dr. Rogelio Hasimoto Beltrán}}
+\codirector{{Dr. Rafael Rivera López}}
+\fecha{2018}
+
+%% Barra izquierda - Escudos
+%\hskip-1.5cm
+\begin{minipage}[c][10cm][s]{3cm} 
+  \begin{center}
+  	\includegraphics[height=2.6cm]{images/itver_logo.jpeg}\\[10pt]
+
+    \hskip2pt
+    \vrule width2pt height15cm \hskip1mm
+    \vrule width1pt height15cm    
+    \\[10pt]
+    
+  \end{center}
+\end{minipage}\quad
+%% Barra derecha - Tí­tulos
+\begin{minipage}[c][9.5cm][s]{10cm}
+  \begin{center}
+    % Barra superior
+	{\Large Tecnológico Nacional de México}
+    \vspace{.3cm}
+    \hrule height2pt
+    \vspace{.1cm}
+    \hrule height1pt
+    \vspace{.3cm}
+    {\large Instituto Tecnológico de Veracruz}
+
+    % Titulo del trabajo
+    \vspace{3cm}
+
+    {\Large \eltitulo}
+
+    \vspace{3cm}
+
+    % Tipo de trabajo
+    \makebox[8cm][s]{\Huge T E S I S}\\[8pt]
+    \vspace{.5cm}
+    QUE PARA OBTENER EL T\'ITULO DE:\\[3pt]
+    \mbox{}\lacarrera\\[13pt]
+    PRESENTA:\\[3pt]
+    \elnombre
+
+    \vspace{1.5cm}
+
+    {\small Asesor:\\ \eldirector\\}
+    \vspace{.3cm}
+    {\small Coasesor:\\ \elcodirector}
+
+    \vspace{2cm}
+
+    \lafecha
+    
+  \end{center}
+\end{minipage}

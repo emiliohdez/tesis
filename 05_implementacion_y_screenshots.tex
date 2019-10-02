@@ -1,0 +1,157 @@
+\section{Implementación del módulo de visualización (móvil y web)}
+\noindent Esta sección muestra el resultado de la implementación para ambas plataformas: Android y Web. El despliegue de imágenes está ordenado de acuerdo al modelo de interacción con el usuario, y se muestran capturas equivalentes de ambas plataformas.
+
+Es importante resaltar que en el aspecto gráfico de ambas aplicaciones se implementó el patrón de diseño gráfico \textit{Material Design} propuesto por Google. También hay que mencionar que para implementar una base dinámica que funciones como un mapa de fondo de pantalla se utilizó la biblioteca y el API RESTful de Google Maps, aunque debido a las políticas de uso se propone una segunda iteración utilizando la biblioteca y el API de OpenStreetMaps, lo cual permitiría implementar un modelo de negocio sin pasar por alto ninguna licencia.
+
+
+
+\captionsetup[subfigure]{labelformat=simple}
+
+\renewcommand{\thesubfigure}{}
+
+
+\subsubsection{Selección de ciudad/población}
+\noindent Las imágenes en la figura \ref{seleccion_de_ciudad} muestra la primera interacción entre el usuario y el software, es decir la selección de la ciudad de interés por parte del usuario.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\begin{subfigure}[b]{0.4\textwidth}
+\centering\includegraphics[width=\linewidth]{images/seleccione_su_ciudad_movil.png}
+\caption{Plataforma móvil.}
+\end{subfigure}%\hspace{0.05\textwidth}
+\begin{subfigure}[b]{0.57\textwidth}
+\centering\includegraphics[width=\linewidth]{images/seleccione_su_ciudad_web.png}
+\caption{Plataforma web.}
+ \end{subfigure}
+ }\vspace{0.01\textwidth}
+
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Vistas de la selección de la ciudad de interés.}
+\label{seleccion_de_ciudad}
+\end{figure}
+
+
+\hfill \break
+\hfill \break
+
+
+\subsubsection{Selección de ruta deseada}
+\noindent La figura \ref{seleccion_de_ruta} muestra la escena en la que el usuario selecciona la ruta que quiere visualizar en pantalla y de la que quiere recibir información en tiempo-real.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\begin{subfigure}[b]{0.4\textwidth}
+\centering\includegraphics[width=\linewidth]{images/seleccione_su_ruta_movil.png}
+\caption{Plataforma móvil.}
+\end{subfigure}%\hspace{0.05\textwidth}
+\begin{subfigure}[b]{0.57\textwidth}
+\centering\includegraphics[width=\linewidth]{images/seleccione_su_ruta_web.png}
+\caption{Plataforma web.}
+ \end{subfigure}
+ }\vspace{0.01\textwidth}
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Vistas de la selección de la ruta a visualizar.}
+\label{seleccion_de_ruta}
+\end{figure}
+
+
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+
+\subsubsection{Despliegue de la ruta}
+\noindent La figura \ref{despliegue_de_ruta} muestra la escena en la que se construye la ruta con componentes gráficos.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\begin{subfigure}[b]{0.4\textwidth}
+\centering\includegraphics[width=\linewidth]{images/mapa_con_ruta_movil.png}
+\caption{Plataforma móvil.}
+\end{subfigure}%\hspace{0.05\textwidth}
+\begin{subfigure}[b]{0.57\textwidth}
+\centering\includegraphics[width=\linewidth]{images/mapa_con_ruta_web.png}
+\caption{Plataforma web.}
+ \end{subfigure}
+ }\vspace{0.01\textwidth}
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Vistas que muestra la construcción de una ruta sobre un mapa dinámico basado en GoogleMaps.}
+ \label{despliegue_de_ruta}
+\end{figure}
+
+
+
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+
+\subsubsection{Información y opciones de un parabús}
+\noindent La figura \ref{info_de_parabus} muestra la forma en la que se despliega la información relacionada a un parabús seleccionado y las opciones pertinentes.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\begin{subfigure}[b]{0.4\textwidth}
+\centering\includegraphics[width=\linewidth]{images/info_de_parabus_movil.png}
+\caption{Plataforma móvil.}
+\end{subfigure}%\hspace{0.05\textwidth}
+\begin{subfigure}[b]{0.57\textwidth}
+\centering\includegraphics[width=\linewidth]{images/info_de_parabus_web.png}
+\caption{Plataforma web.}
+ \end{subfigure}
+ }\vspace{0.01\textwidth}
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Pantallas en las que se plasma la manera en que se muestra la información y opciones de un parabús seleccionado.}
+ \label{info_de_parabus}
+\end{figure}
+
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+
+\subsubsection{Despliegue de la alerta}
+\noindent La figura \ref{vistas_alarma} muestran el despliegue de una alerta activada en un parabús al momento en que se activa.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\begin{subfigure}[b]{0.4\textwidth}
+\centering\includegraphics[width=\linewidth]{images/vista_alarma_movil.png}
+\caption{Plataforma móvil.}
+\end{subfigure}%\hspace{0.05\textwidth}
+\begin{subfigure}[b]{0.57\textwidth}
+\centering\includegraphics[width=\linewidth]{images/vista_alarma_web.png}
+\caption{Plataforma web.}
+ \end{subfigure}
+ }\vspace{0.01\textwidth}
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Vistas que muestran la manera en que se despliega una alerta en ambas plataformas.}
+ \label{vistas_alarma}
+\end{figure}
+
+
+
+
+
+
+
+\section{Comentarios finales}
+\noindent Para finalizar el capítulo se puede agregar que ambas implementaciones fueron diseñadas con el objetivo principal de no afectar el desempeño del dispositivo, puesto que al tomar en cuenta el más extremo de los casos, cuando existe recepción de una gran catidad de datos en tiempo real y estos deben ser procesados y desplegados en pantalla, especialmente el dispositivo móvil es susceptible a sobrecargarse y alentarse. Es importante mencionar que el área que estudia la experiencia del suaurio o UX\footnote{Siglas del inglés \textit{User-Experience}.} señala éste como uno de los aspectos de mayor ciudado.
+
+
+
+

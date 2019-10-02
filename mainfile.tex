@@ -1,0 +1,107 @@
+\documentclass[12pt,letterpaper,oneside]{book}
+
+%conjunto de caracteres UTF-8
+\usepackage[utf8]{inputenc}
+
+%Cambiar etiquetas predefinidas a español
+\usepackage[spanish]{babel}
+\renewcommand\spanishtablename{Figura}
+
+%Cambia el color de los enlaces (links) a azul
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=true,allcolors=blue}
+
+%ignoro que hace pero hay un cambio visual leve...
+\usepackage{microtype}
+
+%Permite implementar algoritmos
+%\usepackage{algpseudocode}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\floatname{algorithm}{Algoritmo}
+
+%\usepackage[spanish]{algorithm2e}
+
+%Cambia los márgenes del documento.
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+
+\usepackage{graphicx}
+%\usepackage{subfig}
+\usepackage{setspace}
+
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+
+\setlength{\headheight}{14pt} 
+\newcommand{\quotes}[1]{``#1''}
+
+%Agrega las cabeceras y pies de página
+\pagestyle{fancy}
+\lhead{}
+\chead{\scriptsize{Desarrollo de un Sistema para el Rastreo del Transporte Urbano basado en sensores GPS: Módulo de Visualización de Información}}
+\rhead{}
+\rfoot{}
+\lfoot{}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{newtxtext,newtxmath}
+\usepackage{listings}
+
+%comando para símbolo de grados
+\newcommand{\grad}{\hspace{-2mm}$\phantom{a}^{\circ}$ }
+\def\bsq#1{\lq{#1}\rq}
+
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}}%
+\newcommand*{\Resize}[2]{\resizebox{#1}{!}{$#2$}}%
+
+
+\DeclareMathOperator{\atantwo}{atan2}
+
+
+\usepackage{subcaption}
+
+\usepackage{caption}
+\DeclareCaptionLabelFormat{mylabel}{#1 #2.-\hspace{1.5ex}}
+\captionsetup[figure]{labelformat=mylabel,labelsep=none,name=Figura}
+\captionsetup[table]{labelformat=mylabel,labelsep=none,name=Figura}
+
+\usepackage{array}
+\newenvironment{conditions}
+  {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
+  {\end{tabular}\par\vspace{\belowdisplayskip}}
+
+
+
+\begin{document}
+\title{Desarrollo de un Sistema para el Rastreo del Transporte Urbano basado en el GPS: Módulo de Cliente Móvil}
+\author{Emilio Ernesto Hernandez Huerfano}
+%\maketitle
+\input{00_Portada.tex}
+\frontmatter
+\input{resumen3.tex}
+
+\tableofcontents
+\listoffigures
+
+\mainmatter
+\input{01_marcometodologico.tex}
+\input{02_marcoteorico_tmp.tex}
+\input{03_sistemacompleto.tex}
+\input{04_modulovisualizacion.tex}
+\input{05_implementacion_y_screenshots.tex}
+\input{06_conclusiones_fin.tex}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Referencias Bibliográficas}
+\bibliographystyle{apalike}
+\renewcommand\bibname{Referencias Bibliográficas}
+\bibliography{biblio} 
+
+
+
+\end{document}

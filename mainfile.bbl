@@ -1,0 +1,387 @@
+\begin{thebibliography}{}
+
+\bibitem[Alani, 2014]{Alani:2014:GOT:2602435}
+Alani, M.~M. (2014).
+\newblock {\em {Guide to OSI and TCP/IP Models}}.
+\newblock Springer Publishing Company, Incorporated.
+
+\bibitem[{Android}, 2017]{android:ref}
+{Android} (2017).
+\newblock {Develop Apps | Android Developers}.
+\newblock \url{https://developer.android.com/develop/index.html}.
+\newblock Online; accessed 20 December 2017.
+
+\bibitem[Baset and Schulzrinne, 2005]{P2P_SKYPE_ARTICLE}
+Baset, S. and Schulzrinne, H. (2005).
+\newblock {An Analysis of the Skype Peer-to-Peer Internet Telephony Protocol}.
+
+\bibitem[Bouguettaya et~al., 2014]{DBLP:books/sp/wsf2014}
+Bouguettaya, A., Sheng, Q.~Z., and Daniel, F., editors (2014).
+\newblock {\em {Web Services Foundations}}.
+\newblock Springer.
+
+\bibitem[Buschmann et~al., 2007]{BuschmannHenneySchmidt07a}
+Buschmann, F., Henney, K., and Schmidt, D.~C. (2007).
+\newblock {\em {Pattern-Oriented Software Architecture, Volume 4: A Pattern
+  Language for Distributed Computing}}.
+\newblock Wiley, Chichester, UK.
+
+\bibitem[Buschmann et~al., 1996]{Buschmann:1996:PSA:249013}
+Buschmann, F., Meunier, R., Rohnert, H., Sommerlad, P., and Stal, M. (1996).
+\newblock {\em {Pattern-Oriented Software Architecture - Volume 1: A System of
+  Patterns}}.
+\newblock Wiley Publishing.
+
+\bibitem[Cerf and Kahn, 1974]{1092259}
+Cerf, V. and Kahn, R. (1974).
+\newblock {A Protocol for Packet Network Intercommunication}.
+\newblock {\em IEEE Transactions on Communications}, 22(5):637--648.
+
+\bibitem[Chung, 2000]{UTEXAS:CLIENTSERVER}
+Chung, L. (2000).
+\newblock {Client-Server Architecture}.
+\newblock Computer Science Program, The University of Texas.
+
+\bibitem[Cowley, 2013]{COM:NETWORKING:books/sp/wsf2013}
+Cowley, J., editor (2013).
+\newblock {\em {Communications and Networking}}.
+\newblock Springer, 2 edition.
+
+\bibitem[Date, 2011]{Date:2011:SRT:2208088}
+Date, C.~J. (2011).
+\newblock {\em {SQL and Relational Theory: How to Write Accurate SQL Code}}.
+\newblock O'Reilly Media, Inc.
+
+\bibitem[Deitel and Deitel, 2007]{Deitel:2007:IWW:1406176}
+Deitel, P. and Deitel, H. (2007).
+\newblock {\em {Internet \& World Wide Web: How to Program , Fourth Edition}}.
+\newblock Prentice Hall Press, Upper Saddle River, NJ, USA, fourth edition.
+
+\bibitem[Duckett, 2014]{Duckett:2014:HCD:2670071}
+Duckett, J. (2014).
+\newblock {\em {HTML and CSS: Design and Build Websites}}.
+\newblock Wiley Publishing, 1 edition.
+
+\bibitem[Dye et~al., 2007]{Dye:2007:NFC:1564846}
+Dye, M., McDonald, R., and Rufi, A. (2007).
+\newblock {\em {Network Fundamentals, CCNA Exploration Companion Guide}}.
+
+\bibitem[Elmasri and Navathe, 2010]{Elmasri:2010:FDS:1855347}
+Elmasri, R. and Navathe, S. (2010).
+\newblock {\em {Fundamentals of Database Systems}}.
+\newblock Addison-Wesley Publishing Company, USA, 6th edition.
+
+\bibitem[{Esri team}, 2016]{ESRI:16}
+{Esri team} (2016).
+\newblock {Esri - GIS Mapping Software, Solutions, Services, Map Apps, and
+  Data}.
+\newblock \url{http://www.esri.com/}.
+
+\bibitem[Fall and Stevens, 2011]{fall2011tcp}
+Fall, K. and Stevens, W. (2011).
+\newblock {\em {TCP/IP Illustrated}}.
+\newblock Number v. 1 in Addison-Wes2ley professional computing series.
+  Addison-Wesley.
+
+\bibitem[Ferreira et~al., 2012]{6313632}
+Ferreira, K.~R., Vinhas, L., Monteiro, A. M.~V., and Camara, G. (2012).
+\newblock {Moving Objects and KML Files}.
+\newblock In {\em {Data Engineering Workshops (ICDEW), 2012 IEEE 28th
+  International Conference on}}, pages 355--359.
+
+\bibitem[Fette and Melnikov, 2011]{fette2011websocket}
+Fette, I. and Melnikov, A. (2011).
+\newblock {The WebSocket Protocol}.
+\newblock RFC 6455, Internet Engineering Task Force.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc6455.txt}.
+
+\bibitem[Fielding et~al., 1999]{http-rfc}
+Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and
+  Berners-Lee, T. (1999).
+\newblock {RFC 2616, Hypertext Transfer Protocol -- HTTP/1.1}.
+
+\bibitem[Fielding, 2000]{phdthesis:FIELDING:ARCH}
+Fielding, R.~T. (2000).
+\newblock {\em {Architectural Styles and the Design of Network-based Software
+  Architectures}}.
+\newblock PhD thesis, University of California.
+\newblock Doctor of Philosophy in Information and Computer Science.
+
+\bibitem[Gamma et~al., 1994]{gamma1994design}
+Gamma, E., Helm, R., Johnson, R., and Vlissides, J.~M. (1994).
+\newblock {\em {Design Patterns: Elements of Reusable Object-Oriented
+  Software}}.
+\newblock Addison-Wesley Professional, 1 edition.
+
+\bibitem[Gomaa, 2011]{Gomaa:2011:SMD:1972546}
+Gomaa, H. (2011).
+\newblock {\em {Software Modeling and Design: UML, Use Cases, Patterns, and
+  Software Architectures}}.
+\newblock Cambridge University Press, New York, NY, USA, 1st edition.
+
+\bibitem[Google, 2014]{GOOGLEM}
+Google, I. (2014).
+\newblock {Google Maps reference}.
+\newblock \url{https://developers.google.com/maps/}.
+
+\bibitem[Gosling et~al., 2015]{MSU-CSE-00-2}
+Gosling, J., Joy, B., Steele, G., Bracha, G., and Buckley, A. (2015).
+\newblock {The Java Language Specification JSE8}.
+\newblock Technical report, Oracle America, Inc., Redwood City, California.
+
+\bibitem[Hunt, 1992]{Hunt:1992:TNA:130922}
+Hunt, C. (1992).
+\newblock {\em {TCP/IP Network Administration}}.
+\newblock O'Reilly \& Associates, Inc., Sebastopol, CA, USA.
+
+\bibitem[{INEGI}, 2017]{INEGI_2017_INTERNET}
+{INEGI} (2017).
+\newblock {Estadísticas a Propósito del Día Mundial del Internet}.
+
+\bibitem[{Intertech}, 2014]{SOA_SERVICES_ARCH}
+{Intertech} (2014).
+\newblock {SOA and Web Services Introduction}.
+
+\bibitem[j.~Du et~al., 2009]{5331433}
+j.~Du, Y., c.~Yu, C., and Liu, J. (2009).
+\newblock {A Study of GIS Development Based on KML and Google Earth}.
+\newblock In {\em {INC, IMS and IDC, 2009. NCM '09. Fifth International Joint
+  Conference on}}, pages 1581--1585.
+
+\bibitem[Jia and Zhou, 2004]{jia2004distributed}
+Jia, W. and Zhou, W. (2004).
+\newblock {\em {Distributed Network Systems: From Concepts to
+  Implementations}}.
+\newblock Network Theory and Applications. Springer US.
+
+\bibitem[Jo et~al., 2003]{JO:2018:FORESTFIRE}
+Jo, M.~H., Kim, J.~B., Jo, Y.~W., and Shin, D.~H. (2003).
+\newblock {Constructing the Forest Fire Extinguishment Helicopter Management
+  System by integrating GPS and GIS}.
+\newblock {\em Journal of the Korean Association of Geographic Information
+  Studies}, 6(1):48 -- 58.
+
+\bibitem[{JSON Organization}, 2014]{JSON14}
+{JSON Organization} (2014).
+\newblock {Introducing JSON}.
+\newblock \url{https://www.json.org}.
+
+\bibitem[Kerrisk, 2010]{Kerrisk:2010:LPI:1869911}
+Kerrisk, M. (2010).
+\newblock {\em {The Linux Programming Interface: A Linux and UNIX System
+  Programming Handbook}}.
+\newblock No Starch Press, San Francisco, CA, USA, 1st edition.
+
+\bibitem[Kirch, 2008]{ref1}
+Kirch, W., editor (2008).
+\newblock {\em {Geographic Information System (GIS)}}, pages 494--495.
+\newblock Springer Netherlands, Dordrecht.
+
+\bibitem[Kurose and Ross, 2012]{Kurose:2012:CNT:2584507}
+Kurose, J.~F. and Ross, K.~W. (2012).
+\newblock {\em {Computer Networking: A Top-Down Approach}}.
+\newblock Pearson, 6th edition.
+
+\bibitem[Li and Zhijian, 2010]{6141544}
+Li, H. and Zhijian, L. (2010).
+\newblock {The study and implementation of mobile GPS navigation system based
+  on Google Maps}.
+\newblock In {\em 2010 International Conference on Computer and Information
+  Application}, pages 87--90.
+
+\bibitem[Liduo and Yan, 2010]{5477670}
+Liduo, H. and Yan, C. (2010).
+\newblock {Design and implementation of Web Content Management System by
+  J2EE-based three-tier architecture: Applying in maritime and shipping
+  business}.
+\newblock In {\em 2010 2nd IEEE International Conference on Information
+  Management and Engineering}, pages 513--517.
+
+\bibitem[McFarland, 2011]{mcfarland2011javascript}
+McFarland, D. (2011).
+\newblock {\em {JavaScript \& JQuery: The Missing Manual}}.
+\newblock Missing Manual. O'Reilly Media.
+
+\bibitem[Meyer, 2012]{meyer2012selectors}
+Meyer, E. (2012).
+\newblock {\em {Selectors, Specificity, and the Cascade}}.
+\newblock Oreilly and Associate Series. O'Reilly Media, Incorporated.
+
+\bibitem[Michal~Zemlicka, 2011]{WS:LS:prague:cu}
+Michal~Zemlicka, J.~K. (2011).
+\newblock {Legacy Systems and Web Services}.
+\newblock Technical report, Charles University, Prague, Czech Republic.
+
+\bibitem[{Microsoft}, 2017]{mvp:microsoft}
+{Microsoft} (2017).
+\newblock {The Model-View-Presenter (MVP) Pattern}.
+\newblock \url{https://msdn.microsoft.com/en-us/library/ff649571.aspx}.
+\newblock Online; accessed 10 December 2017.
+
+\bibitem[{MiTAC Intl}, 2011]{MIOGPSDESCRIPTION}
+{MiTAC Intl} (2011).
+\newblock {GPS Technology Explained}.
+\newblock \url{http://www.mio.com/technology.htm}.
+\newblock 2 de febrero del 2016.
+
+\bibitem[Neteler and Mitasova, 2008]{gis2008}
+Neteler, M. and Mitasova, H. (2008).
+\newblock {\em {Open Source GIS: A GRASS GIS Approach}}.
+\newblock Springer, 3rd edition.
+
+\bibitem[Neustaedter et~al., 2013]{Neustaedter2013}
+Neustaedter, C., Tang, A., and Judge, T.~K. (2013).
+\newblock {Creating scalable location-based games: lessons from Geocaching}.
+\newblock {\em Personal and Ubiquitous Computing}, 17(2):335--349.
+
+\bibitem[Paik et~al., 2017]{Paik:2017:WSI:3131511}
+Paik, H.-y., Lemos, A.~L., Barukh, M.~C., Benatallah, B., and Natarajan, A.
+  (2017).
+\newblock {\em {Web Service Implementation and Composition Techniques}}.
+\newblock Springer Publishing Company, Incorporated, 1st edition.
+
+\bibitem[{PANDA SECURITY}, 2010]{PANDAS_SECURITY_P2P}
+{PANDA SECURITY} (2010).
+\newblock {¿QUÉ ES PEER - TO - PEER (P2P)?}
+\newblock \url{http://www.pandasecurity.com}.
+
+\bibitem[Papinski and Scott, 2011]{PAPINSKI2011434}
+Papinski, D. and Scott, D.~M. (2011).
+\newblock {A GIS-based toolkit for route choice analysis}.
+\newblock {\em Journal of Transport Geography}, 19(3):434 -- 442.
+\newblock Special Issue : Geographic Information Systems for Transportation.
+
+\bibitem[Pitt, 2012]{Pitt:2012:PPM:2401765}
+Pitt, C. (2012).
+\newblock {\em {Pro PHP MVC}}.
+\newblock Apress, Berkely, CA, USA, 1st edition.
+
+\bibitem[Pressman et~al., 2003]{pressman2003ingenieria}
+Pressman, R., Mart{\'\i}n, R., Jare{\~n}o, I., Aguilar, L., and Galaup, V.
+  (2003).
+\newblock {\em {Ingeniería del Software: Un Enfoque Práctico}}.
+\newblock {\'A}rea de inform{\'a}tica y computaci{\'o}n. McGraw-Hill.
+
+\bibitem[Quispe and René, 2011]{MAYQUIS11}
+Quispe, M. and René, N. (2011).
+\newblock {Latitud, Longitud y Altitud}.
+\newblock
+  \url{http://nestorgeografia.blogspot.mx/2011/05/latitud-longitud-y-altitud.html}.
+
+\bibitem[Redmond and Wilson, 2012]{Redmond:2012:SDS:2378688}
+Redmond, E. and Wilson, J.~R. (2012).
+\newblock {\em {Seven Databases in Seven Weeks: A Guide to Modern Databases and
+  the NoSQL Movement}}.
+\newblock Pragmatic Bookshelf.
+
+\bibitem[Robbins, 2012]{robbins2012learning}
+Robbins, J. (2012).
+\newblock {\em {Learning Web Design, 4th Edition}}.
+\newblock O'Reilly Media, Incorporated.
+
+\bibitem[Robinson et~al., 2013]{Robinson:2013:GD:2556013}
+Robinson, I., Webber, J., and Eifrem, E. (2013).
+\newblock {\em {Graph Databases}}.
+\newblock O'Reilly Media, Inc.
+
+\bibitem[Sadalage and Fowler, 2012]{Sadalage:2012:NDB:2381014}
+Sadalage, P.~J. and Fowler, M. (2012).
+\newblock {\em {NoSQL Distilled: A Brief Guide to the Emerging World of
+  Polyglot Persistence}}.
+\newblock Addison-Wesley Professional, 1st edition.
+
+\bibitem[Sample and Ioup, 2014]{Sample:2014:TGI:2755001}
+Sample, J.~T. and Ioup, E. (2014).
+\newblock {\em {Tile-Based Geospatial Information Systems: Principles and
+  Practices}}.
+\newblock Springer Publishing Company, Incorporated.
+
+\bibitem[Shalloway and Trott, 2004]{Shalloway:2004:DPE:1196715}
+Shalloway, A. and Trott, J. (2004).
+\newblock {\em {Design Patterns Explained: A New Perspective on Object-Oriented
+  Design}}.
+\newblock Addison-Wesley Professional, 2 edition.
+
+\bibitem[Shklar and Rosen, 2003]{WEBAPPLEONROSEN}
+Shklar, L. and Rosen, R. (2003).
+\newblock {\em {Web Application Architecture : Principles, Protocols and
+  Practices}}.
+\newblock John Wiley and Sons Ltd, England, 1 edition.
+
+\bibitem[Silberschatz et~al., 2006]{Silberschatz:2005:DSC:993519}
+Silberschatz, A., Korth, H., and Sudarshan, S. (2006).
+\newblock {\em {Database Systems Concepts}}.
+\newblock McGraw-Hill, Inc., New York, NY, USA, 5 edition.
+
+\bibitem[Sommerville and Galipienso, 2005]{sommerville2005ingenieria}
+Sommerville, I. and Galipienso, M. (2005).
+\newblock {\em {Ingeniería del Software}}.
+\newblock Fuera de colecci{\'o}n Out of series. Pearson Educaci{\'o}n.
+
+\bibitem[Statista, 2017]{mobiles:market}
+Statista (2017).
+\newblock {Mobile OS market share 2017}.
+\newblock \url{https://www.statista.com/statistics/266136}.
+
+\bibitem[Stephens, 2015]{Stephens:2015:BSE:2826034}
+Stephens, R. (2015).
+\newblock {\em {Beginning Software Engineering}}.
+\newblock Wrox Press Ltd., Birmingham, UK, UK, 1st edition.
+
+\bibitem[Stevens, 1993]{Stevens:1993:TIP:161724}
+Stevens, W.~R. (1993).
+\newblock {\em {TCP/IP Illustrated (Vol. 1): The Protocols}}.
+\newblock Addison-Wesley Longman Publishing Co., Inc., Boston, MA, USA.
+
+\bibitem[Taczanowska et~al., 2014]{TACZANOWSKA2014184}
+Taczanowska, K., González, L.-M., Garcia-Massó, X., Muhar, A., Brandenburg,
+  C., and Toca-Herrera, J.-L. (2014).
+\newblock {Evaluating the structure and use of hiking trails in recreational
+  areas using a mixed GPS tracking and graph theory approach}.
+\newblock {\em Applied Geography}, 55:184 -- 192.
+
+\bibitem[Tanenbaum and Wetherall, 2010]{Tanenbaum:2010:CN:1942194}
+Tanenbaum, A.~S. and Wetherall, D.~J. (2010).
+\newblock {\em {Computer Networks}}.
+\newblock Prentice Hall Press, Upper Saddle River, NJ, USA, 5th edition.
+
+\bibitem[{U.S. Air Force}, 2016]{GPSGOVOFFICIAL}
+{U.S. Air Force} (2016).
+\newblock {Official U.S. Government information about the Global Positioning
+  System (GPS) and related topics}.
+\newblock \url{http://www.gps.gov/}.
+\newblock 2 de febrero del 2016.
+
+\bibitem[Wang et~al., 2013]{Wang:2013:DGH:2509619}
+Wang, V., Salim, F., and Moskovits, P. (2013).
+\newblock {\em {The Definitive Guide to HTML5 WebSocket}}.
+\newblock Apress, Berkely, CA, USA, 1st edition.
+
+\bibitem[Williams, 2017]{NASA:EARTH:RADIUS}
+Williams, D.~R. (2017).
+\newblock {Earth Fact Sheet}.
+\newblock \url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html}.
+\newblock NASA Official.
+
+\bibitem[{World Wide Web Consortium}, 2017]{w3xml_json}
+{World Wide Web Consortium} (2017).
+\newblock {XML and JSON}.
+\newblock \url{https://www.w3schools.com/js/js_json_xml.asp}.
+
+\bibitem[Yu et~al., 2018]{Yu2018}
+Yu, F., Hu, X., Dong, S., Liu, G., Zhao, Y., and Chen, G. (2018).
+\newblock {Design of a low-cost oil spill tracking buoy}.
+\newblock {\em Journal of Marine Science and Technology}, 23(1):188--200.
+
+\bibitem[Zambon, 2012]{Zambon:2012:BJJ:2385419}
+Zambon, G. (2012).
+\newblock {\em {Beginning JSP, JSF and Tomcat: Java Web Development}}.
+\newblock Apress, Berkely, CA, USA, 2nd edition.
+
+\bibitem[Zeimpekis et~al., 2002]{zeimpekis2002taxonomy}
+Zeimpekis, V., Giaglis, G.~M., and Lekakos, G. (2002).
+\newblock {A taxonomy of indoor and outdoor positioning techniques for mobile
+  location services}.
+\newblock {\em ACM SIGecom Exchanges}, 3(4):19--27.
+
+\end{thebibliography}

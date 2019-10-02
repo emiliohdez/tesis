@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: mainfile.aux
+The style file: apalike.bst
+Database file #1: biblio.bib
+Warning--empty journal in P2P_SKYPE_ARTICLE
+Warning--empty publisher in Dye:2007:NFC:1564846
+Warning--empty journal in INEGI_2017_INTERNET
+You've used 70 entries,
+            1935 wiz_defined-function locations,
+            868 strings with 14592 characters,
+and the built_in function-call counts, 23422 in all, are:
+= -- 2278
+> -- 927
+< -- 58
++ -- 298
+- -- 298
+* -- 1775
+:= -- 4256
+add.period$ -- 219
+call.type$ -- 70
+change.case$ -- 481
+chr.to.int$ -- 70
+cite$ -- 73
+duplicate$ -- 975
+empty$ -- 1617
+format.name$ -- 408
+if$ -- 4583
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 86
+newline$ -- 356
+num.names$ -- 213
+pop$ -- 482
+preamble$ -- 1
+purify$ -- 499
+quote$ -- 0
+skip$ -- 731
+stack$ -- 0
+substring$ -- 1149
+swap$ -- 97
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 344
+warning$ -- 3
+while$ -- 161
+width$ -- 0
+write$ -- 906
+(There were 3 warnings)

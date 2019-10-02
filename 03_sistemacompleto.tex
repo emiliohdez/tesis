@@ -1,0 +1,299 @@
+\chapter{Análisis y Diseño del Sistema}
+
+\noindent En este capítulo se introducen las bases del sistema de monitoreo, es decir, los requerimientos que fueron tomados en cuenta para el desarrollo del sistema y el bosquejo o diseño general de éste, también se presenta una breve explicación sobre el papel desempeñado por cada uno de los módulos principales que lo conforman: El módulo de recolección de datos, el de procesamiento de información y el de despliegue de información.
+
+Es importante destacar que los detalles acerca de la implementación del módulo de recolección de datos y del de procesamiento de la información quedan fuera del alcance de este proyecto de tesis.
+
+\section{Requerimientos de desarrollo}
+
+\noindent Para el desarrollo del sistema se tomó en cuenta la siguiente lista de requerimientos:
+
+\subsubsection*{Requerimientos de usuario}
+
+\begin{itemize}
+\item Se debe mostrar una lista que contenga las rutas que se encuentren disponibles en la ciudad, tal que el usuario pueda seleccionar de ella la que quiere ver.
+\item El usuario debe ser capaz de ver en un mapa interactivo el dibujo de la ruta que él seleccione, además de los parabuses oficiales que dicha ruta involucre.
+\item Los autobuses que circulan la ruta de interés para el usuario deben ser representados gráficamente en pantalla, de modo tal que informe también el sentido que el autobús lleva.
+\item El usuario debe poder ver información extra acerca de los parabuses y los autobuses de una ruta.
+\item El usuario podrá recibir notificaciones por parte del sistema en ciertas situaciones, por ejemplo el caso en el que un autobús que él espera esté a punto de llegar a la parada de autobús en la que se encuentra.
+\item Se debe notificar y mostrar al usuario cuando una ruta cambie por algún acontecimiento externo al sistema.
+\end{itemize}
+
+\subsubsection*{Requerimientos funcionales}
+\begin{itemize}
+\item El sistema debe ser capaz de dar servicio a $N$ usuarios al mismo tiempo.
+\item La transmisión de datos debe ejecutarse en forma tal que todos los usuarios cuenten con información actual en todo momento.
+\item La arquitectura del sistema debe permitir su escalamiento a otras ciudades.
+\end{itemize}
+
+\subsubsection{Especificaciones derivadas}
+\noindent Derivado del análisis de los requerimientos anteriormente expuestos, se tiene que el sistema debe cumplir con las siguientes características técnicas:
+
+\begin{itemize}
+\item La arquitectura del sistema debe ser distribuida.
+\item La transmisión de datos entre los componentes del sistema debe darse en tiempo real.
+\item El sistema debe ser especialmente robusto en cuanto a los riesgos y fallos que pueden darse al transmitir datos, tales como la latencia en la transmisión y la desconexión inesperada de servidores y clientes.
+\item La precisión de la información geográfica de los autobuses debe tener un margen de error pequeño (no más de 10 metros).
+\item El ícono que representa a los autobuses en movimiento debe ser transformado con cada posición nueva para indicar el sentido real de éste.
+\item El modelo de datos implementado debe ser flexible a cambios frecuentes.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Abstracción del modelo de datos}
+\noindent Los sistemas de transporte urbano de una localidad pueden variar de acuerdo a factores como el nivel socio-económico de ésta, su tamaño y el número de habitantes. Existen ciudades muy grandes como Monterrey, Guadalajara y Ciudad de México, y también ciudades pequeñas como la capital de Guanajuato, pero en todas ellas hay un sistema de transporte urbanos que involucra autobuses. Tomando en cuenta dicha situación, el modelo de datos se basa en afirmaciones lo suficientemente generales para encajar en casi cualquier localidad, que se listan a continuación:
+
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics{images/parabusesDeLaCiudad.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Mapa de una ciudad que remarca la ubicación de los parabuses oficiales.}\label{parabuses_mapa}
+\end{figure}
+
+
+\begin{itemize}
+  \item Existen un conjunto de parabuses distribuidos por toda la ciudad (figura \ref{parabuses_mapa}).
+  \item Todos los parabuses se encuentran conectados entre sí por un camino que puede ser una calle o una sucesión de éstas, siguiendo un sentido.
+  \item Existen un conjunto de rutas urbanas, y cada una se define como una sucesión de parabuses que forma un circuito cerrado (figura \ref{rutas_grafo}).
+  \item Existe también un conjunto de autobuses en la localidad, recorriendo una ruta específica de manera permanente o dinámica.
+\end{itemize}
+
+
+
+De manera natural, el contexto encaja para ser modelado en un diagrama de tipo grafo dirigido (figura \ref{parabuses_graph}). En la abstracción, cada nodo representa un parabús cuya propiedad más importante es su posición GPS. Las aristas modelan la calle o camino que lleva de un parabús a otro, el peso y el sentido de éstas son la longitud en metros y el sentido descrito por el sistema vial, respectivamente.
+
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.35]{images/parabuses_graph.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Abstracción gráfica de la información sobre el transporte público expresada en la figura \ref{parabuses_mapa}, según el esquema propuesto.}\label{parabuses_graph}
+\end{figure}
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.35]{images/rutas_grafo.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Simulación de la formación de rutas sobre un grafo.}\label{rutas_grafo}
+\end{figure}
+
+Por su parte, los autobuses que transitan las rutas son concebidos como agentes dinámicos externos a la estructura base del grafo, ya que sus atributos y su posición se encuentran en cambio constante (tiempo-real). Además un autobús no está ligado a una ruta específica, ya que puede ser cambiando de ruta según la demanda de usuarios durante el día.
+
+
+En cuanto al manejo del modelo de datos descrito, el gestor de base de datos principal almacena instancias de rutas preprocesadas en archivos KML que contienen la definición estructural de una ruta (los parabuses, los caminos entre éstos y el sentido que siguen) para facilitar la entrega de información al cliente (móvil o web) que la solicite.
+
+El modelo también almacena un registro de las unidades de transporte urbano que se monitorean, incluyendo el número de placa y el código de la unidad, y un registro de los conductores de las unidades (nombre completo, número de teléfono, dirección y demás datos que los concesionarios requieren), con el objetivo de enviar algunos datos a los usuarios finales y otros utilizarlos para generar reportes e historiales de utilidad administrativa.
+
+Cabe resaltar que la abstracción del modelo de datos permite que el sistema reaccione a la situación de cambio en la estructura de alguna ruta, como cuando un parabús es eliminado de la ciudad, o cuando se suscita un acontecimiento que obliga al sistema de tránsito a proponer un camino temporal para los autobuses. Las actualizaciones solo involucran un cambio en las propiedades de los nodos o de las aristas según corresponda.
+
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+%POR AQUÍ DEBE IR LA COSA DEL KML Y COMO ESTÁ GUARDADO EN LA BASE DE DATOOOOOS... DIJO RIVERA
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+\section{Módulos principales del sistema}
+\noindent Debido a que el sistema debe ser distribuido para dar servicio a muchos clientes, se dan a notar tres procesos principales para lograr el funcionamiento adecuado de éste. La imagen \ref{arquitectura} ilustra la propuesta, donde se observa que procesos se comunican y comparten información implementando interfaces basadas en protocolos como TCP, UDP y HTTP.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.55]{images/arquitectura.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Módulos principales del sistema de monitoreo.}\label{arquitectura}
+\end{figure}
+
+\subsection{Recolección de datos geográficos}
+\noindent El Módulo de Recolección de Datos Geográficos es el primero en la cadena de flujo de información y por tanto el origen de los datos, consiste en una aplicación móvil instalada en un smartphone Android que va montado en el autobús que se desea rastrear. Esta aplicación está dedicada a realizar tres tareas ilustradas en el diagrama de flujo de la imagen \ref{diagrama_app_rastreadora} y explicadas en las líneas siguientes:
+
+%Aquí va la imágen del diagrama de flujo...
+
+
+%El primer proceso es el rastreo de la unidad en tiempo real... posteriormente la verificación 
+
+
+
+
+
+
+La tarea principal que desempeña esta aplicación es notificar al servidor la ubicación en tiempo real de los autobuses que circulan una ruta específica del sistema de transporte de la ciudad o localidad, también es responsable de realizar cálculos basados en la geoposición de la unidad y detectar el caso en que ésta salga de ruta (figura \ref{diagrama_app_rastreadora}).
+
+
+
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.35]{images/diagrama_app_rastreadora.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama de flujo general de los pasos que sigue la aplicación rastreadora.}\label{diagrama_app_rastreadora}
+\end{figure}
+
+Por medio del proceso de inicio de sesión se define la ruta que el autobús circulará durante la jornada de trabajo, declarando también la clave de la ruta como encabezado especial de la información enviada al servidor en tiempo real.
+
+Una vez que se estableció la ruta a circular, y para evitar el problema de la variante precisión en las lecturas del sensor GPS de los dispositivos móviles, la aplicación se encarga de ubicar la unidad sobre algún punto o segmento de línea del camino que hay entre las paradas de autobuses implementando cálculos basados en la fórmula conocida como \quotes{Haversine}\footnote{Contracción del inglés \textit{Half Versed Sine}.} (fórmula \ref{haversine}), la cual es utilizada para calcular la distancia entre dos puntos sobre una superficie esférica (en este caso la Tierra) con muy buena aproximación.
+
+\begin{equation}\label{haversine}
+\left.\begin{aligned}
+a &= \sin^{2}(\frac{\Delta \varphi }{2}) + \cos \varphi 1 \cdot \cos \varphi 2 \cdot \sin^{2}(\frac{\Delta \lambda}{2}) \\
+c &= 2 \cdot \atantwo (\sqrt{a},\sqrt{(1-a)}) \\
+\mathnormal{D} &= \mathnormal{R} \cdot c \\
+\end{aligned}\right.
+\end{equation}
+
+donde:
+\begin{conditions}
+ \mathnormal{R} &  Radio terrestre acordado en 6371 km según \cite{NASA:EARTH:RADIUS}. \\
+ \varphi        &  Latitud de un punto. \\   
+ \lambda        &  Longitud de un punto. \\   
+ \mathnormal{D} &  Distancia aproximada en metros.
+\end{conditions}
+
+Cuando se obtiene una posición GPS se calcula el segmento de línea o punto más cercano, teniendo así que el autobús se aproxima a esa parte de  la ruta (figura \ref{posicionamiento_sobre_linea}). Un mecanismo similar es empleado para calcular la distancia que le falta al autobús para llegar al siguiente parabús, puesto que la línea es una serie de puntos y su longitud es la suma de las distancias que hay entre ellos (formula \ref{suma_distancias}), por lo que la distancia faltante es la diferencia que hay entre la longitud total y la recorrida.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.27]{images/posicionamiento_sobre_linea.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Ubicación de una unidad de transporte sobre un segmento de línea de la ruta.}\label{posicionamiento_sobre_linea}
+\end{figure}
+
+\begin{equation}\label{suma_distancias}
+\left.\begin{aligned}
+D_{T} &= \sum_{i=0}^{n-1}haversine((\varphi_i, \lambda_i), (\varphi_{i+1}, \lambda_{i+1}))
+\end{aligned}\right.
+\end{equation}
+
+Aparte de la información de interés para el usuario final mencionada en líneas anteriores, la aplicación también calcula la velocidad aproximada a la que se desplaza con base en la distancia que recorre cada cinco segundos y el tiempo que tardará en llegar a al siguiente parabús. Toda esta información está ligada a una ruta y a una unidad de transporte específicos, y es actualizada al menos cada cinco segundos para enviarla al servidor.
+
+
+
+
+
+
+
+\subsection{Lógica del servidor}
+\noindent Este módulo funge como intermediario entre los datos recolectados en el módulo anterior y la información que se despliega al usuario final (figura \ref{arquitectura}). El servidor realiza tres tareas concretas que se describen a continuación:
+
+
+\subsubsection{Interfaz REST}
+\noindent El servidor deja a disposición de los clientes un API de tipo REST para el acceso vía HTTP a la información de las rutas de autobuses y unidades de transporte registrados en el sistema (figura \ref{rest_server_interface}). La información que los clientes obtienen puede encontrarse en dos formatos diferentes según los siguientes casos:
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.5]{images/RESTinterface_server.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Interfaz REST entre el modelo de datos y los clientes que entrega información en formatos KML y JSON, según sea necesario.}\label{rest_server_interface}
+\end{figure}
+
+\begin{itemize}
+  \item{\textbf{Tipo KML}:} Al ser un formato estándar para la presentación de información geográfica, se implementa para brindar la información que describe la estructura de las rutas registradas en el sistema, incluyendo la ubicación de los parabuses oficiales o nodos que la delimitan y la dirección de cada camino o arista que los autobuses recorren.
+  \item{\textbf{Tipo JSON}:} La información transferida en este formato es la descripción básica de las instancias que interactúan en el modelo de datos (rutas, nodos, autobuses, ciudades, etc.), ofreciendo reportes como la lista de rutas disponibles en cierta ciudad, la lista de parabuses de dicha ruta, los autobuses que la circulan al momento, entre otros. Mediante este formato también se envían notificaciones del sistema, como el caso en que una ruta cambia y es necesaria su actualización en el resto de los módulos.
+\end{itemize}
+
+\subsubsection{Validación de datos}
+\noindent La tarea de validación de información  se implementa con el fin de asegurar un nivel de seguridad en cuanto a la confiabilidad de la información que se distribuye por el sistema. Ésta se realiza en primera instancia al nivel de origen de la información, en el que por medio de un protocolo propio y de la adición de cabeceras, se asegura que esta proviene de una aplicación rastreadora válida. Posteriormente se valida el formato de las cadenas o mensajes recibidos, ya que estos deben contar con una cantidad de caracteres específica y tener una estructura tal que puedan ser interpretados por el servidor. Finalmente algunas credenciales son comparadas con la base de datos para asegurar la legitimidad del mensaje.
+
+
+
+\subsubsection{Distribución de la información}
+\noindent Una vez iniciada la transmisión de datos entre las aplicaciones rastreadoras activadas y el servidor, éste procede a la distribución de información filtrada y formateada a los usuarios finales utilizando el protocolo WebSocket, organizando el envío de datos de manera tal que el dispositivo móvil del usuario solo recibe la información de los autobuses activos en la ruta deseada (figura \ref{distribucion_de_datos}).
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.5]{images/distribucion_informacion.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema de la entrega de información bajo demanda por rutas de transporte.}\label{distribucion_de_datos}
+\end{figure}
+
+El filtrado se implementa en primera instancia para reducir el tráfico de información en red, evitando así la sobrecarga y congestión en el lado del servidor, y también para evitar que el usuario se vea económicamente afectado a causa del uso de internet móvil cuando no se cuenta con Wi-Fi.
+
+\subsubsection{Manejo de conexiones}
+\noindent Un tema muy importante en cuanto al desarrollo de sistemas distribuidos es el manejo de las conexiones en red. Al estar basado en el protocolo TCP, el protocolo WebSocket también presenta complicaciones para notar cuando una conexión se terminó de manera inesperada y pasó a ser una \textit{conexión zombie}, es decir que el canal de comunicación se cerró a causa de un error o excepción y uno de los procesos no recibió el paquete ACK que lo notifica, conservando el apuntador como una conexión activa.
+
+Enfocando dicha situación, el cliente web es afectado en menor grado que los dispositivos que cargan la aplicación móvil, puesto que el cliente web (que es usualmente una computadora con un conveniente tamaño de pantalla) puede perder conexión de manera inesperada en muy esporádicos casos, como la caída de la red Wi-Fi. Los clientes móviles, por el contrario, son más susceptibles a generar conexiones zombies en el servidor a causa de las conexiones dinámicas a la antena celular más cercana o a la pérdida de recepción en zonas de difícil acceso.
+
+En un esquema de conexión en el que un proceso envía información (escribe en el canal) y otro la recibe (lee del canal), el proceso que lee arroja al instante una excepción al perder la comunicación, dando pauta a reaccionar de acuerdo al protocolo establecido en el desarrollo. El proceso que escribe no puede reaccionar de la misma manera debido a que en el sistema no hay nada que le avise que se perdió la conexión, por lo que una de las medidas recomendadas en el lado del envío de datos es la limitación del tamaño del \textit{buffer} temporal, asegurando que al llenarse arroje una excepción que notifique al proceso de escritura que el canal de comunicación es inválido.
+
+Java maneja un buffer de 8 kb para cada conexión WebSocket, sin embargo en este caso se considera que éste debe ser reducido a 3 kb para para disminuir la probabilidad de saturar el procesador con conexiones zombies, y así lograr que el sistema reaccione oportunamente.
+
+
+\subsection{Visualización de la información}
+\noindent Finalmente, el módulo para el despliegue o visualización de la información comprende una aplicación para dispositivos móviles Android y una aplicación web, que funcionan como la interfaz que presenta gráficamente la información proveniente del servidor e interactúa con el usuario final. Ambas aplicaciones satisfacen el mismo objetivo primario: Mostrar al usuario la ubicación de los autobuses que circulan una ruta de interés (figura \ref{interfaces_visuales}).
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.65]{images/interfaces_visuales.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Despliegue de información geográfica en tiempo real sobre la web y móviles.}\label{interfaces_visuales}
+\end{figure}
+
+
+Ambas aplicaciones visuales obtienen la información en tiempo real de los autobuses al conectarse al módulo de lógica de servidores utilizando el protocolo WebSocket y enviando una serie de cabeceras que lo acreditan como un dispositivo cliente confiable. Entre dichas cabeceras se encuentra un identificador que le indica al servidor la ruta que el cliente pide en pantalla y, por consiguiente, los datos de los autobuses que son necesarios, a medida que los datos son obtenidos van siendo graficados (figura \ref{interfaces_process_diagram}).
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.46]{images/interfaces_process_diagram.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama del funcionamiento general de las aplicaciones que interactúan con el usuario final del sistema.}\label{interfaces_process_diagram}
+\end{figure}
+
+La función secundaria del módulo en cuestión, es la de notificar al usuario o interactor cuando un autobús se acerca a algún punto de interés sobre la ruta (dígase un parabús de su preferencia). Paralelamente al despliegue de los autobuses en pantalla, el software está habilitado para realizar cálculos basados en la información que el servidor envía y resolver los autobuses que se encuentran más cerca de el parabús seleccionado y si alguno se encuentra lo suficientemente cerca (referencia acordada a 80m o menos) como para activar la notificación al usuario.
+
+
+Cabe mencionar que, a pesar de que las funciones de estas aplicaciones son las mismas, algunas de éstas no fueron implementadas de la misma manera debido al uso de diferentes lenguajes de programación y tecnologías. Esto se describe más a detalle en el siguiente capítulo.
+
+%\noindent Finalmente el módulo de despliegue o visualización de la información tiene el objetivo de mostrar al usuario información de interés acerca de los autobuses que circulan una ruta preferida de manera dinámica y llamativa. La función primaria de este es dibujar en la pantalla del dispositivo un mapa interactivo que muestre gráficamente el trayecto de la ruta que el usuario desea ver, a demás de los autobuses la circulan, actualizándolos en pantalla según la información geográfica transmitida por el servidor, tal y como se muestra en la figura \ref{geobus_screenshot}.
+
+% . . . . Inclusión de una imagen . . . .
+%\begin{figure}[hbtp]
+%\centering
+%\includegraphics[scale=0.2]{imgs/geobus_screen.png}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Vista preliminar de la pantalla para la visualización de una ruta de autobuses.}\label{geobus_screenshot}
+%\end{figure}
+
+%\section{Arquitectura Distribuida}
+%\noindent Es muy importante mencionar que la arquitectura de este sistema fue diseñada con el objetivo de dar soporte a una indeterminada cantidad de usuarios, la demanda por parte de estos dependerá del lugar que el sistema atienda.
+
+%Los usuarios que se conectan al sistema para recibir información lo hace a través del protocolo WebSocket para la transmisión de datos en tiempo real, por lo que la conexión que el servidor tiene con cada cliente es persistente.
+
+%Mencionadas las situaciones anteriores se decidió que el sistema fuera capaz de crecer bajo demanda, o sea, que si la carga de los servidores disponibles está llegando a un 60\% o 70\% es posible agregar más servidores sin afectar al resto del sistema.
+
+%Al agregar nuevos servidores a la cadena, el sistema es capaz de ejecutar un balanceo de cargas con el objetivo de minimizar el riesgo de falla en algún servidor activo a causa de una sobrecarga en el número de conexiones o sockets abiertos.
+
+
+
+
+
+\section{Comentarios finales}
+\noindent A pesar de ser descrita de manera introductoria es posible expresar que el sistema fue diseñado desde su base para ser fácilmente actualizable y escalable, por lo que no se utilizaron Frameworks de terceros. Iniciando por el uso de un esquema de datos más orgánico y natural que el modelo tabular clásico, el cual captura muy acertadamente la situación real de un sistema de transporte público. Continuando por el uso de servicios web para dar acceso a la información de manera independiente por parte de los procesos externos, y permitiendo aumentar funcionalidades o mejorar las ya existentes sin interferir con las que se encuentran activas. Finalmente en cuanto al flujo de datos propuesto, se pone gran atención al rendimiento del servidor, ya que se toman medidas importantes para evitar, por ejemplo, problemas de sobrecarga por procesamiento de peticiones entrantes y conexiones persistentes.
+
+El siguiente capítulo detalla la procedencia y objetivo de dichas conexiones y peticiones, la información que se transfiere y su procesamiento hasta la pantalla del usuario final.
+
+

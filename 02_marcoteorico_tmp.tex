@@ -1,0 +1,790 @@
+\chapter{Marco Teórico}
+
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+
+\noindent En este capítulo se presenta una descripción de los conceptos teóricos y herramientas o tecnologías que fueron utilizadas a lo largo del desarrollo de este proyecto de tesis. Se da inicio por aquellos relacionados con la tecnología GPS y su uso en la actualidad, tales como el geoposicionamiento y los Sistemas de Información Geográfica.
+
+Posteriormente se introducen algunos términos orientados al área de desarrollo de software, como arquitecturas, patrones de diseño, y frameworks. También se incluyen conceptos relacionados al área de diseño gráfico como modelado,  maquetación y patrones visuales.
+
+
+%Finalmente , así como los lenguajes de programación y plataformas que fueron utilizados para la construcción de la plataforma como Java, Apache Tomcat y Android, algoritmos y estructuras de datoscuestiones que tienen su contexto en las relaciones humanas como la que existe entre el cliente y el grupo de ingenieros de software que desarrollarán el producto, hasta cuestiones de nivel más técnico como el diseño arquitectónico al que conllevará el análisis de las necesidades del cliente y la posterior programación.
+
+%Despues se describen las tecnologías, lenguajes utilizados y conceptos tomados en cuenta en la construcción del sistema que esta tesis describe, dividiéndolos en tres rubros principales: Programación de Servidores, Programación Web y Programación Móvil.
+
+%Finalmente se ofrece una significativa introducción acerca de las tecnologías y términos que fueron implementadas para lograr una correcta comunicación entre los módulos con los que el sistema cuenta para su funcionamiento, incluyendo conceptos útiles en el área de las Redes de computadoras, protocolos de comunicación y aplicaciones de los mismos.
+
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+
+\section{Conceptos y herramientas geográficas}
+\noindent El área de la computación, y la tecnología en general, se ha ido mezclando con otras a lo largo del tiempo, tal es el caso de la sinergia con la geografía y la cartografía que surgió con la idea del rastreo y localización de objetos sobre la superficie terrestre, dando así origen a sistemas tecnológicos robustos que son utilizados para una gran cantidad de propósitos en todo el mundo, como la geolocalización de objetos, personas o lugares, el cálculo de rutas entre dos puntos localizados con coordenadas espaciales y la visualización, análisis e interpretación de datos geográficos \cite{ESRI:16}.
+
+\subsection[GPS]{GPS\footnote{Por sus siglas en inglés \textit{Global Positioning System}.}}
+\noindent El GPS, o Sistema de Posicionamiento Global en español, es un sistema satelital utilizado para conseguir posicionar un determinado objeto o región sobre la superficie terrestre \cite{MAYQUIS11}. El Sistema GPS provee posicionamientos tridimensionales en tiempo real las 24 horas del día, coordenadas de navegación y tiempos mundiales. Cualquier persona que posea un dispositivo que tenga receptor GPS, ya sea dedicado como en el caso de los sistemas de navegación vehiculares, o embebido como los smartphones, puede acceder a estos servicios.
+
+El GPS está compuesto por una constelación de poco más de 24 satélites cuya labor es la transmisión de señales de radio a los usuarios. En esta malla, 24 satélites deben encontrarse siempre activos y el resto actúan como un repuesto en caso de falla o una ventana de mantenimiento. \cite{GPSGOVOFFICIAL}.
+
+Los satélites activos antes mencionados se encuentran repartidos equitativamente entre 6 órbitas inclinadas 55\grad tomando como base relativa al ecuador y a una altitud aproximada de 20,200km, como se muestra en la figura \ref{red_de_satelites}, de manera que cada satélite pueda completar dos vueltas alrededor de la Tierra diariamente y así mantener disponible el servicio en casi cualquier lugar del mundo.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.12]{img/gps_satellites_system.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Red de satélites GPS que vuelan alrededor de la Tierra.}\label{red_de_satelites}
+\end{figure}
+
+\subsection{Geoposicionamiento y técnicas para dispositivos móviles}
+\noindent La geoposición de un objeto es la ubicación aproximada de éste sobre la superficie terrestre, se encuentra dada por un vector de tres dimensiones ($\phi$, $\lambda$, $h$) \cite{GOOGLEM}, a continuación una breve explicación:
+
+\begin{itemize}
+  \item \textbf{Latitud ($\phi$)}: Es la distancia angular que existe desde cualquier punto de la Tierra con respecto al ecuador medida en grados, minutos y segundos (figura \ref{latitud_longitud}). Puede encontrarse en un rango de -90\grad a 90\grad representando los valores positivos posiciones del ecuador hacia el polo norte, y los negativos posiciones del ecuador al polo sur.
+  \item \textbf{Longitud ($\lambda$)}: Es la distancia angular que existe desde cualquier punto de la Tierra con respecto al meridiano de Greenwich (figura \ref{latitud_longitud}), exceptuando a los polos norte y sur, los cuales no tiene longitud. Este valor representa la posición de un punto en la orientación este-oeste sobre la superficie terrestre en un rango de -180\grad a 180\grad.
+  \item \textbf{Altitud ($h$)}: Es la distancia angular vertical de un origen dado que es considerado como el nivel 0, el cual usualmente es el nivel del mar, a un objeto en cuestión.
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.5]{img/Latitud-y-longitud.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación de la latitud y la longitud en el planeta tierra.}\label{latitud_longitud}
+\end{figure}
+
+Existen varias formas para poder obtener la geoposición de un objetivo con un receptor GPS, las cuales son explicadas en las siguientes líneas:
+
+\subsubsection{Consultas al sistema GPS}
+\noindent Este método resulta ser el más utilizado, consiste en que el dispositivo o receptor GPS ubique al menos tres satélites en órbita y envíe una serie de datos que ayuden a estos a calcular sus distancias y posiciones con respecto al mismo. Cuando éstos responden, el dispositivo es capaz de calcular una triangulación (ilustrada en la figura \ref{triangulacion}) y obtener su ubicación con alto nivel de precisión\cite{zeimpekis2002taxonomy}.
+
+\subsubsection{Geolocalización por Wi-Fi}
+\noindent El sistema de posicionamiento por Wi-Fi se utiliza en casos en los que la geolocalización por GPS no es accesible, por ejemplo cuando el dispositivo se encuentra dentro de un edificio y no es capaz de detectar los satélites necesarios. Esta técnica se basa principalmente el medir el grado de intensidad con el que la señal Wi-Fi llega del Access Point (Modem) al dispositivo móvil \cite{zeimpekis2002taxonomy}, sin embargo la precisión de ésta es muy baja.
+
+\subsubsection{Uso de antenas de telefonía móvil}
+\noindent Para localizar un dispositivo utilizando esta técnica se realiza un procedimiento muy parecido al del caso del sistema GPS, pero en lugar de emplear una red satelital se utilizan las antenas de la red de celular. Mientras un dispositivo está en movimiento puede ir conectándose a diferentes antenas de telefonía de acuerdo a la intensidad de señal que presenten, guardando así registros de las antenas a las que se ha conectado recientemente, registro que en conjunto a la posición de la antena a la que se encuentra conectado al momento puede dar como resultado una aproximación a la geoposición del dispositivo \cite{zeimpekis2002taxonomy}. Es importante resaltar que este método resulta tener un nivel de precisión menor que los dos mencionados anteriormente.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.3]{img/triangulacion.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Triangulación para la obtener de la posición de un objetivo con base en tres referencias.}\label{triangulacion}
+\end{figure}
+
+\subsection{Sistemas de información geográfica}
+\noindent También conocidos como \textit{GIS}\footnote{Siglas del inglés \textit{Geographic Information System}.}, son sistemas de software diseñados para almacenar, recuperar, administrar y mostrar todo tipo de información geoespacial, permitiendo a los usuarios organizarla en capas (figura \ref{gis_information}), realizar consultas interactivas, editar datos en un mapa y analizar la información disponible con el fin de gestionar situaciones que van desde encontrar rutas para conducir en la ciudad hasta el manejo de fenómenos meteorológicos \cite{gis2008}.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.8]{img/GIS_data.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Separación de capas de la información que un GIS provee.}\label{gis_information}
+\end{figure}
+
+Las aplicaciones de los GIS no se enfocan solamente en cuestiones de cálculo de rutas o medio ambiente y meteorología, ya que pueden ser utilizados en cualquier situación que requiera el análisis de información geoespacial. En el sector salud son utilizados para encontrar relaciones o patrones entre algunos padecimientos y enfermedades en determinada población, como los casos de cáncer pulmonar en lugares en los que se practica la metalurgia, o el gradiente socioeconómico en la mortalidad infantil \cite{ref1}
+
+
+Las simulaciones de la superficie terrestre que un GIS es capaz de hacer, también conocidas con el nombre de \quotes{Mapas Web dinámicos}, son construidas a partir de la técnica \textit{Tiling}. Esta técnica consiste, a grandes rasgos, en mapear posiciones terrestres en una superficie en dos dimensiones utilizando una cuadrícula regular para posteriormente asociar una imagen (usualmente satelital) que rellene el área que cada espacio de la cuadrícula involucra \cite{Sample:2014:TGI:2755001}.
+
+
+%Quité esto por que sobran detalles
+%El proceso inicia con la definición de un nivel de acercamiento o zoom en un rango de $[1-20]$, tomando por defecto 1, para tener el número de filas (ecuación \ref{get_rows}) y el número de columnas (ecuación \ref{get_columns}) que conformarán la cuadrícula, de manera gráfica luce como en la figura \ref{tiling}.
+
+%\begin{equation} \label{get_rows}
+%\Scale[1.1]{R_i=2^{i-1}}
+%\end{equation}
+%\begin{equation} \label{get_columns}
+%\Scale[1.1]{C_i=2^i}
+%\end{equation}
+
+%\begin{figure}[hbtp]
+%\centering
+%\includegraphics[scale=0.5]{imgs/tiling_map.png}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Sistema grid empleado en el proceso de Tiling.}\label{tiling}
+%\end{figure}
+
+%De manera abstracta, cada espacio de la cuadrícula cubre un área geográfica de la superficie terrestre, para sobreponer una imagen del área correspondiente (figura \ref{coordenadas_tiling}) es necesario conocer las coordenadas de esta. Las ecuaciones \ref{lat_min}, \ref{lng_min}, \ref{lat_max} y \ref{lng_max} ayudan a obtener los puntos de las esquinas que definen el área a cubrir, donde $c$ es el índice de la columna y $r$ es el índice de la fila.
+
+%\begin{figure}[hbtp]
+%\centering
+%\includegraphics[scale=0.5]{imgs/coordenadas_tile.png}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Ejemplo de un Tile.}\label{coordenadas_tiling}
+%\end{figure}
+
+%\begin{equation} \label{lng_min}
+%\Scale[1.1]{\lambda_{min}=c\dfrac{360}{2^{i}}-180}
+%\end{equation}
+%\begin{equation} \label{lng_max}
+%\Scale[1.1]{\lambda_{max}=(c+1)\dfrac{360}{2^{i}}-180}
+%\end{equation}\begin{equation} \label{lat_min}
+%\Scale[1.1]{\phi_{min}=r\dfrac{180}{2^{i-1}}-90}
+%\end{equation}
+%\begin{equation} \label{lat_max}
+%\Scale[1.1]{\phi_{max}=(r+1)\dfrac{180}{2^{i-1}}-90}
+%\end{equation}
+
+%Cuando se tienen las coordenadas de cada espacio en la cuadrícula, es posible sobreponer las imágenes y formar el mapa completo \ref{map_tiled}. Algunos ejemplos de estas plataformas son Google Maps, OpenStreetMaps y Microsoft Bing Maps.
+
+%\begin{figure}[hbtp]
+%\centering
+%\fbox{\includegraphics[scale=0.4]{imgs/pyramid.jpeg}}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Construcción de un mapa utilizando la técnica Tiling.}\label{map_tiled}
+%\end{figure}
+
+
+
+
+
+
+
+
+
+\section{Sistemas distribuidos}
+%\noindent Aquí va una breve descripción respecto a los sistemas distribuidos y su amplio uso en la actualidad... en todos lados prácticamente.
+
+\subsection{Definición y elementos}
+\noindent Se denomina Sistema Distribuido a aquél compuesto por un conjunto de dispositivos que trabajan bajo la misma red y que ejecutan software diseñado para colaborar en diferentes tareas de manera colaborativa, compartiendo recursos e información (figura \ref{distributed_schema}), y aportando ventajas de concurrencia y alta escalabilidad en los procesos ejecutados \cite{jia2004distributed}.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.55]{imgs/distributed_schema.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema de un sistema distribuido.}\label{distributed_schema}
+\end{figure}
+
+Los elementos básicos que componen cualquier sistema distribuido son los siguientes:
+
+\subsubsection{Servidor}
+\noindent Un servidor es un programa o proceso que ofrece algún tipo de servicio a otros procesos\cite{Kerrisk:2010:LPI:1869911}. Los servicios que puede ofrecer son muy diversos, que van desde el acceso a bases de datos, páginas web y correo electrónico, hasta uso de contenido especializado como información multimedia.
+
+
+
+
+
+
+
+
+\subsubsection{Cliente}
+\noindent Un proceso cliente es aquél que solicita algún servicio a un proceso servidor \cite{WEBAPPLEONROSEN}. Por ejemplo, un explorador web como Firefox o Google Chrome es un cliente que se comunica con servidores web para obtener los documentos necesarios para mostrar una página web y Thunderbird es un cliente de correos electrónicos que se conecta a un servidor de correo para solicitar correos de un usuario.
+
+Existen dos tipos de cliente:
+
+\begin{itemize}
+\item \textbf{Cliente pesado}: Es aquel proceso diseñado para solicitar información específica al servidor y realizar todos los procesos de análisis y presentación por si solo \cite{sommerville2005ingenieria}. Los juegos por computadora son un ejemplo de este tipo de cliente pues el renderizado de las escenas y movimientos son realizados por él mismo, mientras que en el servidor solo se guardan pequeños registros.
+\item \textbf{Cliente ligero}: Es el proceso cuyo objetivo es mandar ciertos datos al servidor para realizar todo el procesamiento necesario, retornando una respuesta concreta \cite{sommerville2005ingenieria}. Una aplicación móvil de un banco solo envía pequeñas instrucciones y claves al servidor para que éste realice transacciones bancarias.
+\end{itemize}
+
+
+
+
+
+
+La comunicación entre ambos tipos de procesos se puede dar de las siguientes maneras:
+
+\begin{itemize}
+\item \textbf{Local}: Cuando tanto el proceso servidor como el proceso cliente están siendo ejecutados en la misma computadora.
+\item \textbf{Remota}: Cuando ambos procesos están siendo ejecutados en diferentes computadoras que se encuentran conectadas a la mista red, en este tipo de comunicación no importa la ubicación geográfica de las máquinas.
+\end{itemize}
+
+
+%Los servicios que este puede ofrecer son muy diversos, pueden ser servicios de base de datos, páginas web, contenido multimedia, información sobre el clima, DNS, email, etc., Y lo puede hacer a través de diferentes protocolos de comunicación \cite{Stevens:1993:TIP:161724} \cite{WEBAPPLEONROSEN}, estos aspectos dependen de la implementación y los requerimientos del sistema.
+
+
+
+
+
+\subsection{Modelos arquitectónicos para sistemas distribuidos}
+\noindent Existen varias opciones cuando de la construcción de un sistema distribuido se trata, el análisis del problema es el que definirá cual de los modelos arquitectónicos se apega más a la solución. A continuación se describen algunos de estos modelos:
+
+\subsubsection{Cliente-Servidor}
+\noindent Este modelo arquitectónico se centra en la separación de un sistema en dos segmentos, por un lado aquellos procesos que requieren del uso de funciones o información específicas (clientes), y por el otro lado el o los procesos que proveen estas funciones e información (servidores) \cite{pressman2003ingenieria} \cite{Stephens:2015:BSE:2826034}. La separación en estos dos segmentos cumple la función de disminuir el tiempo de desarrollo puesto que se puede trabajar en éstas por separado.
+
+En un principio, era utilizado solamente para la construcción de sistemas de software centralizado, en los que una sola máquina guardaba la lógica y el modelo de datos, sin embargo después se convirtió en el \textit{estándar de facto} para el desarrollo de plataformas distribuidas \cite{UTEXAS:CLIENTSERVER}.
+
+\subsubsection{Arquitectura de tres capas}
+\noindent La arquitectura de software basada en tres capas tuvo su auge entre los años 80's y los 90's al permitir a los desarrolladores de software separar cualquier sistema en tres segmentos principales \cite{5477670} \cite{Gomaa:2011:SMD:1972546}:
+
+\begin{itemize}
+\item Capa de presentación: Programa de interfaz gráfica que es ejecutado en un cliente, tomando en cuenta una distribución tipo Cliente-Servidor, y cuyo objetivo es la interacción con el usuario final.
+\item Capa de lógica del negocio: También llamada \quotes{Capa intermedia}, es la encargada de que el flujo de datos sea acorde a la lógica establecida, de la validación de datos de entrada y salida al sistema, y del manejo de transacciones y dependencias.
+\item Capa de persistencia de datos: Responsable de la interacción entre la lógica del negocio y la base de datos, contiene las reglas impuestas por el modelo de datos a fin de conservar la integridad de la información que se almacena y consulta.
+\end{itemize}
+
+\subsubsection{Arquitectura multicapas}
+\noindent Una arquitectura multicapas, también llamada de $N$-capas, resulta ser la generalización a la arquitectura de tres capas antes mencionada. El objetivo de esta idea es el de organizar el software de manera granular al fraccionarlo en capas y subcapas extra. La tendencia actual se evoca a esta arquitectura con base en la facilidad para implementar sistemas distribuidos codificando capas que funcionan como interfaces de comunicación entre los componentes \cite{Buschmann:1996:PSA:249013}.
+
+Muchos casos actualmente involucran segmentos de software destinados a la interpretación de datos, a diversas formas de comunicación a través de la red, conexión a diferentes tipos de bases de datos de manera remota y demás código fuente que fácilmente puede ser conceptualizado en capas intermedias a las clásicas.
+
+\subsubsection{Arquitectura Peer-to-Peer}
+\noindent Mayormente conocida por el acrónimo \quotes{P2P}, es una arquitectura de software distribuida cuyo objetivo es permitir a los individuos comunicarse y compartir información entre ellos (como en la figura \ref{p2p_schema}), sin la necesidad de un proceso que sirva de servidor central \cite{PANDAS_SECURITY_P2P}.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.55]{imgs/p2p.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema de un sistema que se comunica empleando una arquitectura P2P.}\label{p2p_schema}
+\end{figure}
+
+El uso principal de esta tecnología es el intercambio de archivos a través de la red y los sistemas tipo \textit{Torrent} son ejemplos de este caso. El sistema de videollamadas Skype emplea esta arquitectura para la transmisión de voz \cite{P2P_SKYPE_ARTICLE}.
+
+%-------------------------------->
+
+\section{Protocolos de comunicación}
+\noindent Como se mencionó en líneas anteriores, la tendencia en el desarrollo de sistemas de software apunta a la implementación de arquitecturas y modelos distribuidos, principalmente por cuestiones de escalabilidad y disponibilidad. Para que la distribución de procesos en varios nodos de un sistema sea posible es necesaria la especificación de los protocolos de comunicación entre procesos o IPC\footnote{Siglas del inglés \textit{Inter-Process Communication}.}, los cuales definen estándares para el transporte de información entre los componentes de sistema, ya sea de manera local o remota.
+
+Una de las propuestas más sobresalientes es el modelo TCP/IP, cuyas primeras definiciones se dieron en \cite{1092259}, donde se estipulan una serie de capas que indican la manera correcta de enviar información a través de la red \cite{fall2011tcp}. A continuación se describen las capas del modelo, cuyo orden se encuentra plasmado en la figura \ref{tcp_ip_model}:
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.7]{images/tcp_ip_layers.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Pila de capas definidas por el modelo TCP/IP.}\label{tcp_ip_model}
+\end{figure}
+
+\paragraph{Capa de enlace y acceso a la red:} Es la capa de más abajo en la pila, detalla la manera en que la información es enviada físicamente a través de la red hacia el destino. Estos detalles involucran lo relacionado al envío de cada bit de manera eléctrica u óptica y el enlace físico a utilizar como cable coaxial, fibra óptica o cable de par trenzado \cite{Dye:2007:NFC:1564846}.
+
+\paragraph{Capa de internet:} Se encarga de definir un formato y codificación estándar para los datos que van a viajar a través de la red resultando en una serie de paquetes de datos conocidos como datagramas IP que contienen direcciones de origen y destino, poniendo especial atención en los métodos de fragmentación de los datos y el ruteo de estos hacia el dispositivo destino.
+
+\paragraph{Capa de transporte:} El objetivo principal de esta capa es definir un acuerdo entre el dispositivo que envía los datos y el que los recibe respecto a cómo establecer la conversación e iniciar la transmisión de datos. Usualmente esta decisión se reduce a dos opciones, tener un canal de conexión fijo (TCP) o no tener una conexión estable y enviar ágilmente la información (UDP).
+
+\paragraph{Capa de aplicación:} Ésta es la capa superior en la pila, se encarga del manejo de la representación y codificación de los datos que serán enviados, a demás de controlar el diálogo establecido entre los dispositivos. Su tarea en general es recabar información para pasarla a la capa de transporte, y leer información de esta última para presentarla a los procesos o aplicaciones pertinentes \cite{Alani:2014:GOT:2602435}.
+
+A continuación algunos de los protocolos más utilizados según la capa en la que se encuentran.
+
+\subsection{IP como protocolo de la capa de red}
+
+El protocolo IP\footnote{Del inglés \textit{Internet Protocol}.} es el más importante de la capa de red, la versión que es utilizada en la actualidad es la 4, la versión 5 es utilizada solo para experimentar con algoritmos de transmisión en tiempo real y la versión 6 fue liberada recientemente pero al no ser interoperable con la versión 4 no ha sido implementada \cite{Hunt:1992:TNA:130922} \cite{Alani:2014:GOT:2602435}. Las tareas que éste desempeña son principalmente las siguientes:
+
+\begin{itemize}
+\item Establecer el esquema de direccionamiento origen-destino a través de la red al adicionar una cabecera que contiene la información de direccionamiento o dirección IP, la cual es una sucesión de 32 bits que sigue un formato conocido como \textit{dotted-decimal} \cite{COM:NETWORKING:books/sp/wsf2013}.
+
+\item Administrar datagramas IP, refiriéndose a su generación, su fragmentación en partes pequeñas y fáciles de administrar y el reensamble para obtener la información original, acción que es útil cuando la información pasa por redes que especifican diferente tamaño máximo de paquete.
+\end{itemize}
+
+Un \textbf{Datagrama} es un paquete de información que consta de dos partes llamadas cabecera y cuerpo o datos. La cabecera es la que contiene la información de direccionamiento necesaria: las direcciones IP del origen y del destino, el tamaño del paquete, la versión y el protocolo utilizado. Por otra parte, la sección de los datos contiene la información a entregar al receptor.
+
+\subsection{Protocolos de la capa de transporte}
+\noindent La capa de transporte se enfoca prácticamente en dos protocolos: TCP\footnote{Siglas del inglés \textit{Transmission Control Protocol}.} y UDP\footnote{Siglas del inglés \textit{User Datagram Protocol}.}. Éstos se caracterizan por diferir en dos variables principalmente, la velocidad de transmisión de la información y la confiabilidad con la que ésta se transfiere.
+
+\subsubsection{TCP}
+
+\noindent El Protocolo de Control de la Transferencia  es considerado un mecanismo altamente confiable para la transmisión de información entre dos procesos conectados a la red, y uno de los más importantes en el mundo de las redes de computadoras. Pertenece a la rama de los protocolos conocidos como \textit{Orientados a Conexión} puesto que para iniciar el envío de datos es necesario previamente establecer un canal de comunicación o conexión fija entre el proceso origen y el destino mediante un proceso llamado \textit{3-way Handshake}\footnote{Traducido al español como \textit{Negociación en tres pasos}.}. El objetivo de este proceso es establecer parámetros que indican como se llevará a cabo la transmisión y la recepción de la información \cite{Kurose:2012:CNT:2584507}.
+
+
+
+TCP es implementado principalmente en aquellas aplicaciones en las que la pérdida de paquetes no es una opción, como en el envío de correo electrónico o de mensajes de texto. Éste ofrece un mecanismo de control de transmisión/retransmisión automática de datos en caso de fallo. Los paquetes son enviados de manera ordenada al proceso destino, y cada que un paquete es enviado se espera un paquete que confirma su recepción antes de enviar el siguiente.
+
+
+
+De manera predeterminada, TCP provee un canal de comunicación \textit{full-duplex} o en dos sentidos, por lo que una vez establecida la conexión, ambos procesos quedan habilitados para enviar y recibir información cuando sea necesario, pero es posible desactivar esta función estableciendo una conexión en un solo sentido.
+
+\subsubsection{UDP}
+\noindent El Protocolo de Datagramas de Usuarios es un estándar de facto para la construcción de redes de transmisión de datos que pertenece, de manera contraria al protocolo TCP, al conjunto conocido como \textit{Connectionless}. Es un protocolo que no requiere de una conexión previamente establecida para transferir información de un proceso a otro. El tipo de paquete utilizado por este protocolo es conocido como Datagrama y se caracteriza por contener toda la información necesaria para identificarlo y direccionarlo a través de la red \cite{Stevens:1993:TIP:161724} \cite{Tanenbaum:2010:CN:1942194}.
+
+Se caracteriza por ser más rápido que TCP, a costa de ser mucho menos seguro. UDP no implementa ningún control de seguridad para el envío de paquetes, ni tampoco espera una señal de confirmación de recepción de estos por parte del receptor, aumentando la probabilidad de pérdida de paquetes \cite{Stevens:1993:TIP:161724}.
+
+La transmisión de audio y video en tiempo real, conocida actualmente como \textit{Streaming}, son algunas de las aplicaciones en que UDP tiene lugar, ya que toleran cierto grado de pérdida de paquetes y requieren alta velocidad de transferencia.
+
+\subsubsection{Sockets}
+\noindent Los sockets son puertos lógicos que permiten que la información sea intercambiada entre aplicaciones o programas que se ejecutan en un sistema distribuido \cite{Kerrisk:2010:LPI:1869911} de manera bidireccional. Son la forma utilizada para implementar el intercambio de información basada en los protocolos TCP y UDP, situándolos como la interfaz de comunicación entre la capa de aplicación y la de transporte (figura \ref{sockets_layer}).
+
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{images/sockets_layer.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Los Sockets son el mecanismo que se utiliza como intermediario entre la capa de transporte y la de aplicación.}\label{sockets_layer}
+\end{figure}
+
+
+\subsection{Protocolos de la capa de aplicación}
+\noindent La capa de aplicación se encuentra relacionada a la manera en que la información transmitida interactuará con la implementación de procesos de software y los usuarios. Los protocolos de esta capa se implementan principalmente sobre TCP y UDP.
+
+En el caso de UDP, algunos de los diseñados para utilizarlo como base son el Protocolo de Tiempo Real (RTP\footnote{Siglas del inglés \textit{Real-Time Protocol}.}) y el protocolo VoIP\footnote{Del inglés \textit{Voice over IP}.} para el flujo de audio. Por otro lado, entre los que se implementan sobre TCP encontramos a los protocolos HTTP\footnote{Siglas del inglés \textit{Secure HTTP}.}, su derivado HTTPS\footnote{Contracción de \textit{Hypertext Transfer Protocol}.} y el nuevo estándar WebSocket, los cuales son explicados en las siguientes líneas.
+
+
+
+
+
+
+\subsubsection{HTTP}
+\noindent El Protocolo de Transferencia de Hipertexto es el más conocido de entre los protocolos que se pueden implementar sobre la capa de aplicación según el modelo TCP/IP. Éste fue desarrollado para ser implementado en sistemas distribuidos que trabajen de manera colaborativa puesto que, gracias a su apertura para la asignación de tipos de datos y a la negociación de la manera en que estos serán representados, permite que dichos sistemas sean desarrollados de manera independiente a la información que se transferirá \cite{http-rfc}.
+
+Un explorador Web, como Mozilla Firefox, Google Chrome o Safari por mencionar algunos, es el mejor ejemplo de implementación del protocolo HTTP, su trabajo es desplegar una página web al usuario al interpretar información que solicita al servidor empleando una o varias peticiones HTTP (figura \ref{webbrowser_http}) \cite{Kurose:2012:CNT:2584507}.
+
+Es importante mencionar que las peticiones HTTP que una aplicación realiza a uno o varios servidores no guardan relación alguna entre sí, razón por la cual HTTP es denominado \textit{Stateless}, haciendo referencia a que el servidor no tiene la capacidad de guardar información de cada cliente basándose exclusivamente en las peticiones que realiza y cada petición es tomada como algo completamente nuevo.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{images/webbrowser_http.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama que muestra el proceso que sigue un explorador web (cliente) para desplegar una página, comunicándose con el servidos vía HTTP.}\label{webbrowser_http}
+\end{figure}
+
+
+\subsubsection{HTTPS}
+\noindent Es la versión del protocolo HTTP que implementa ciertas medidas de seguridad al intercambiar información a través de la red. Un problema que presenta HTTP es que la información que se envía es fácilmente interpretada \cite{Alani:2014:GOT:2602435}, aumentando la vulnerabilidad a ataques informáticos destinados a robarla. Los sistemas que manejan información sensible o transacciones interbancarias fueron los primeros en adoptar esta versión del estándar.
+
+Durante el handshake que se dan al enviar una petición HTTPS al servidor, se automatiza la verificación de identidad de ambos procesos y se acuerdan ciertas claves de encriptación, logrando que la información no corra el peligro de ser leída por un tercero.
+
+
+\subsubsection{WebSocket}
+\noindent El protocolo WebSocket surgió a partir de la necesidad de poder establecer una conexión full-duplex para una transmisión de datos en tiempo real sin tener que acudir al mecanismo tradicional en que el cliente envía peticiones HTTP \cite{fette2011websocket} \cite{Wang:2013:DGH:2509619}.
+
+Éste fue diseñado para implementarse sobre el protocolo HTTP, y por consiguiente sobre TCP, tal que pueda aportar el canal bidireccional de TCP aunado a ventajas como el filtrado, la capacidad de autenticación y de estándares de seguridad que aporta HTTP.
+
+Al ser implementado sobre HTTP es posible, y preferible, evolucionar a la versión segura del protocolo WebSocket, conocida como WSS\footnote{Siglas del inglés \textit{WebSocket Secure}.}, enviando información encriptada en tiempo real y evitando así que sea extraía por atacantes informáticos.
+
+Los WebSockets son implementados usualmente en aquellas aplicaciones que requieres transferencia de información a alta velocidad, como el caso de juegos en línea y herramientas de edición de documentos colaborativos, también para interfaces gráficas que despliegan información al usuario que solicitan al servidor en tiempo real.
+
+%--------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Paradigmas, arquitecturas y patrones de diseño de software.}
+
+\subsection{Paradigma orientado a servicios}
+\noindent Cuando se plantea el desarrollo de software para una empresa de tamaño indistinto, e inclusive al tratarse de un proyecto personal, muchas veces se presenta la situación en que hay componentes que realizan tareas lógicas muy similares o inclusive iguales, sobre todo cuando se agregan módulos nuevos a una plataforma o nuevo software es desarrollado para convivir con el ya existente.
+
+La situación anterior abrió paso a la concepción de una nueva arquitectura para el diseño de software conocida en adelante como Arquitectura Orientada a Servicios o SOA\footnote{Del inglés \textit{Service Oriented Architecture}.} \cite{SOA_SERVICES_ARCH}, diseñada para facilitar la construcción de plataformas altamente escalables y flexibles, pero favoreciendo la facilidad de su mantenimiento y actualización.
+
+En ésta, el modelo de datos se encuentra aislado por una capa formada por pequeños componentes de software llamados servicios, los cuales se encargan de un proceso lógico específico y poseen la característica de estar desacoplados y ser autónomos (figura \ref{SERVICES_LAYER}), por lo cual un servicio puede ser consultado por un proceso sin interferir o afectar a otros. También es posible desarrollar servicios que se comuniquen con otros para concretar una tarea u obtener información que requieran para llegar a su fin.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{images/services_layer.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema de un sistema SOA básico que indica el desacoplamiento entre los servicios ofrecidos.}\label{SERVICES_LAYER}
+\end{figure}
+
+Los procesos o aplicaciones cliente, de acuerdo a la arquitectura, están diseñados para consumir estos servicios y ejecutar acciones CRUD\footnote{Siglas en inglés de \textit{Create-Read-Update-Delete}} sobre el modelo de datos detrás de ellos. Al igual que esta arquitectura de desarrollo de software, existen otras opciones que se adecuan a otro tipo de necesidades, como el caso de las que siguen el paradigma orientado a objetos o el orientado al diseño de componentes.
+
+
+\subsubsection{Servicios web}
+\noindent Los servicios web siguen la conceptualización antes mencionada respecto a \quotes{servicio}. Son componentes desacoplados de software e independientes de plataforma que se encuentran disponibles a través del internet y, usualmente, son consultados utilizando el protocolo HTTP. Cada servicio web es identificado por medio de una serie única de caracteres llamada URI\footnote{Siglas del ingés \textit{Uniform Resource Identifier}.}, misma que sirve para accederlo o consultarlo \cite{DBLP:books/sp/wsf2014}.
+
+Como ejemplo de implementación de servicios web se puede mencionar la creación de interfaces de comunicación para sistemas legados (sistemas informáticos antiguos que pueden ser difícilmente actualizados por desarrollar tareas críticas en la lógica del negocio), ya que estos permiten que un sistema nuevo interactúe con uno obsoleto sin alterar este último \cite{WS:LS:prague:cu}.
+
+
+\subsubsection{SOAP}
+\noindent SOAP\footnote{Acrónimo del inglés \textit{Simple Object Access Protocol}.} es un protocolo para el intercambio de mensajes en lenguaje XML que fue definido por el Consorcio WWW\footnote{Siglas del inglés \textit{World Wide Web}.} siguiendo una filosofía Cliente-Servidor \cite{Paik:2017:WSI:3131511}. Su uso principal se encuentra en la implementación de arquitecturas de software basadas en servicios web.
+
+La implementación de SOAP logra que la transferencia de mensajes entre pares se realice de manera independiente a la plataforma y al lenguaje de programación. El envío y recepción de mensajes no está limitado al protocolo HTTP, si no que también puede efectuarse sobre los protocolos SMTP\footnote{Siglas del inglés \textit{Simple Mail Transfer Protocol}.}y TCP, y utilizando el mecanismo JMS\footnote{Siglas del inglés \textit{Java Message Service}.}. Un mensaje SOAP se compone por los siguientes elementos:
+
+
+
+\begin{itemize}
+\item \textbf{\textit{Información del protocolo de transporte}}: Es la cabecera del protocolo sobre el que se enviará el mensaje, usualmente HTTP, más una cabecera especial $SOAPAction$ que indica que la petición es un mensaje SOAP. 
+\item \textbf{\textit{<soapenv:Envelope>}}: Es el elemento que contiene el mensaje, es conformado por dos bloques:
+
+\begin{itemize}
+	\item \textbf{\textit{<soapenv:Header>}}: Especifica las directivas para el mecanismo SOAP, estas reglas no son para el mensaje a transferir, si no para su procesamiento en el servidor, tales como seguridad básica, expresiones regulares, configuraciones de la transacción, etc.
+	\item \textbf{\textit{<soapenv:Body>}}: Contiene los datos a enviar o consultar, así como el nombre del servicio web , parámetros necesarios para el procesamiento y nombres de métodos.
+\end{itemize}
+
+\end{itemize}
+
+
+
+
+
+
+
+
+\subsubsection{RESTful}
+\noindent Los servicios web RESTful se encuentran basados en la ideología REST\footnote{Siglas del inglés \textit{Representational State Transfer}.}, propuesta por Roy Fielding, que indica que todo en la red es un recurso o elemento de información que puede ser referenciado por medio de un URI y manipulado a través de peticiones del protocolo HTTP \cite{phdthesis:FIELDING:ARCH}.
+
+En esta conceptualización, algunos de los comandos HTTP son utilizados como operadores sobre el recurso señalado por la dirección URI, como GET, POST y PUT.
+
+Este tipo de servicios web ha tomado gran importancia en los últimos años debido a la implementación de interfaces completas de acceso a información o APIs que grandes empresas han implementado basándose en su ventaja sobre SOAP en cuanto a su velocidad de procesamiento, tal es el caso de Facebook, Twitter y Spotify. A través de dichas interfaces o servicios es posible solicitar recursos como contenido multimedia, documentos de texto, streamings, etc.
+
+
+
+
+\subsection{Patrones arquitectónicos}
+\noindent La fase del análisis de requerimientos de software es considerada la más importante y decisiva debido a que en ésta se abstrae la arquitectura que el producto debe tener para cumplir con todos los requerimientos y alcanzar sus objetivos. Los Patrones Arquitectónicos de Software son soluciones generales a ciertos problemas o situaciones con características similares. Definen algunas reglas o restricciones cuyo objetivo es asegurar que el producto final contará con características como escalabilidad, desacoplamiento, modularidad, entre otras \cite{BuschmannHenneySchmidt07a}. Un patrón arquitectónico se aplica usualmente sobre módulos definidos y la comunicación entre estos. El módulo de interfaces gráficas o de la vista, el de la lógica de negocio, el de servicios web o el del modelo de datos son ejemplos de estos.
+
+\subsubsection{Modelo-Vista-Controlador}
+\noindent Usualmente abreviado solo como MVC\footnote{Por sus siglas en inglés \textit{Model View Controller}.}, es un patrón de diseño de software que se basa en la separación e interconexión de los componentes en tres categorías principales y es típicamente implementado en el desarrollo de software distribuido susceptible al cambio  \cite{BuschmannHenneySchmidt07a} y que se construye con lenguajes de programación orientados a objetos,  como Java o PHP \cite{Pitt:2012:PPM:2401765}. La figura \ref{mvc_diagram} muestra de manera abstracta la arquitectura MVC, a continuación la descripción de sus componentes:
+
+
+\begin{itemize}
+\item{\textbf{El modelo}} es el contenedor de toda la lógica de negocio del sistema, es decir, es en donde los datos que son manipulados en el sistema se almacenan, a demás de que también se especifica como es que dichos datos son almacenados y si es necesario utilizar servicios de terceros para lograr cumplir con todos los requerimientos del negocio al que va dirigido el sistema. Si en el sistema es necesario el acceso a información almacenada en alguna base de datos, el código para implementar esa tarea debe ser parte del modelo.
+\item{\textbf{La vista}} es el módulo en el que las interfaces gráficas con las que el usuario interactáa son guardadas, por ejemplo los documentos HTML, las hojas de estilo CSS\footnote{Siglas del inglés \textit{Cascading Style Sheets}.}, y los archivos JavaScript. En general todo lo que interactúe y pueda ser utilizado por el usuarios puede ser guardado en el componente de vista.
+\item{\textbf{El controlador}} es el componente encargado de realizar la conexión entre el modelo y la vista. Su labor principal es el aislamiento de la lógica del negocio incluida en el modelo, de los elementos de la interfaz de usuario incluida en la vista, y la manipulación de las respuestas que el sistema dará ante la interacción del usuario con la vista. Se puede decir que este componente es el principal de los tres, ya que cuando el usuario realiza alguna petición en la vista, esta es pasada en primera instancia al controlador, el cual posteriormente ordenará alguna acción en el modelo y regresará resultados a la vista.
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{img/diagrama_mvc.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación abstracta de la arquitectura MVC.}\label{mvc_diagram}
+\end{figure}
+
+El uso de este patrón de diseño ayuda a los desarrolladores de software a mantener un código bien estructurado y limpio ya que cada componente está dedicado a ciertas responsabilidades, lo cual aporta mayor facilidad al mantenimiento o hacer pruebas en busca de errores \cite{Pitt:2012:PPM:2401765}. Actualmente este patrón de diseño ha tenido gran auge en los sistemas web, habiendo incluso frameworks que ayudan a los desarrolladores a organizar su código siguiendo las reglas MVC sin mucho esfuerzo como el caso de Struts2 en Java y Laravel en PHP.
+
+\subsubsection{Modelo-Vista-Presentador}
+\noindent Es una derivación del patrón MVC que es utilizada principalmente para la construcción de interfaces móviles y el front-end de los sistemas web \cite{mvp:microsoft}. Se trata de organizar los componentes de código en las capas a continuación explicadas:
+
+\begin{itemize}
+\item \textbf{Modelo}: Usualmente es la capa de acceso a los datos, como el API de conexión con la Base de Datos o con un servidor remoto.
+\item \textbf{Vista}: Es la capa que se encarga de la interacción con el usuario y del paso de eventos a la capa de Presentador.
+\item \textbf{Presentador}: Esta capa contiene la lógica necesaria para responder a los eventos generados en la capa de Vista; también se encarga de controlar las actualizaciones sobre la capa del Modelo y de alterar el estado de la Vista según sea necesario.
+\end{itemize}
+
+El flujo de datos entre dichas capas (mostrado en la figura \ref{diagrama_mvp}) inicia con la generación de eventos por parte del usuario en la capa de la vista; estos son comunicados al presentador, quien se encarga de actualizar el modelo de datos. Una vez actualizado el modelo, una serie de eventos de cambio de estado son disparados y controlados por el Presentador para realizar actualizaciones en la vista según es necesario.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{images/diagrama_mvp.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Patrón de diseño Modelo-Vista-Presentador.}\label{diagrama_mvp}
+\end{figure}
+
+\subsection{Patrones de diseño}
+\noindent Un patrón de diseño es un concepto a menor escala que el de patrón arquitectónico, ya que éste se centra en definir reglas que afecten a nivel de subcomponentes y objetos, asegurando un estándar para la creación de instancias y estructuras y la interacción entre estas. En \cite{gamma1994design} los patrones de diseño son clasificados de acuerdo a su propósito como se detalla a continuación:
+
+\begin{itemize}
+\item{Patrones creacionales:} Describen pautas para la construcción de instancias u objetos.
+\item{Patrones estructurales:} Formulan reglas para la especificación de clases, sus atributos, métodos y tipos de acceso.
+\item{Patrones de comportamiento:} Describen la manera en que los objetos y estructuras deben interactuar entre ellos y la distribución de sus responsabilidades.
+\end{itemize}
+
+A continuación algunos de los patrones de diseño más importantes:
+
+\subsubsection{Singleton}
+\noindent Este patrón de diseño (de tipo creacional) asegura que una clase tendrá solamente una instancia a lo largo de la ejecución del proceso, siendo un acceso global para todos los interactores \cite{gamma1994design}. Lo anterior se logra configurando la clase de tal forma que sea capaz de interceptar las ordenes para crear nuevas instancias y sea un acceso a la única existente (figura \ref{singleton}).
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{imgs/singleton.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Descriptor UML básico de la implementación del patrón Singleton.}\label{singleton}
+\end{figure}
+
+Ejemplo de una situación en la que se puede aplicar el patrón Singleton es la programación de una interfaz para comunicarse a una base de datos, es preferible que exista una sola conexión compartida para todos los usuarios o cliente puesto que permitir conexiones separadas para los mismos puede ser muy costoso computacionalmente.
+
+
+\subsubsection{Factory method}
+\noindent También conocido como \quotes{Virtual Constructor}, es un patrón de diseño de tipo creacional cuyo objetivo es la creación de una interfaz que permita construir objetos cuyo tipo será definido por la clase que la implemente, lo cual favorece que el código sea muy poco acoplado y fácil de extender.
+
+El esquema \ref{factory_method} representa el modelo de clases para una situación en la que un proceso quiere crear instancias de diferentes tipos de computadoras (Laptop, Desktop y ServerMachine). Con base en el argumento $tipo$, será la instancia de Computadora que el método $factory()$ dará como retorno, ya que las clases $Laptop$, $Desktop$ y $ServerMachine$ son subclases de $Computadora$. 
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.4]{images/factory_method.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama de Clases para la situación que ejemplifica el uso del patrón Factory Method.}\label{factory_method}
+\end{figure}
+
+
+\subsubsection{Observer}
+\noindent Éste es un patrón de diseño de comportamiento ampliamente utilizado en la construcción de sistemas MVC Programación Orientada a Objetos, especialmente al implementar software en el que se sigue la arquitectura MVC \cite{Shalloway:2004:DPE:1196715}. El objetivo que éste sigue es la definición de una relación de dependencia uno a muchos ($1:N$) entre las instancias, de tal forma que cuando una instancia cambia de estado, todas las instancias dependientes de esta son notificadas y actualizadas automáticamente \cite{gamma1994design}.
+
+Un caso de implementación es un sistema de gráficas en tiempo real que ofrece a varios usuarios diferentes formas de visualizar los datos que se encuentran en una instancia Tabla (figura \ref{observer}). Cuando un dato de la tabla cambia, se notifica a las gráficas que despliegan los datos al usuario y estás deben preguntar por la modificación y actualizarse.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.45]{images/observer.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Aplicación del patrón Observer a un sistema de gráficas en tiempo real.}\label{observer}
+\end{figure}
+
+
+
+
+
+
+
+\section{Base de datos}
+\subsection{Definición y objetivo}
+\noindent Una base de datos es una colección estructurada de datos relacionados que son relevantes para una persona o empresa \cite{Elmasri:2010:FDS:1855347} \cite{Silberschatz:2005:DSC:993519}. Usualmente se utiliza un conjunto de programas para almacenar y recuperar información de ella de manera eficiente, al cual se le llama Sistema Gestor de Base de Datos o SGBD por sus siglas.
+
+Las empresas, los bancos, las universidades, todos utilizan bases de datos para almacenar su información de interés, crucial para su negocio o para el control de la vida laboral, desde ventas y compras, hasta número de teléfono y edades.
+
+Un SGBD debe cumplir con tres características principales:
+
+\begin{itemize}
+\item Debe ser capaz de mantener la integridad de los datos que entran, a fin de que cuando necesiten ser recuperados no se vean alterados.
+\item Debe manejar cierto nivel de seguridad para evitar la extracción de información por puertas traseras del sistema.
+\item La cantidad de información que se almacenará en ella puede variar, por lo que debe contar con los mecanismos y estructuras de datos necesarios para soportar cada caso.
+\end{itemize}
+
+\subsection{Tipos de bases de datos}
+\noindent La conceptualización de una base de datos está dividida, en primera instancia, en dos grupos: Relacionales y No Relacionales.
+
+\subsubsection{Bases de datos relacionales}
+\noindent Las bases de datos que siguen un paradigma relacional, también conocidas como SQL\footnote{Siglas en inglés de \textit{Structured Query Language}.} por el lenguaje utilizado para su manipulación, son las más populares en la industria del desarrollo de sistemas de software. En éstas, el almacenamiento de la información se basa en estructuras tabulares en donde cada fila representa un nuevo registro, ejemplar o instancia, y cada columna un atributo o propiedad específica de la misma  (figura \ref{tabla_sql}) \cite{Silberschatz:2005:DSC:993519}.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.35]{images/tabla_sql.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Ejemplo gráfico del almacenamiento de información en una estructura tabular.}\label{tabla_sql}
+\end{figure}
+
+El almacenamiento de información y la manipulación de los datos está regido por un esquema o estructura descriptora conocido como \quotes{Diagrama Entidad-Relación} o \quotes{E-R}. Un diagrama E-R contiene las reglas necesarias para lograr esquematizar la situación real en un modelo lógico de datos, éstas incluyen la descripción de las entidades u objetos que intervienen y sus propiedades e información de interés, a demás de la manera en que dichas entidades se relacionan e interactúan entre sí (figura \ref{er_diagram}) \cite{Date:2011:SRT:2208088}.
+
+
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{images/er_diagram.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Ejemplo de un diagrama Entidad-Relación.}\label{er_diagram}
+\end{figure}
+
+
+Las bases de datos relacionales presentan ventajas asociadas a la madurez de la tecnología y confiabilidad en la integridad de los datos y operaciones realizadas sobre estos, sin embargo a su vez presentan desventajas en cuanto al rendimiento en ejecución y, la más remarcable, un bajo nivel de tolerancia a cambios y escalabilidad del modelo lógico.
+
+La implementación de los SGBD es recomendada para situaciones en las que difícilmente se suscitarán cambios en el modelo y cuando los datos deben ser consistentes sin dar posibilidad al error. Ejemplo de dichas situaciones son los sistemas bancarios o de manejo administrativo de las empresas.
+
+\subsubsection{Bases de datos no-relacionales}
+\noindent Son también conocidas como Bases de Datos NoSQL debido a que utilizan otros lenguajes o métodos para el almacenamiento y manipulación de los datos. En este grupo se encuentran aquellas que no se basan en estructuras tabulares para el estructuramiento de la información, si no que utilizan diversos esquemas, a continuación se listan algunos ejemplos:
+
+\begin{itemize}
+
+	\item{\textbf{Bases de datos orientadas a pares llave-valor}}\\
+Basadas en una tabla Hash, estas tecnologías son las más sencillas entre las NoSQL ya que un cliente solamente puede obtener el valor al que apunta una llave, asignarle a ésta un valor o eliminarla de la base de datos. Usualmente, el tipo de valor que almacenan es binario, razón por la cual el mecanismo de almacenamiento guarda todo de la misma manera, logrando un alto nivel de rendimiento y procesamiento \cite{Sadalage:2012:NDB:2381014}. Riak KV y Apache Cassandra son tecnologías de este tipo.
+
+	\item{\textbf{Bases de datos orientadas a documentos}}\\
+Se basan en el almacenamiento de información en documentos empleando formatos como XML, JSON\footnote{Acrónimo del inglés \textit{JavaScript Simple Object Notation}.} o BSON (versión binaria de JSON). Los documentos generados son organizados utilizando una estructura de árbol jerárquico compuesto por mapas de datos, colecciones y valores escalares, y relacionados con identificadores o llaves únicas (figura \ref{documents_db}) \cite{Sadalage:2012:NDB:2381014}. En este paradigma, cada documento almacenado representa una instancia de algún objeto lógico y es diferente de otro, a pesar de que los documentos tengan cierto parecido en estructura y formato. MongoDB es actualmente la opción principal cuando se necesita un esquema de este tipo.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{images/documents_database.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Distribución y conexión entre documentos organizados en una base de datos orientada a documentos.}\label{documents_db}
+\end{figure}
+
+	\item{\textbf{Bases de datos orientadas a grafos}}\\
+Son sistemas diseñados para organizar la información en estructuras conocidas como grafos, representándola con nodos, aristas y propiedades (figura \ref{graph_database}). El uso de estas bases de datos está orientado a casos en que la información a almacenar está fuertemente ligada y expuesta a cambios constantes como la que se almacena en las redes sociales. Son empleadas en el análisis de grandes cantidades de datos (BigData), puesto que al ser un grafo es posible aplicar algoritmos optimizados para la búsqueda sobre dichas estructuras \cite{Robinson:2013:GD:2556013}. El sistema Neo4J, originalmente diseñado para trabajar con el lenguaje Java, es un excelente referente de un SGBD basado en grafos.
+	
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.55]{images/graph_database.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Grafo utilizado para modelar una situación real en una base de datos.}\label{graph_database}
+\end{figure}
+
+\end{itemize}
+
+La ventaja principal de los SGBD NoSQL es la flexibilidad que aportan en cuanto a los datos que se almacenan, puesto que no necesitan una serie de reglas que indique estrictamente el tipo de información a almacenar y como se relaciona, propiciando el desarrollo de un sistema mantenible y altamente escalable \cite{Redmond:2012:SDS:2378688} \cite{Sadalage:2012:NDB:2381014}. No obstante, son tecnologías y conceptos emergentes comparados con las bases de datos relacionales, el nivel de madurez es mucho menor y algunos casos pueden llegar a presentar un alto nivel de riesgo en cuanto a la integridad de los datos y la seguridad.
+
+
+
+
+
+
+
+
+
+
+\section{Lenguajes y tecnologías}
+
+\subsection{Sistema Android}
+\noindent Es un sistema operativo de código abierto orientado principalmente al manejo de smartphones, aunque recientemente ha sido implementado en otros tipos de dispositivos como relojes (smartwhatch), televisiones (smart-TV) y controladores domóticos.
+
+Es la plataforma para dispositivos móviles con mayor importancia en el mercado, abarcando más del 85\% y dejando atrás otras plataformas como iOS de Apple, con poco menos del 10\%, y Windows Phone de Microsoft con menos del 5\% \cite{mobiles:market}.
+
+La programación de aplicaciones móviles para esta plataforma se realiza utilizando el lenguaje de programación Java, aunque en el año 2017 se anunció el lenguaje Kotlin como una opción \cite{android:ref}.
+
+\subsection{Java}
+\noindent Java es un lenguaje de programación orientado a objetos empleado principalmente en el desarrollo de sistemas distribuidos de alta escalabilidad y arquitecturas para servicios y aplicaciones web. El software desarrollado con este lenguaje tiene la remarcable característica de ser independiente de la plataforma o del tipo WORA\footnote{Siglas del inglés \textit{Write Once, Run Anywhere}.} pues es ejecutado sobre una \textit{Máquina Virtual}, conocida simplemente como JVM\footnote{Siglas del inglés \textit{Java Virtual Machine}.}, que es una capa de software que se encuentra entre la aplicación y el sistema operativo (figura \ref{jvm_layer}), y que está disponible para una gran cantidad de plataformas \cite{MSU-CSE-00-2}.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.45]{images/jvm_schema.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama que muestra la ubicación de la JVM en el proceso de ejecución de aplicaciones, permitiendo ejecutar la misma aplicación sobre cualquier plataforma.}\label{jvm_layer}
+\end{figure}
+
+
+
+
+\subsubsection{Servlet}
+\noindent Un Servlet es un programa escrito en el lenguaje Java que se ejecuta del lado del servidor, actúa como una capa entre las peticiones provenientes de la interfaz gráfica con la que el usuario interactúa y las bases de datos o aplicaciones que se encuentran en el Servidor Web, tal y como se ilustra en la imagen \ref{servlet_work}. Es considerado como un módulo especial que sirve para extender las capacidades del servidor en cuanto al contenido dinámico.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.6]{images/servlet_schema.png}
+%source: pdf.coreservlets.com/Overview.pdf
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama acerca del funcionamiento de un Servlet.}\label{servlet_work}
+\end{figure}
+
+
+
+
+\subsubsection{JSP}
+\noindent Java Server Pages es una tecnología para el desarrollo web que permite a los programadores agregar contenido dinámico a las páginas desplegadas desde el lado del servidor, lo cual es muy útil cuando se debe mostrar información dependiente de alguna rutina o proceso lógico del flujo de datos. Un uso común es el manejo de información dependiente de sesiones como las de perfiles, carritos de compras en línea o interfaces administrativas \cite{Zambon:2012:BJJ:2385419}. El dinamismo del contenido se consigue incrustando líneas de código Java entre el código HTML, cuando el servidor procesa el documento, interpreta las instrucciones Java y las reemplaza por el contenido correspondiente.
+
+
+
+
+\subsection{XML}
+\noindent El Lenguaje de Marcado Extensible, o simplemente XML, es un formato de texto muy simple y flexible que fue originalmente diseñado como una aportación al problema que las publicaciones electrónicas de gran tamaño representaban. Debido a la facilidad de su procesamiento, actualmente juega un papel muy importante como formato para el intercambio de mensajes de información entre procesos sobre la red \cite{w3xml_json}.
+
+La sintaxis de este formato se muestra con un ejemplo en la figura \ref{sintaxis_xml} y se describe en las siguientes líneas:
+
+%Inclusión de una imagen en el texto
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.65]{imgs/xml_syntax.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Muestra de los componentes sintácticos del lenguaje XML.}\label{sintaxis_xml}
+\end{figure}
+
+\begin{itemize}
+\item Un \textbf{elemento} estará compuesto por una etiqueta de apertura, el contenido de éste y una etiqueta de cierre.
+\item Siempre debe existir un \textbf{elemento raiz} en el documento XML.
+\item El \textbf{contenido} de una etiqueta puede ser una cadena de caracteres, números u otros elementos correctamente anidados.
+\item Un elemento puede tener uno o más \textbf{atributos}, los cuales se ubican dentro de la etiqueta de apertura. Es importante mencionar que el valor del atributo siempre debe ir entre comilas dobles.
+\end{itemize}
+
+Existen dos mecanismos para el procesamiento mensajes con este formato, a continuación su descripción:
+
+\subsubsection{Analizador SAX\protect\footnote{Acrónimo de \textit{Simple API for XML}.}}
+\noindent Este mecanismo procesa un documento o mensaje XML con base en eventos que se disparan en casos específicos de lectura:
+
+\begin{itemize}
+\item{Inicio del documento}: Es disparado solamente al inicio del procesamiento del documento XML
+\item{Inicio de un elemento}: Se dispara cada vez que una etiqueta de inicio es leída, aportando información sobre el nombre del elemento y sus atributos.
+\item{Contenido}: Solo es disparado si al leer el contenido de un elemento, éste es numérico o una cadena de caracteres.
+\item{Fin de un elemento}: Es disparado cada vez que se lee una etiqueta de cierre.
+\item{Fin de documento}: Se dispara solamente cuando el procesamiento del documento XML finaliza.
+\end{itemize}
+
+La velocidad de procesamiento por parte de este mecanismo es considerablemente alta si se compara con el procesamiento DOM\footnote{Acrónimo de \textit{Document Object Model}.}, y el uso de recursos es contrastantemente bajo en la misma comparación.
+
+\subsubsection{Analizador DOM}
+\noindent Por otro lado, cuando un documento XML es procesado con un analizador DOM, éste utiliza cierto espacio de memoria para generar una representación arborescente del documento (figura \ref{dom_sample}), de ese modo se pueden realizar operaciones como agregar nodos al árbol, editar los existentes o eliminarlos e inclusive obtener información a través de la aplicación de algoritmos especializados. Es importante tomar en cuenta el tamaño de los archivos XML que se procesan, puesto que es probable sobrecargar la memoria de la máquina durante la construcción del árbol.
+
+%Inclusión de una imágen en el texto
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.7]{imgs/dom_sample.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Ejemplo de la conversión de un documento XML a un árbol por medio del modelo DOM.}\label{dom_sample}
+\end{figure}
+
+\subsubsection[KML]{KML\footnote{Siglas del inglés \textit{Keyhole Markup Language}.}}
+\noindent Desarrollado por la compañía Google, es un lenguaje de marcado descriptivo basado en la sintaxis del lenguaje XML utilizado para el almacenamiento de información geográfica tal como puntos de geoposición, líneas, capas, objetos en 3D, etc. basándose en el estándar GML\footnote{Siglas del inglés \textit{Geography Markup Language}.} definido por el \textit{Open Geospatial Consortium} \cite{5331433} \cite{6313632}.
+
+Este formato descriptivo es usualmente procesado por plataformas como Google Earth y Carto, aunque es posible desarrollar \textit{parsers} o intérpretes con facilidad.
+
+
+\subsection{Formato JSON}
+\noindent Es un formato de texto ligero utilizado, al igual que XML, para el intercambio de información entre mensajes. Al transmitir la información de manera textual, este formato es independiente de la plataforma que envía o recibe el mensaje y del lenguaje de programación \cite{JSON14}.
+
+
+El formato JSON define tres estructuras principales denotadas por la gramática de la figura \ref{json_gramatic}, a continuación una breve explicación:
+
+Una cadena JSON puede ser la descripción de la instancia o estado de un \textbf{objeto} o un \textbf{arreglo} de éstas, la descripción de una instancia está dada por \textbf{pares} $<identificador,valor>$, en donde el $identificador$ es el nombre de un atributo y el $valor$ es el estado de éste al momento; la descripción de un objeto se escribe entre llaves ( $\{$ y $\}$ ) y un arreglo se escribe entre corchetes ( \textbf{[} y \textbf{]} ), finalmente los pares $<identificador,valor>$ van separados por una coma ( , ) según el número de atributos a incluir.
+
+
+
+%Inclusión de una imágen en el texto
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.4]{images/json_gramatic.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Gramática descriptora del formato de texto JSON.}\label{json_gramatic}
+\end{figure}
+
+
+
+
+\subsection{HTML}
+\noindent El lenguaje HTML, categorizado dentro de los lenguajes de marcado basados en la estructura sintáctica de XML, es el estándar web utilizado para la descripción de la estructura y el contenido que debe desplegarse ante el usuario \cite{Deitel:2007:IWW:1406176}. 
+
+Los elementos descritos por el lenguaje HTML se dividen en dos grupos según la interpretación que el explorador web les da durante el procesamiento y despliegue de información \cite{Duckett:2014:HCD:2670071}: 
+
+\begin{itemize}
+\item{Semánticos:} Son aquellas etiquetas que definen claramente su contenido, las etiquetas $<$p$>$ utilizadas para describir párrafos, $<$table$>$ para la descripción de una tabla y $<$img$>$ para especificar una imagen son algunos ejemplos.
+\item{Estructurales:} Son las etiquetas que se limitan a funcionar como simples contenedores cuyo contenido no es obvio, por ejemplo las etiquetas $<$div$>$ y $<$span$>$.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{CSS}
+\noindent El lenguaje CSS es el estándar propuesto por el W3C para la definición visual de la información que se despliega en una página web. Permite a programadores y diseñadores especificar por separado muchas características respecto a la visualización de cada elemento empleando reglas, tales como tamaño, posición, colores, animaciones, eventos, etc. La separación de dichas reglas visuales y de la estructura del contenido facilita en gran medida el mantenimiento y modificación de la página web \cite{Deitel:2007:IWW:1406176}.
+
+Las reglas que describen el aspecto de ĺos elementos de la página se componen de dos partes:
+
+\begin{itemize}
+\item{Selector:} Representa el elemento o conjunto de ellos que serán afectados por las especificaciones posteriormente señaladas y pueden ser nombres de etiquetas, clases de elementos, el atributo \textit{id} de un elemento e inclusive nodos del árbol DOM que representa el documento HTML. El nivel de especificidad de un selector juega un papel muy importante cuando el explorador web procesa las reglas CSS, cuanto más específico es el selector mayor será la prioridad que la regla tendrá \cite{meyer2012selectors}. Por ejemplo, un selector que es el id de un elemento es mucho más específico que un selector que es el nombre de la etiqueta de un elemento, ya que el id señala exactamente el nodo del árbol al que se aplicarán las reglas, sin embargo el nombre de una clase señala un conjunto de nodos.
+\item{Definición:} Es una tupla atributo-valor que específica aspectos como el largo o ancho, color,tipo de letra, etc., sobre el objeto que especifica el selector al que pertenecen.
+\end{itemize}
+
+
+
+
+\subsubsection{JavaScript}
+\noindent JavaScript es un lenguaje de programación que permite agregar contenido dinámico, animaciones, interactividad y efectos visuales a las páginas web \cite{mcfarland2011javascript}. Es el lenguaje de programación estándar de facto para el lado del cliente debido a su alto nivel de portabilidad, cualidad multiparadigma y a su sencilla curva de aprendizaje\cite{Deitel:2007:IWW:1406176}.
+
+El explorador web ya implementa una gran cantidad de acciones dinámicas de JavaScript por defecto, como el disparo de eventos de botones o del cursor, el llenado y envío de formularios al servidor web, sin embargo son funciones básicas. JavaScript permite personalizar el comportamiento de la clásica página web estática por completo \cite{robbins2012learning}. A pesar de ser un lenguaje de procesamiento rápido y ligero, es importante mencionar que depende de las características de la máquina cliente puesto que es ésta la que lo interpreta.
+
+
+
+
+\section{Comentarios finales}
+\noindent Derivado de los conceptos y tecnologías explicados, se puede notar que para el desarrollo del proyecto se utilizaron solamente estándares, tanto en el caso de los lenguajes y tecnologías, como en el de aplicaciones teóricas como arquitecturas de software y patrones de diseño. El uso de estándares aporta al proyecto mayor fiabilidad y robustez, debido a que un estándar que ya ha sido blanco de numerosos estudios, pruebas y validaciones de concepto, e implementado en muchas áreas y proyectos.
+
+En el siguiente capítulo se detalla el uso y aplicacion de estos conceptos en el desarrollo del sistema, y más específicamente en el desarrollo de la capa de software con la que el usuario interactúa.
+
+
+
+
+

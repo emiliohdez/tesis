@@ -1,0 +1,646 @@
+\chapter{Marco Teórico}
+
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+
+\noindent En este capítulo se presenta una descripción de los conceptos teóricos y de las herramientas o tecnologías que fueron utilizadas para el desarrollo de este proyecto de tesis. Se da inicio por aquellos relacionados con la tecnología GPS y su uso en la actualidad, tales como el geoposicionamiento y los Sistemas de Información Geográfica. 
+
+Posteriormente se introducen algunos términos orientados al área de desarrollo de software, como arquitecturas, patrones de diseño, y frameworks. También se incluyen conceptos relacionados al área de diseño gráfico como modelado,  maquetación y patrones visuales.
+
+
+%Finalmente , así como los lenguajes de programación y plataformas que fueron utilizados para la construcción de la plataforma como Java, Apache Tomcat y Android, algoritmos y estructuras de datoscuestiones que tienen su contexto en las relaciones humanas como la que existe entre el cliente y el grupo de ingenieros de software que desarrollarán el producto, hasta cuestiones de nivel más técnico como el diseño arquitectónico al que conllevará el análisis de las necesidades del cliente y la posterior programación.
+
+%Despues se describen las tecnologías, lenguajes utilizados y conceptos tomados en cuenta en la construcción del sistema que esta tesis describe, dividiéndolos en tres rubros principales: Programación de Servidores, Programación Web y Programación Móvil.
+
+%Finalmente se ofrece una significativa introducción acerca de las tecnologías y términos que fueron implementadas para lograr una correcta comunicación entre los módulos con los que el sistema cuenta para su funcionamiento, incluyendo conceptos útiles en el área de las Redes de computadoras, protocolos de comunicación y aplicaciones de los mismos.
+
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+
+\section{Conceptos y herramientas geográficas}
+\noindent La computación, y la tecnología en general, se ha ido mezclando con otras áreas a lo largo del tiempo, tal es el caso de la sinergia con la geografía y la cartografía que surgió con la idea del rastreo y localización de objetos sobre la superficie terrestre, dando así origen a sistemas tecnológicos robustos que son utilizados para una gran cantidad de propósitos en todo el mundo, como la geolocalización de objetos, personas o lugares, el cálculo de rutas entre dos puntos localizados con coordanadas espaciales y la visualización, análisis e interpretación de datos geográficos \cite{ESRI:16}.
+
+\subsection{GPS}%[GPS]{GPS\footnote{Por sus siglas en inglés \textit{Global Positioning System}.}}
+\noindent El GPS, o Sistema de Posicionamiento Global en español, es un sistema satelital utilizado para ubicar un determinado objeto o región sobre la superficie terrestre \cite{MAYQUIS11}. El Sistema GPS provee posicionamiento tridimensional en tiempo real las 24 horas del día, así como coordenadas de navegación y tiempos mundiales. Cualquier persona que posea un dispositivo con receptor GPS, ya sea dedicado como en el caso de los sistemas de navegación vehiculares, o embebido como los smartphones, puede accesar a estos servicios.
+
+El GPS está compuesto por una constelación de poco más de 24 satélites cuya labor es la transmisión de señales de radio a los usuarios. En esta malla, 24 satélites deben encontrarse siempre activos y el resto actúan como un repuesto en caso de falla o una ventana de mantenimiento \cite{GPSGOVOFFICIAL}.
+
+Los satélites activos se encuentran repartidos equitativamente entre 6 órbitas inclinadas 55\grad tomando como base relativa al ecuador y flotanto a una altitud aproximada de 20,200 km, como se muestra en la figura \ref{red_de_satelites}, de manera que cada satélite pueda completar dos vueltas alrededor de la tierra diáriamente y así mantener disponible el servicio en casi cualquier lugar del mundo.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.15]{img/gps_satellites_system.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Red de satélites GPS que se desplazan alrededor de la tierra.}\label{red_de_satelites}
+\end{figure}
+
+\subsection{Geoposicionamiento y técnicas para dispositivos móviles}
+\noindent La geoposición de un objeto es la ubicación aproximada de este sobre la superficie terrestre \cite{GOOGLEM}, determinada por un vector de tres dimensiones ($\varphi$, $\lambda$, $h$):
+
+\begin{itemize}
+  \item \textbf{Latitud ($\varphi$)}: Es la distancia angular que existe desde cualquier punto de la Tierra con respecto al ecuador (figura \ref{latitud_longitud}). Puede encontrarse en un rango de -90\grad a 90\grad donde los valores positivos son posiciones del ecuador hacia el Polo Norte, y los valores negativos son posiciones del ecuador al Polo Sur.
+  \item \textbf{Longitud ($\lambda$)}: Es la distancia angular que existe desde cualquier punto de la Tierra con respecto al meridiano de Greenwich (figura \ref{latitud_longitud}), exceptuando a los Polos Norte y Sur, los cuales no tiene longitud. Este valor representa la posición de un punto en la orientación este-oeste sobre la superficie terrestre en un rango de -180\grad a 180\grad. 
+  \item \textbf{Altitud ($h$)}: Es la distancia vertical de un origen dado que es considerado como el nivel 0, el cual usualmente es el nivel del mar, a un objeto en cuestión.
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{img/Latitud-y-longitud.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación de la latitud y la longitud en el planeta tierra.}\label{latitud_longitud}
+\end{figure}
+
+Existen varias formas para poder obtener la geoposición de un objetivo con un receptor GPS, las cuales son explicadas en las siguientes líneas:
+
+\begin{itemize}
+\item \textbf{Consultas al Sistema GPS}: Este método resulta ser el más utilizado, consiste en que el dispositivo o receptor GPS ubique al menos 3 satélites en órbita y envíe una serie de datos que ayuden a estos a calcular sus distancias y posiciones con respecto al mismo. Cuando estos responden, el dispositivo es capaz de realizar una triangulación, ilustrada en la figura \ref{triangulacion}, para obtener su ubicación con alto nivel de precisión\cite{zeimpekis2002taxonomy}.
+
+\item \textbf{Geolocalización por Wi-Fi}: Este sistema se utiliza en casos en los que la geolocalización por GPS no es accesible, por ejemplo cuando el dispositivo se encuentra dentro de un edificio y no es capaz de detectar los satélites necesarios. Esta técnica se basa principalmente el medir el grado de intensidad con el que la señal Wi-Fi llega del Access Point (Modem) al dispositivo móvil \cite{zeimpekis2002taxonomy}, sin embargo la precisión de ésta es muy baja.
+
+\item \textbf{Uso de Antenas de Telefonía Móvil}: Para localizar un dispositivo utilizando esta técnica se realiza un procedimiento muy parecido al del caso del sistema GPS, pero en lugar de emplear una red satelital se utilizan las antenas de la red de celular. Mientras un dispositivo está en movimiento, éste puede ir conectándose a diferentes antenas de telefonía de acuerdo a la intensidad de señal que presenten, guardando así registros de las antenas a las que se ha conectado recientemente, esta información sumada a la posición de la antena a la que se encuentra conectado al momento dan como resultado una aproximación a la geoposición del dispositivo \cite{zeimpekis2002taxonomy}. Es importante resaltar que este método resulta tener un nivel de precisión menor que los dos mencionados anteriormente.
+
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.3]{img/triangulacion.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Triangulación para la obtener de la posición de un objetivo con base en tres referencias.}\label{triangulacion}
+\end{figure}
+
+
+%\subsection{Fórmula Haversine}
+%\noindent La fórmula Haversine\footnote{Contracción del inglés \textit{Half Versed Sine}.} es utilizada para el cálculo de la distancia entre un punto A y un punto B sobre una superficie esférica \cite{CHRISVENESSLATLON}.
+
+%Esta fórmula tiene varias aplicaciones en diferentes campos, una de ellas es en el campo de la astronomía, donde es utilizada para medir la separación que existe entre dos estrellas u objetos espaciales \cite{SINNOTTHAVERSINE}, otro uso es el cálculo de distancias entre dos puntos o geoposiciones dados, en el cual solo es necesario el uso de la latitud y la longitud. Este último uso representa el más representativo ya que los dos puntos que son necesarios puede ir de casos normales como dos personas a casos más críticos como un barco de carga y un puerto, sin embargo es recomendable utilizarla solamente para calcular distancias pequeñas ya que el planeta tierra no es una esfera exacta como se contempla en el planteamiento de la fórmula, pero es muy aproximado.
+%\begin{gather}
+%\alpha = \sin^2(\Delta\varphi/2)+\cos(\varphi_1)*\cos(\varphi_2)*\sin^2(\Delta\lambda/2),\label{haversine_1}\\
+%c = R * ( 2 * \rm atan2 ( \sqrt{\alpha}, \sqrt{(1 - \alpha)} ) ),\label{haversine_2}
+%\end{gather}
+
+%Esta fórmula es presentada en la sucesión de ecuaciones \ref{haversine_1}y \ref{haversine_2}, para la cual se tienen las siguientes acotaciones:
+
+%\begin{itemize}
+%\item $\varphi \rightarrow$ representación de la Latitud del objeto.
+%\item $\lambda \rightarrow$ representación de la Longitud del objeto.
+%\item $\Delta \varphi \rightarrow$ Resultado de la resta de la latitud del primer punto a la latitud del segundo punto ($\varphi_{2} - \varphi_{1}$).
+%\item $\Delta \lambda \rightarrow$ Resultado de la resta de la longitud del primer punto a la longitud del segundo punto ($\lambda_{2} - \lambda_{1}$).
+%\item $R \rightarrow$ constante que representa el radio aproximado del planeta tierra, a manera de estandar se acordó que el radio es de  6371km \cite{NASAOFFICIAL}.
+%\item $d \rightarrow$ distancia en metros resultante del cálculo.
+%\end{itemize}
+
+%Al ser una fórmula tán popular existen portales en internet en los que se muestra su implementación en una gran cantidad de lenguajes de programación tales como Java, C, JavaScript, Haskell, Phyton, LISP, Pascal, etc.
+
+\subsection{Sistemas de información geográfica}
+\noindent También conocidos como \textit{GIS}\footnote{Siglas del inglés \textit{Geographic Information System}.}, son sistemas de software diseñados para almacenar, recuperar, administrar, mostrar y analizar todo tipo de información georreferenciada para gestionar situaciones que van desde encontrar rutas para conducir en la ciudad hasta el manejo de fenómenos meteorológicos \cite{gis2008}. 
+
+Los GIS han ganado importancia en los últimos años, ya que permiten visualizar la información georreferenciada de manera organizada sobre simulaciones de espacios geográficos (usualmente simulaciones de la superficie terrestre), información que puede ser separada en capas temáticas tal y como ilustra la figura \ref{gis_information}.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.8]{img/GIS_data.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Separación de capas de la información que un GIS provee.}\label{gis_information}
+\end{figure}
+
+
+\subsubsection[KML]{KML\footnote{Siglas del inglés \textit{Keyhole Markup Language}.}}
+\noindent Desarrollado por la compañía Google, es un lenguaje de marcado descriptivo basado en la sintaxis del lenguaje XML\footnote{siglas del inglés \textit{eXtensible Markup Language}.} utilizado para el almacenamiento de información geográfica tal como puntos de geoposición, líneas, capas, objetos en 3D, etc. basándose en el estandar GML\footnote{Siglas del inglés \textit{Geography Markup Language}.} definido por el \textit{Open Geospatial Consortium} \cite{5331433}\cite{6313632}.
+
+Este formato descriptivo es usualmente procesado por plataformas como Google Earth y Carto, aunque es posible desarrollar \textit{parsers} ó intérpretes con facilidad.
+
+\section{Arquitecturas de software, modelos y patrones de diseño}
+\noindent Respecto al desarrollo de plataformas de software, se realiza un análisis del problema, modelos y diseños antes de comenzar con la programación de la misma, esto de acuerdo a los pasos sugeridos por el área de Ingeniería de Software \cite{sommerville2005ingenieria} \cite{pressman2003ingenieria}.
+
+A continuación se inicia con la descripción de los conceptos relacionados a la arquitectura del software en cuanto a la comunicación entre procesos, ya sea de manera local o en la misma máquina como de manera remota o en máquinas diferentes.
+
+Posteriormente se habla sobre el diseño arquitectónico del software, es decir, sobre la distribución del código, tomando en cuenta las tareas que los componentes y clases realizan y las capas en que se les puede agrupar para  asegurar facil mantenimiento y escalabilidad a futuro.
+
+Finalmente se exponen los patrones de diseño que fueron utilizados para la implementación del flujo de datos de la applicación móvil.
+
+\subsection{Sistemas distribuidos}
+
+Existen dos términos fundamentales en cuanto a la construcción de plataformas , las cuales actualmente son en su gran  mayoría distribuidas.
+
+\begin{itemize}
+
+\item \textbf{Servidor}: También conocido como Servidor HTTP\footnote{Siglas del inglés \textit{Hypertext Transfer Protocol}.}, es básicamente un programa que es ejecutado es una computadora conectada a la red, el cual se encarga de dar servicio e intercambiar información con un conjunto de clientes (usualmente un explorador web que interactua con el usuario) por medio del protocolo HTTP \cite{WEBAPPLEONROSEN} tal como se muestra en la figura \ref{funcionamiento_servidor_web}. Adicionalmente, los servidores web modernos implementan una variedad de protocolos para procesar peticiones de contenido web dinámico y contenido en tiempo real como búsquedas con palabras clave y solicitudes a servicios meteorológicos \cite{WEBAPPLEONROSEN}.
+
+\item \textbf{Cliente}: Es un programa que se ejecuta en una computadora conectada a la misma red que un servidor, su función es solicitar información al servidor a través de algún protocolo de comunicación y desplegarla o presentarla al usuario de una manera atractiva \cite{WEBAPPLEONROSEN}. Actualmente la presentación de contenido web dinámico se ha estandarizado, por lo que las conexiones en tiempo real entre el cliente y el servidor se ha vuelto común.
+
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.3]{img/funcionamiento_servidor_web.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Funcionamiento básico de un servidor web que recibe una solicitud y regresa una respuesta.}\label{funcionamiento_servidor_web}
+\end{figure}
+
+
+El diseño arquitectónico del software es lo primero en relucir, pues es la base de la plataforma y los módulos que la componen, a continuación algunas de arquitecturas de software más utilizadas:
+
+\subsection{Arquitectura Cliente-Servidor}
+\noindent En el modelo o arquitectura Cliente-Servidor el usuario interactua con un programa que es ejecutado en la computadora o equipo local que es considerado cliente, ya sea un explorador web o una aplicación instalada en un dispositivo móvil, dicho clientes son los que se comunican con otro software que se encuentra corriendo es un equipo remoto como un servidor web, este equipo remoto se encarga de proveer servicios, tales como acceso a páginas web o a recursos, a los clientes externos \cite{sommerville2005ingenieria}.
+
+El funcionamiento básico de este modelo requiere que existan, bajo la misma red, al menos un equipo ejecutando la versión servidor del software del sistema y un conjunto de equipos ejecutando la versión cliente del software \cite{Foster:2014:SEM:2717104}, la imagen \ref{modelo_cliente_servidor} muestra gráficamente lo recien explicado.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.9]{img/cliente_servidor.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación gráfica de la arquitectura Cliente-Servidor.}\label{modelo_cliente_servidor}
+\end{figure}
+
+Entre las ventajas que ofrece el modelo Cliente-Servidor se encuentra la facilidad para implementar sistemas distribuidos complejos, lo cual es muy importante cuando se trabajará en sistemas de gran escalabilidad y que implementan sistemas de Base de Datos por mencionar un ejemplo. Otra ventaja es la escalabilidad que este modelo ofrece al grupo de desarrollo, ya que resulta sencillo hacer que el sistema crezca al adicionar más clientes o servidores a la red. Este enfoque también provee un alto nivel de flexibilidad en la manera en la que los componentes y módulos de software pueden comunicarse entre si, ya sea por medio de solicitudes o transferencia de datos o de servicios, logrando así una mejora en el rendimiento y la productividad del sistema \cite{Foster:2014:SEM:2717104}.
+
+La implementación de este modelo trae consigo 3 desafíos principales:
+\begin{itemize}
+\item Al implementar este modelo, software más sofisticado es requerido para lograr una correcta comunicación entre los componentes del sistema que se encuentran bajo la red, sin embargo esto representava un mayor problema mucho tiempo atras, ya que hoy en día ese software ya se encuentra disponible.
+\item Cada servidor tiene la responsabilidad de crear respaldos periódicos de los datos y sus cambios y también debe encargarse de las cuestiones de recuperación de la información en caso de algún fallo.
+\item En las situaciones en la que los datos son replicados con el fin de mantener un buen nivel de eficiencia, el servidor debe hacerse cargo de mantener la integridad de los datos.
+\end{itemize}
+
+\subsection{Arquitectura orientada a servicios}
+\noindent La Arquitectura Orientada a Servicios o SOA\footnote{Del inglés \textit{Services Oriented Architecture}.} es una manera de desarrollar plataformas distribuidas en la que los servicios que se ofrecen son componentes completamente desacoplados e independientes de cualquier aplicación o plataforma. Estos servicios, en adelante llamados servicios web, pueden encontrarse distribuidos de manera geográfica e inclusive transmitir información utilizando protocolos diferentes.
+
+Algunos ejemplos en la actualidad de esta arquitectura se encuentran en plataformas de entretenimiento y comunicación como Facebook, Twitter, YouTube, Spotify, etc., plataformas que ofrecen ciertos servicios web a través de un API\footnote{De inglés \textit{ Application Programming Interface}.} pública.
+
+\subsubsection{Servicios web}
+\noindent 
+
+Un servicio web es un tipo especial de servicio ofrecido por el servidor web que es identificado por medio de una URI\footnote{Siglas del ingés \textit{Uniform Resource Identifier} que se refiere a una serie de caracteres que identifícan la ubicación de un recurso.} \cite{DBLP:books/sp/wsf2014}, su función principal es el interoperar a través de la web con otras aplicaciones con el objetivo de intercambiar información con total independencia del lenguaje de programación y la plataforma, actualmente existen dos tipos populares de servicios web: los servicios web basados en la ideología REST\footnote{Por las siglas del inglés \textit{Representational State Transfer}} y los servicios web SOAP\footnote{Del inglés \textit{Simple Object Access Protocol}.}.
+
+Los proveedores ofrecen sus servicios web como procedimientos remotos que son accesados por cualquier proceso o usuario a través de la web. Estos servicios proporcionan mecanismos de comunicación estándares entre diferentes aplicaciones, que interactúan entre sí para presentar información dinámica al usuario \cite{w3c15}.
+
+
+Cada Servicio Web se encuentra conformado por tres secciones principales como se menciona en \cite{McGovern:2006:ESO:1137786}:
+
+\begin{itemize}
+\item{Descriptor:} Es la parte del Servicio Web que define la interfaz de acceso a este, lo cual incluye la especificación de los parámetros necesarios, tipos de datos y objeto retornado como respuesta.
+\item{Mecanismo de Consumo:} Especifica la manera en la que una aplicación o proceso debe consultar al servicio web haciendo uso de la interfaz detallada en el descriptor.
+\item{Implementación:} También conocido como  \textit{Provisión del Servicio}, es la sección que representa el código que es ejecutado internamente en el servidor con cada llamado al Servicio Web.
+\end{itemize}
+
+Los servicios web que son ofrecidos pueden realizar taréas muy variadas, se puede obtener cierta información de una base de datos, también obtener un documento como recurso o realizar ciertos procedimientos acorde a la lógica del negocio que fué implementada en el software del servidor\cite{DBLP:books/sp/wsf2014}.
+
+Una de las aplicaciones de los servicios web es la construcción de interfaces especiales para la comunicación con Sistemas Legados o \textit{Legacy Systems} (Sistemas informáticos de los que depende mucha información y que son obsoletos pero que no pueden ser actualizados tán sencillamente, ni dejar de ser utilizados) \cite{WS:LS:prague:cu}, con el fin de no alterarlos y conservar cierto nivel de comunicación e interoperabilidad con ellos.
+
+\subsubsection{RESTful}
+\noindent Los servicios web RESTful se encuentran basados en la ideología REST\footnote{Siglas del inglés \textit{Representational State Transfer}.}, la cual fué propuesta por Roy Fielding en su tesis doctoral e indica que todo en la red es un recurso o elemento de información que puede ser referenciado por medio de un URI y manipulado a través de peticiones del protocolo HTTP \cite{phdthesis:FIELDING:ARCH}.
+
+Una de las cualidades más importantes de este tipo de Servicios, y de la arquitectura en general es el ser \textit{stateless}\footnote{Su significado en español es \textit{sin estado}.}, lo cual quiere decir que con cada llamado a un servicio la información es eliminada, por lo cual no es posible que el servidor recuerde a un usuario de una llamada a otra, por mencionar un ejemplo \cite{Adamczyk2011} \cite{ORA15}.
+
+Los servicios web basados en REST, o RESTful, son el tipo de servicios web que ha ganado mayor importancia en los último años gracias al surgimiento de las API's REST. Actualmente existe un sin número de sistemas informáticos con propósitos variados, tales como Redes Sociales, Sistemas de información geográfica, sistemas de información gubernamental, aerolíneas, Sistemas de venta musical, etc., que ponen a disponibilidad de los desarrolladores una serie de servicios REST o API para el manejo de ciertas partes de la información que mantienen, aumentando aun más el nivel de interoperabilidad que puede existir entre dos sistemas web y promoviendo la iniciativa de compartir información básica entre ellos, como el caso de las API de Facebook, Google+ y Twitter.
+
+\subsection{Modelo arquitectónico de software}
+\noindent Es la representación abstracta y simplificada de un sistema de software, este modelo expone principalmente los componentes o elementos que conforman al sistema, la interacción entre los mismos y sus propiedades \cite{Qin:2008:SA:1373326} \cite{SOFTWAREARQ:VOGEL:2011}. Al ser una abstracción no se encuentra anclado a ser implementado siguiendo exclusivamente el paradigma orientado a objetos. 
+
+\subsection{Clean Architecture}
+\noindent Es una idea propuesta por Robert C. Martin en el 2017, una combinación de las ventajas que varias arquitecturas de software presentan, tales como onion architecture y hexagonal architecture. La representación gráfica de esta arquitectura consiste en capas circulares concéntricas, como en la figura \ref{clean_arch_diagram}, siguiendo la idea de que las capas internas son abstraciones de alto nivel, mientras que las externas son implementaciones de detalles técnicos \cite{Martin17}.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.5]{imgs/clean_architecture.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación gráfica general de Clean Architecture.}\label{clean_arch_diagram}
+\end{figure}
+
+A continuación las 4 capas propuestas:
+
+\begin{itemize}
+\item \textbf{Entidades}: Son los objetos que engloban el conjunto de reglas que operan el flujo de datos o lógica del negocio. Usualmente son las entidades del modelo de datos que se implementa.
+\item \textbf{Casos de Uso}: Son aquellas reglas que son parte de la lógica del negocio pero que no pueden ser efectuadas solamente por las entidades, tareas específicas de hacen uso de estas.
+\item \textbf{Adaptadores de Interfaces}: Son aquellos procesos que funcionan como un puente entre el contacto con el exterior y la lógica del negocio, se encargan de convertir datos de entrada a un formato conveniente para la lógica del negocio y datos de salida a uno para el exterior.
+\item \textbf{Frameworks y Controladores}: Capa que involucra la Base de Datos, los Frameworks web y otras herramientas externas a la programación del sistema.
+\end{itemize}
+
+Esta arquitectura está basada en la \textit{Regla de Dependencia}, la cual se refiere a que cada capa es dependiente solamente de la capa interna a esta \cite{clean:arch:blog}, por lo que ningun cambio podría afectar a la capa de entidades, por el contrario si esta capa sufre un cambio el resto se verían afectadas.
+
+
+%    Entities. Here should live the business objects of your application, generally called “entities,” in DDD lingo.
+%    Use cases. In this layer reside the use cases; in short, we could say that these are objects that represent an action a user can perform in the application.
+%    Interface adapters. This layer contains code whose goal is basically to provide a bridge between the outside world and the immaculate world inhabited by the use cases and entities. Models, views, presenters, and repository implementations all should go here.
+%    Frameworks and drivers. Finally, we have the layer that basically represents external agents: the web, the database, etc.
+
+
+\subsection{Patrones de diseño}
+\noindent Un Patrón de Diseño es una solución abstracta a una serie de problemas cuya generalización es similar \cite{gamma1994design}\cite{Shalloway:2004:DPE:1196715}, es un concepto general utilizado en distintas áreas, como la Arquitectura \cite{citeulike:305879}. En el ámbito de la programación y el desarrollo de software fue adoptado con el surgimiento de la POO\footnote{Siglas del término \textit{Programación Orientada a Objetos}.}, al seguir la idea del modelamiento de problemas del mundo real.
+
+Existen una lista bastante larga de patrones de diseño, cada uno se acopla a un tipo específico de problemas o situaciones, en la siguientes líneas se explican los que fueron empleados en la construcción de la aplicación móvil de la que esta tesis trata.
+
+\subsection{Modelo-Vista-Controlador}
+\noindent Usualmente abreviado solo como MVC\footnote{Por sus siglas en inglés \textit{Model View Controller}.}, Modelo-Vista-Controlador es un patrón de diseño de software que se basa en la separación e interconexión de los componentes de código en tres categorías principales y es típicamente implementado en el desarrollo de software basado en lenguajes de programación que esten fuertemente orientados hacia el paradigma de la programación orientada a objetos u OOP\footnote{Del inglés \textit{Object Oriented PRogramming}.}, como el caso de Java o PHP \cite{Pitt:2012:PPM:2401765}. A continuación se explica que es cada componente y como es que son conectados para lograr el correcto funcionamiento del sistema:
+
+\begin{itemize}
+\item{\textbf{El modelo}} es el contenedor de toda la lógica de negocio del sistema, es decir, es en donde los datos que son manipulados en el sistem se almacenan, a demás de que también se especifica como es que dichos datos son almacenados y si es necesario utilizar servicios de terceros para lograr complir con todos los requerimientos del negocio al que va dirigido el sistema. Si en el sistema es necesarioel acceso a información almacenada en alguna base de datos, el código para implementar esa tarea debe ser parte del modelo.
+\item{\textbf{La vista}} es el módulo en el que las interfaces gráficas con las que el usuario interactua son guardadas, por ejemplo los documentos HTML, las hojas de estilo CSS\footnote{Siglas del inglés \textit{Cascading Style Sheets}.}, y los archivos JavaScript. En general todo lo que interactue y pueda ser utilizado por el usuarios puede ser guardado en el componente de vista.
+\item{\textbf{El controlador}} es el componente encargado de realizar la conexión entre el modelo y la vista. Su labor principal es el aislamiento de la lógica del negocio incluida en el modelo, de los elementos de la interfaz de usuario incluida en la vista, y manipular las respuestas que el sistema dará ante la interacción del usuario con la vista. Se puede decir que este componente es el principal de los 3, ya que cuando el usuario realiza alguna petición en la vista, esta es pasada en primera instancia al controlador, el cual posteriormente ordenará alguna acción en el modelo y regresará resultados a la vista.
+\end{itemize}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{img/diagrama_mvc.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación del patrón de diseño MVC.}\label{mvc_diagram}
+\end{figure}
+
+Lo anterior se muestra por medio de un diagrama en la figura \ref{mvc_diagram}. El uso de este patrón de diseño ayuda a los desarrolladores de software a mantener un código bien estructurado y limpio ya que cada componente está dedicado a ciertas responsabilidades, lo cual aporta mayor facilidad al dar mantenimiento o hacer pruebas en busca de errores \cite{Pitt:2012:PPM:2401765}. Actualmente este patrón de diseño ha tenido gran auge en los sistemas web, habiendo incluso frameworks que ayudan a los desarrolladores a organizar su código siguiendo las reglas MVC sin mucho esfuerzo como el caso de Struts2 en Java y Laravel en PHP.
+
+\subsection{Modelo-Vista-Presentador}
+\noindent Es una derivación del patrón MVC que es utilizada principalmente para la construcción de interfaces móviles y el front-end de los sistemas web \cite{mvp:microsoft}. Se trata de organizar los componentes de código en las capas a continuación explicadas:
+
+\begin{itemize}
+\item \textbf{Modelo}: Usualmente es la capa de acceso a los datos, como el API de conexión con la Base de Datos o con un servidor remoto
+\item \textbf{Vista}: Es la capa que se encarga de la interacción con el usuario y del paso de eventos a la capa de Presentador.
+\item \textbf{Presentador}: Esta capa contiene la lógica necesaria para responder a los eventos generados en la capa de Vista, también se encarga de controlar las actualizaciones sobre la capa del Modelo y de alterar el estado de la Vista según sea necesario.
+\end{itemize}
+
+El flujo de datos entre dichas capas (mostrado en la figura \ref{mvp_diagram}) inicia con la generación de eventos con el usuario en la capa de la vista, estos son comunicados al presentador, quien se encarga de actualizar el modelo de datos. Una vez actualizado el modelo, una serie de eventos de cambio de estado son disparados y controlados por el Presentador para realizar actualizaciones en la vista según es necesario.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.4]{img/mvp_diagram.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Patrón de diseño Modelo-Vista-Presentador.}\label{mvp_diagram}
+\end{figure}
+
+\subsection{Observer}
+\noindent El patrón de diseño Observer, u Observador en español, es ampliamente utilizado en la Programación Orientada a Objetos, especialmente en las implementaciones de software en las que se sigue la arquitectura MVC \cite{Shalloway:2004:DPE:1196715}. En este patrón de diseño un objeto, llamado sujeto u objeto observable, mantiene una lista de los objetos que dependen de él, llamados observadores, y les notifica cualquier cambio de estado que le ocurra durante la ejecución del software, estas notificaciones ocurren como respuesta a la activación de ciertos eventos que se disparan al cambio de estado, es por esta razón que dice que este patrón de diseño está basado en la manipulación de eventos \cite{gamma1994design}.
+
+La notificación de cambio de estado del objeto que está siendo observado a los objetos que lo están observando puede ocurrir de dos distintas formas:
+
+\begin{itemize}
+\item{Push:} Cuando se implementa este tipo de notificación a los objetos observadores, el objeto observado es el que se encarga de enviar los datos de cambio de manera adjunta en la notificación tal como se muestra en la figura \ref{observer_push}, el inconveniente es que el objeto observado debe saber que información es la que los observadores necesitan respecto al cambio de estado que sucedió.
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.8]{img/observer_push.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación del patrón de diseño Observer aplicado en la modalidad Push.}\label{observer_push}
+\end{figure}
+
+\item{Pull:} En este tipo de implementación el objeto observado solo notifica a sus observadores que ocurrió un cambio de estado, los objetos registrados a su observación son los encargados de solicitar a este la información que requieran para actuar según el cambio de estado ocurrido como se observa en la figura \ref{observer_pull}, esta modalidad es la menos utilizada por ser considerada poco eficiente, ya que incluye el realizar más trabajo despues de recibir la notificación al tener que pedirla por su cuenta.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.9]{img/observer_pull.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Representación del patrón de diseño Observer aplicado en la modalidad Pull.}\label{observer_pull}
+\end{figure}
+
+\end{itemize}
+
+\section{Protocolos de comunicación y transferencia de datos}
+\noindent La transmisión de información entre aplicaciones y los procesos que estas involucran es pieza fundamental en el desarrollo de software, razón por la cual debe ser parte de la planeación y diseño iniciales.
+
+Cuando se desarrolla un sistema distribuido, como el caso de este proyecto de tesis, tomar en cuenta este aspecto es esencial, pues de acuerdo a la lógica del negocio seguida los datos que se recaben en un módulo serán utilizados por el resto de ellos, módulos que posiblemente no se encuentren en la misma computadora o cerca geográficamente.
+
+\subsection{Sockets}
+\noindent Los sockets son puertos lógicos que proveen un mecanismo de IPC\footnote{Siglas del inglés \textit{Inter-Process Communication}.}cuyo objetivo es permitir que la información sea intercambiada entre aplicaciones o programas que se ejecutan en la misma máquina o en diferentes máquinas conectadas a la misma red \cite{Kerrisk:2010:LPI:1869911} de manera bidireccional. Son la base del internet
+
+\subsection[IP]{IP\footnote{Siglas del inglés \textit{Internet Protocol}.}}
+\noindent Cuando dos computadoras necesitan intercomunicarse a través de la red requieren alguna forma de ubicarse y de encontrar al proceso destino, esa es la función general del Protocolo de Internet \cite{COM:NETWORKING:books/sp/wsf2013}, o simplemente IP.
+
+Una dirección IP es una sucesión de 32 bits que sigue un formato conocido como \textit{dotted-decimal}, dicho formato consiste en la separación de esos 32 bits en grupos de 8 bits por medio de un punto, para posteriormente convertir cada grupo al sistema decimal \cite{COM:NETWORKING:books/sp/wsf2013}, por ejemplo:
+\begin{gather*}
+11000000101010000000000100100001 \longrightarrow 192\ldotp168\ldotp1\ldotp33
+\end{gather*} 
+
+El protocolo IP provee funciones de segmentación y reensamble de paquetes de información en unos más pequeños, lo cual se vuelve muy conveniente cuando se transmite información a través de redes que difieren en la longitud máxima de un paquete permitida, también trata cada paquete de información como una entidad independiente del resto de los paquetes \cite{OSI:TCP:IP:books/sp/wsf2014}.
+
+\subsection[TCP]{TCP\footnote{Siglas del inglés \textit{Transmission Control Protocol}.}}
+\noindent El protocolo de control de la transferencia o TCP, como normalmente se le conoce, es un protocolo que permite que un flujo de bytes generado en una máquina sea entregado a cualquier otra máquina sin error alguno. Este protocolo es reconocido en el mundo del desarrollo y las redes de comunicaciones por ser unos de los más confiables \cite{Tanenbaum:2010:CN:1942194}.
+
+TCP pertenece a la rama de los protocolos conocidos como \textit{orientados a conexión} ya que para un proceso pueda comenzar a transmitir datos a otro es necesario que realicen un proceso denominado \textit{Handshake} o saludo, el cual consiste en enviar algunos datos preeliminares con el fin de asegurar una transferencia de datos correcta. Como parte de la estabilización de la conexión entre ambos procesos, estos deben inicializar ciertos variables de estado propias de protocolo \cite{Kurose:2012:CNT:2584507}.
+
+El nivel de seguridad que ofrece se debe a su implementación, cuando se envía un flujo de bytes por medio de este protocolo, lo que ocurre es que dicho flujo es segmentado en mensajes discretos que son pasados posteriormente a la capa de interred, una vez llegando al destino el proceso TCP que los recibe ensambla los mensajes de nueva cuenta formando el flujo de salida.
+
+El protocolo TCP tiene la característica de proveer un canal de comunicación \textit{full-duplex} o en dos sentidos, es decir que cuando un proceso A se conecta a un proceso B utilizando TCP, ambos procesos quedan habilitados para enviar información al otro en el momento que sea necesario. Cabe remarcar que una conexión TCP es siempre de punto a punto, es decir, solo puede existir un emisor y un receptor.
+
+\subsection[UDP]{UDP\footnote{Siglas del inglés \textit{User Datagram Protocol}.}}
+\noindent UDP o Protocolo de Datagrama de Usuarios es, junto a TCP, uno de los protocolos principales de internet, proporciona una forma para que las aplicaciones envíen datagramas (pequeñas unidades básicas de datos) IP encapsulados sin la necesidad de establecer una conexión previamente \cite{Tanenbaum:2010:CN:1942194}, ya que el propio datagrama enviado es un tipo especial de paquete caracterizado por contener dentro de sí mismo toda la información que se necesita para identificarlo y direccionarlo a través de la red \cite{Stevens:1993:TIP:161724}.
+
+Los envíos realizados por medio de este protocolo resultan ser más rápidos que cuando se utiliza TCP sin embargo, presenta un bajo nivel de confiabilidad en comparación a TCP, ya que no provee señal alguna cuando ocurre algún error en la conexión, tampoco maneja la secuencia de los datagramas ni la eliminación de duplicados, no existe un control del flujo de datos ni de la congestión que los mismos podrían provocar \cite{Stevens:1993:TIP:161724}, generándose así problemas como la llegada de los datagramas en desorden desde un punto A a un B, falta de datagramas que se perdieron en el proceso de transmisión y más importante aún, la falta de retroalimentación por parte del destino al no poder avisar al origen sobre la falta de paquetes al no existir una confirmación como el caso de TCP con la trama ACK.
+
+Algunos de los usos que se le dan a este protocolo es la transmision de audio y video en tiempo real, conocida actualmente como \textit{Streaming}, también es aplicado para la construcción de algunos juegos para los que un grado de pérdida de paquetes durante los procesos de comunicación es tolerable, a demás es utilizado en aplicaciones en las que se necesita una rápida transferencia de datos.
+
+Existen ciertas vulnerabilidades relacionadas a la falta de control que este protocolo maneja, dando pié a la ocurrencia de ataques como la generación masiva de datos a alta velocidad, logrando que el servidor se sature al no tener la capacidad de controlar la transmisión de estos de manera correcta, también es vulnerable al ataque conocido como \textit{Magnification Attack}\footnote{Traducido al español como \textit{Ataque de Magnificación}.}, en el cual el atacante envía una pequeña cantidad de datos a un sistema que genera muchos más.
+
+\subsection{HTTP}
+\noindent El protocolo HTTP, también conocido como el protocolo de la capa de aplicaciones web, resulta ser el motor de funcionamiento de la Web como se conoce hoy en día. Este protocolo es implementado en un programa cliente y uno servidor, los cuales se encuentran corriendo en diferentes terminales, intercambiando información por medio de la transmisión de mensajes o peticiones HTTP de un punto a otro \cite{Kurose:2012:CNT:2584507}. También define la estructura de las peticiones y la forma en la que son intercambiadasque.
+
+Cuando un cliente web se conecta a un servidor web, HTTP es el encargado de definir la forma en la que el cliente solicitará recursos o documentos del servidor, estos recursos o documentos pueden ser imágenes, audios, documentos HTML, documentos CSS e inclusive videos, y la forma en la que los servidores web transfieren la información solicitada por el cliente a través de la red. Lo anteriormente explicado puede ser representado por medio del diagrama de la imagen \ref{http_communication}.
+
+  %Inclusión de una imágen en el texto
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=1]{img/http_connection.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama que representa la conexión de un cliente a un servidor web por medio del protocolo HTTP.}\label{http_communication}
+\end{figure}
+
+Un detalle muy importante a mencionar es que el protocolo HTTP utiliza como protocolo de transporte al protocolo TCP, sabiendo esto se puede decir que, a bajo nivel, lo que sucede es que el cliente HTTP primero inicia una conexión TCP con el servidor, cuando la conexión es establecida entre ambos, el cliente procede con el envío de peticiones HTTP a través del socket que sostiene la conexión TCP, el servidor recibe estas peticiones por el socket que sostiene la conexión de su lado \cite{Kurose:2012:CNT:2584507}.
+
+\subsection{WebSocket}
+\noindent El protocolo WebSocket para la transmisión de datos a través de un ambiente web surgió como parte de la iniciativa HTML5, su característica principal es el permitir una conexión \textit{full-duplex} o conexión de doble canal tomando como base el protocolo TCP entre un cliente que solicita y un servidor que acepta sostener dicha conexión  \cite{Wang:2013:DGH:2509619}, esto es, una conexión persistente de dos canales de envío de datos entre un explorador web o una aplicación móvil y un servidor local o remoto, a fin de que el cliente o el servidor puedan enviar y recibir información en cualquier momento.
+
+El uso más popular de esta tecnología relativamente nueva es la implementación de aplicaciones que necesitan una comunicación y transmisión de datos en tiempo real, tal como el caso de los videojuegos y los sistemas para colaboración de proyectos.
+
+Una buena analogía que se presenta para lograr una mejor compresión de los antes mencionado es una llamada telefónica \cite{Coward:2014:DGH:2509619}, al proveer el protocolo WebSocket con una conexión para envío y recepción de información en dos direcciones puede ser comparado con las llamadas telefónicas ya que en estas la transmisión de mensajes de voz se dá en abas direcciones también.
+
+La transmisión de datos por medio de protocolos de comunicación y formatos para estructurar la información resultan ser la base de los sistems web ya que estos se encuentrab basados en la red, es por ello que es de suma importancia el saber qué es lo que ocurre con la información que envíamos de un punto a otro, que procesos se siguen, los protocolos que intervienen, etc.
+
+\subsection{Formato JSON}
+\noindent Acrónimo de “JavaScript Object Notation”, es un formato de texto ligero utilizado para el intercambio de datos entre procesos ejecutados en la misma máquina o de manera remota. La información transmitida por medio de este formato es completamente independiente de la plataforma, por lo que permite que un proceso escrito en el lenguaje de programación Java sobre un sistema operativo Linux pueda transmitir información a uno escrito en lenguaje C o Python sobre un sistema Windows \cite{JSON14}.
+
+El formato JSON define tres estructuras principales denotadas por la gramática del cuadro \ref{cfg_json}, a continuación una breve explicación:
+
+Una cadena JSON puede ser la descripción de la instancia o estado de un \textbf{objeto} ó un \textbf{arreglo} de estas, la descripción de una instancia está dada por \textbf{pares} $<identificador,valor>$, en donde el $identificador$ es el nombre de un atributo y el $valor$ es el estado de este al momento; la descripción de un objeto se escribe entre llaves ( $\{$ y $\}$ ) y un arreglo se escribe entre corchetes ( \textbf{[} y \textbf{]} ), finalmente los pares $<identificador,valor>$ van separados por una coma ( , ) según el número de atributos a incluir.
+
+\begin{table}
+\centering
+\begin{tabular}{|rcl|}
+\hline
+ & & \\
+$<json>$ & $::=$ & $<objeto>$ \text{\textbar} $<arreglo>$\\
+$<objeto>$ & $::=$ & `\{' $<miembros>$ `\}' \text{\textbar} `\{' `\}'\\
+$<miembros>$ & $::=$ & $<par>$ `,' $<miembros>$ \text{\textbar} $<par>$\\
+$<par>$ & $::=$ & $STRING$ `:' $<valor>$\\
+$<arreglo>$ & $::=$ & `[' $<elementos>$ `]'\\
+$<elementos>$ & $::=$ & $<valor>$ `,' $<elementos>$ \text{\textbar} $<valor>$\\
+$<valor>$ & $::=$ & $STRING$ \text{\textbar} $NUMBER$ \text{\textbar} $<objeto>$ \text{\textbar} \\
+ & & $<arreglo>$ \text{\textbar} $TRUE$ \text{\textbar} $FALSE$ \text{\textbar} $NULL$\\ 
+  & & \\
+ \hline
+\end{tabular}
+\caption{Gramática descriptora del formato de texto JSON.}
+\label{cfg_json}
+\end{table}
+
+\subsection{Lenguaje XML}
+\noindent El Lenguaje de Marcado Extensible, o simplemente XML, es un formato de texto muy simple y flexible que fue originalmente diseñado como una aportación al problema que las publicaciones electrónicas de gran tamaño representaban \cite{w3xml}. Actualmente juega un papel muy importante como formato para el intercambio de información entre procesos localmente o en red.\cite{w3xml_json}, esto debido a la facilidad en el manejo y organización de los datos.
+
+
+
+La sintaxis de este formato resulta ser simple, un ejemplo de ello se mira en la figura \ref{sintaxis_xml}, a continuación las reglas de su estructura:
+
+%Inclusión de una imágen en el texto
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.8]{imgs/xml_syntax.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Sintaxis del lenguaje XML.}\label{sintaxis_xml}
+\end{figure}
+
+\begin{itemize}
+\item Un \textbf{elemento} estará compuesto por una etiqueta de apertura, el contenido de este y una etiqueta de cierre.
+\item Siempre debe existir un \textbf{elemento raiz} en el documento XML.
+\item El \textbf{contenido} de una etiqueta puede ser una cadena de caracteres, números u otros elementos correctamente anidados.
+\item Un elemento puede tener uno o más \textbf{atributos}, los cuales se ubican dentro de la etiqueta de apertura, es importante mencionar que el valor del atributo siempre debe ir entre commilas dobles.
+\end{itemize}
+
+Debido a su importancia, el procesamiento de este formato resulta crucial en cualquier plataforma, este puede ser basado en eventos o arborescente, en las siguientes líneas una breve explicación:
+
+\subsubsection{Analizador SAX\protect\footnote{Acrónimo de \textit{Simple API for XML}.}}
+\noindent Un analizador o parser tipo SAX realiza el procesamiento de un documento XML con base en los eventos que se producen al leer las líneas de este. A continuación el listado de eventos posibles:
+
+\begin{itemize}
+\item{Inicio del documento}: Es disparado solamente al inicio del procesamiento del documento XML
+\item{Inicio de un Elemento}: Se dispara cada vez que una etiqueta de inicio es leida, aportando información sobre el nombre del elemento y sus atributos.
+\item{contenido}: Solo es disparado si al leer el contenido de un elemento, este es numérico o una cadena de caracteres.
+\item{Fin de un elemento}: Es disparado cada vez que se lee una etiqueta de cierre.
+\item{Fin de documento}: Se dispara solamente cuando el procesamiento del documento XML finaliza.
+\end{itemize}
+
+La ventaja principal de este mecanismo de análisis es la velocidad con que se realiza y que la carga en memoria es poca, sin embargo es tarea del desarrollador el programar correctamente cada evento.
+
+\subsubsection{Analizador DOM\protect\footnote{Acrónimo de \textit{Document Object Model}.}}
+\noindent Por otro lado, llevar a cabo un análisis tipo DOM quiere decir que quedará almacenado en memoria un arbol que representa al documento XML, como lo ejemplifica la figura \ref{dom_sample}, para realizar operaciones sobre sus nodos posteriormente, tales como consultas, agregación de nodos y eliminación de estos.
+  
+%Inclusión de una imágen en el texto
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.8]{imgs/dom_sample.png}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Ejemplo de la conversión de un documento XML a un arbol por medio del modelo DOM.}\label{dom_sample}
+\end{figure}
+
+La principal ventaja de este método de análisis es el hecho de que, al resultar en una estructura arborescente, la obtención de información se puede realizar de muchas maneras, inclusive aplicando algoritmos complejos y especilizados. Sin embargo esto conlleva a su principal desventaja, la sobrecarga de memoria que se hace cuando el arbol es construido y durante su persistencia.
+
+
+\section{Tecnologías y lenguajes implementados}
+\noindent Aquí debes decir algo acerca de las tecnologías que se ofrecen en la actualidad para realizar el desarrollo de software... algunas ventajas y desventajas de ellas y algo sobre la programación orientada a objetos.
+
+\subsection{Java}
+\noindent El lenguaje de programación Java es un lenguaje de propósito general, concurrente, basado en clases y orientado a objetos que fué diseñado con la mayor simpleza posible, a fin de que sea fácil de aprender para todos los programadores. Este lenguaje de programación está ampliamente relacionado con los lenguajes C y C++ aunque se organiza de una manera un poco diferente, incluyendo tambien ciertos aspectos provenientes de otros lenguajes como Fortran. Está pensado para que sea utilizado con una orientación de producción y no de investigación. Otro de los objetivos con los que fué desarrollado este lenguaje fué el ser lo más desacoplado de plataforma posible, de modo que el desarrollador solo tenga que escribir código una sola vez y despues este pueda ser ejecutado en cualquier plataforma que cuente con un software especial denominado \textit{Máquina Virtual} o JVM\footnote{Del inglés \textit{Java Virtual Machine}.} sin necesidad de cambios, logrando programas denominados como WORA\footnote{Siglas del inglés \textit{Write Once, Run Anywhere}.} \cite{MSU-CSE-00-2}.
+
+El desarrollo en este lenguaje de programación ha tenido un gran auge en los últimos años debido a su extenso soporte para el desarrollo de software que puede ser ejecutado en diferentes plataformas o ambientes, es posible desarrollar aplicaciones de escritorio, software que es ejecutado en un ambiente web multihilos e inclusive aplicaciones que pueden ser utilizadas en dispositivos móviles. Entre los últimos avances conocidos está el desarrollo de aplicaciones orientadas a Televisiones y relojes inteligentes.
+
+
+\subsection{Apache Tomcat}
+\noindent También conocido como Jakarta Tomcat, es un proyecto de software de código abierto de la fundación Apache que se encuentra escrito completamente en el lenguaje de programación Java y funciona principalmente de tres maneras \cite{Zambon:2012:BJJ:2385419}:
+
+\begin{itemize}
+\item Como un servidor web.
+\item Una aplicación de software que ejecuta Java Servlets.
+\item Una aplicación de software que convierte páginas JSP\footnote{Siglas del inglés \textit{Java Server Pages}.} en Java Servlets.
+\end{itemize}
+
+Este servidor web presenta una característica muy importante, al tener gran soporte para procesar y presentar archivos JSP y Servlets, es altamente capaz de manejar contenido web dinámico, esto aunado a la robustés y soporte que el lenguaje de programación Java ha presentado durante mucho tiempo \cite{TOMCATBRITTAINJASON}.
+
+\subsubsection[JSP]{JSP\footnote{Siglas del inglés \textit{Java Server Pages}.}}
+\noindent JSP o Java Server Pages es una tecnología que permite a los desarrolladores agregar contenido dinámico a las páginas web, logrando que la información que se despliega ante los usuarios dependa de muchos factores tales como la hora en la que se está visualizando la página, la información que el usuario provee e inclusive el tipo de explorador web por medio del cual es usuario está visualizando la página \cite{Zambon:2012:BJJ:2385419}.
+
+El dinamísmo que ofrece esta tecnología se debe principalmente a que en realidad no existe una página web en el servidor, este crea un nuevo servlet con base en cada petición que recibe por el protocolo HTTP y el archivo JSP al que va dirigido y posterior a su compilación se produce el contenido HTML es que enviado al cliente como respuesta. Otro factor que aumenta un poco más el aspecto dinámico al que da resultado reside en las etiquetas especiales que están disponibles para el desarrollador, habilitándolo para realizar procesamiento especial de datos y paso de parámetros del servidor al cliente \cite{ORACLEJAVAEE5}.
+
+\subsubsection{Servlets}
+\noindent Un Servlet es un programa escrito en el lenguaje de programación Java que es ejecutado del lado del servidor, actúa como una capa entre las peticiones provenientes de la interfaz gráfica con la que el usuario está interactuando y las bases de datos o aplicaciones que se encuentran en el Servidor Web, tal y como se ilustra en la imagen \ref{servlet_work}. Es considerado como un módulo especial que sirve para extender las capacidades del servidor en cuanto al contenido dinámico.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.6]{img/servlet_work.png}}
+%source: pdf.coreservlets.com/Overview.pdf
+\captionsetup{justification=centering,margin=2cm}
+\caption{Diagrama acerca del funcionamiento de un Servlet.}\label{servlet_work}
+\end{figure}
+
+\subsection{Android}
+\noindent Es un sistema operativo de código abierto orientado principalmente al manejo de smartphones, aunque recientemente ha sido implementado en otros tipos de dispositivos como relojes (smartwhatch), televisiones (smart-TV) y controladores domóticos.
+
+Es la plataforma para móviles con mayor importancia en el mercado, de acuerdo a \cite{mobiles:market}, abarcando más del 85\% y dejando atras otras plataformas como iOS de Apple, con poco menos del 10\%, y Windows Phone de Microsoft con menos del 5\%.
+
+La programación de aplicaciones móviles para esta plataforma se realiza utilizando el lenguaje de programación Java, aunque en el año 2017 se anunció el lenguaje Kotlin como una opción \cite{android:ref}.
+
+\subsection{Modelo de datos No-SQL}
+\noindent Una base de datos es una colección de datos organizados, estructurados e interrelacionados según un modelo de información, cuya información resulta de suma relevancia para la empresa u organización a la que pertenece \cite{silberschatz2006fundamentos}. Una base de datos es, actualmente, un elemento indispensable para cualquier tipo de sistema, desde los grandes motores de búsqueda disponibles a través de internet hasta pequeños sistemas que solo funcionan dentro de la empresa, e inclusive páginas y proyectos personales \cite{DATABASE:LAPUENTE:MADRID}.
+
+En la actualidad existen varios tipos de modelos para bases de datos, como son el clásico relacional o basado en tablas, y los no relacionales o No-SQL, basados en documentos, en objetos y en grafos.
+Los modelos No-SQL\footnote{Contracción referente al desuso de SQL} existían desde algunos años antes que el modelo SQL o Relacional, pero no habían tenido el suficiente resalte en el mundo de la industria y el desarrollo, recientemente han surgido nuevas tecnologías que implementan estos modelo, como lo son las bases de datos orientadas a documentos, las que están orientadas a ver la información como un grafo y las orientadas a objetos \cite{SITEPOINT:BUCKLER:SQL:NOSQL}, por mencionar las más resaltantes.
+
+Algunos de los beneficios que este tipo de tecnologías proveen al desarrollo de software \cite{MONGODB:NOSQL} son:
+
+\begin{itemize}
+\item Pensadas para ser usadas con grandes volumenes de datos, tanto estructurados como no estructurados, que se encuentran en cambios constantes.
+\item Esquemas dinámicos que son fácilmente adaptables a cambios constantes.
+\item Facilidad para integrar al desarrollo basado en el paradigma orientado a objetos
+\item Fácilmente escalables al confiar más en una arquitectura distribuida que en una monolítica.
+\end{itemize}
+
+\subsubsection{Base de datos orientada a grafos}
+\noindent Es un tipo de Base de Datos en el que se realizan consultas al modelo tomando en cuenta que los datos son almacenados a manera de nodos, aristas que los conectan y propiedades, como se observa en la figura \ref{graph_db}.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=1]{img/graph_db.png}}
+%source: pdf.coreservlets.com/Overview.pdf
+\captionsetup{justification=centering,margin=2cm}
+\caption{Modelo de datos orientado a grafos.}\label{graph_db}
+\end{figure}
+
+
+
+ 
+%\section{Bases teóricas para el desarrollo del lado Cliente del sistema.}
+%\noindent En el mundo de los sistemas de información, un cliente es en general software que es ejecutado en una máquina o en un dispositivo móvil bajo una red, el cual solicita ciertos servicios e información al servidor de acuerdo a la interacción y necesidades que el usuario presente, como la solicitud de datos de una persona, el despliegue de un componente gráfico, un documento, archivos multimedia e incluso un flujo de datos por medio de una coexión persistente como el caso de los streams\footnote{Referente al flujo de datos sin interrupción.} de video.
+
+% ----- PARECE MÁS UTILIZABBLE PARA EL CUERPO DE LA TESIS -----
+%\noindent En esta sección de la tesis, se envuelve la descripción de los dos tipos de clientes con los que el sistema contará, es decir la versión web que corre en los exploradores web y la versión móvil que corre en los dispositivo móviles que cuentas con el sistema operativo Android, también se incluyen aquellos conceptos que son generales para ambos cliente como el patrón de diseño utilizado para la creación de las interfaces gráficas o GUI's\footnote{Del inglés \textit{Graphical User Interface}.} y el uso de la API\footnote{NO SE SI YA LA PUSE ANTES...} de google maps para la visualización y el procesamiento del mapa.
+
+
+%\subsection{Patrón de diseño \textit{Material Design}}
+%\noindent El patrón de diseño \textit{Material Design} fué propuesto por Google hace aproximadamente 3 años por medio del rediseño completo en las interfaces de muchos de sus productos y complementado más tarde con la llegada de la versión Lollipop de la plataforma móvil Android \cite{MATERIALDESIGN:GOOGLE:REFERENCE}.
+
+%La idea central de este patrón de diseño es crear para el usuario una experiencia gráfica consistente y predecible que esté basada en el mundo material que nos rodea en la realidad.
+
+%Este nuevo enfoque de diseño ganó gran popularidad al ser sumamente llamativo para todo tipo de usuarios a tal grado que en la actualidad existen muchos frameworks de diseño para interfaces web que utilizan por defecto el diseño material \cite{MATERIALDESIGN:BLOG}. La disponibilidad de este patrón es amplia, es posible encontrarlo en páginas web, aplicaciónes móviles e inclusive en aplicaciones para relojes inteligentes.
+
+%\subsection{Google Maps}
+%\noindent Es un servidor de aplicaciones de mapas perteneciente a la empresa Google, el cual ofrece diferentes servicios referentes a cartografía, geo-posicionamiento, fotografía satelital, imágenes “a pie de calle” , cálculos de distancias entre puntos, etc \cite{DIN13}.
+
+%El servidor de Google Maps ofrece sus servicios a los desarrolladores por medio de una API, cuya función principal es el aportar la vista del mapa, a demás de los componentes gráficos y las funciones especiales para dibujar sobre el mapa, establecer marcadores, figuras, lineas, zonas, capas, etc. \cite{GOOGLEM}, esta API se encuentra disponible principalmente para 3 plataformas:
+
+%\begin{itemize}
+%  \item \textbf{JavaScript} para el desarrollo de aplicaciones web que incluyan servicios de Google Maps.
+%  \item \textbf{Android} para el desarrollo de aplicaciones móviles bajo el sistema operativo móvil iniciado por google.
+%  \item \textbf{IOS} para la construcción de aplicaciones móviles bajo el sistema operativo iniciado por la empresa Apple.
+%\end{itemize}
+
+%La API ofrecida por este servidor, a pesar de presentarse en las tres versiones mencionadas anteriormente, resulta ser la misma con el fin de poder extender el soporte de la API a la mayor cantidad de dispositivos y equipos de cómputo posibles, como se ilustra en la figura \ref{google_maps_image}.
+
+  %Inclusión de una imágen en el texto
+%\begin{figure}[hbtp]
+%\centering
+%\fbox{\includegraphics[scale=0.6]{img/google_maps_devices.jpg}}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Google Maps presente en diversos dispositivos.}\label{google_maps_image}
+%\end{figure}
+
+
+%\subsection{Conceptos asociados a la implementación de la versión web del cliente}
+%\noindent Un cliente web de un sistema de información es un módulo de software que es usualmente presentado por un explorador web, básicamente se encuentra compuesto por un documento estático que denota la estructura de la interfaz con el usuario normalmente escrito en HTML, un documento CSS que indica el estilo asociado al documento de la estructura, el cual especifica tamaños, colores, animaciones y responsividad, y finalmente un documento que contiene las funciones necesarias para agregar contenido dinámico a la interfaz gráfica, así como lograr conexiones directas con el servidor y hacer peticiones a este. Los tres componentes antes mencionados son estándares web, es decir que son tecnologías que han sido adoptadas de manera general por la industria del desarrollo web, y son explicados a mayor detalle en las siguientes líneas:
+
+%\subsubsection{HTML}
+%\noindent El lenguaje HTML, catedorizado dentro de los lenguajes de marcado, es el estandar web utilizado para la creación de la base de una página web, es decir, para la descripción de la estructura y el contenido que debe desplegarce ante el usuario \cite{INTERNETWWW:DEITEL:2012}.
+
+%El código HTML está conformado de caracteres establecidos dentro de paréntesis angulares, los cuales son llamados \textit{elementos} HTML. Los elementos HTML usualmente están compuestos por dos etiquetas: una de apertura y otra de cierre; esta última tiene un caracter extra justo despues de el paréntesis angular que abre, el cual es una diagonal \textbf{/} como se ejemplifica en la imágen \ref{html_structure}, también existen elementos conformados por una sola etiqueta llamada \textit{etiqueta de autocierre}. El trabajo de los elementos del código HTML es indicarle al explorador web que representa la información contenida entre las etiquetas de apertura y cierre \cite{DUCKETT:HTMLCSS:2011}.
+
+  %Inclusión de una imágen en el texto
+%\begin{figure}[hbtp]
+%\centering
+%\fbox{\includegraphics[scale=0.7]{img/html_structure.jpg}}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Señalamiento de los componentes de un elemento HTML.}\label{html_structure}
+%\end{figure}
+
+%Las etiquetas disponibles a utilizar en HTML se encuentran en la página oficial de el W3C\footnote{Abreviación del inglés \textit{World Wide Web Consortium}.}, en donde se explica el uso de cada una y si perteneces a la versión más reciente de HTML, es decir HTML5. Con la llegada de esta nueva versión de HTML se dió refuerzo a una de las bases del estructuramiento de la información: La semántica \cite{SEMANTICTAGS:W3C}. Las etiquetas HTML se pueden dividir en dos rubros principales:
+
+%\begin{itemize}
+%\item{Semánticas:} Son aquellas etiquetas que definen claramente su contenido, las etiquetas $<$p$>$ utilizadas para describir párrafos, $<$table$>$ para la descripción de una tabla y $<$img$>$ para especificar una imagen son algunos ejemplos.
+%\item{No semánticas:} Son las etiquetas que se limitan a funcionar como simples contenedores cuyo contenido no es obvio, por ejemplo las etiquetas $<$div$>$ y $<$span$>$.
+%\end{itemize}
+
+
+%\subsubsection{CSS}
+%\noindent El lenguaje CSS es el estandar propuesto por el W3C para manejar el formateo y la presentación de la información desplegada en una página web. Esta tecnología le permite a desarrolladores y a diseñadores el poder específicar muchos aspectos en cuanto ala forma en que se muestran los elementos de un documento HTML, tales como fuentes de texto, espaciado, tamaño, color, posicionamiento, etc., de forma separada de dicho documento. Esta separación entre estructura y presentación trae consigo la simplificación del mantenimiento y la modificación de la página web \cite{INTERNETWWW:DEITEL:2012}.
+
+%La especificación de la forma en la que un elemento debe aparecer en la interfaz o página web se produce por medio de \textit{reglas} como la que se muestra en la figura \ref{CSS_structure}. Las reglas de CSS están conformadas por dos partes principales:
+
+%\begin{itemize}
+%\item{Selector:} Representa el elemento o conjunto de ellos que serán afectados por las especificaciones posteriormente señaladas y pueden ser nombres de etiquetas, clases de elementos, el id de un elemento, eventos que ocurren sobre un elemento (pasar el puntero sobre el objeto o dar click sobre el mismo, entre otros) e inclusive nodos del arbom DOM que representa el documento HTML. La prioridad con la que las especificaciones de cierto selector son aplicadas depende directamente de lo específico que el selector es \cite{DUCKETT:HTMLCSS:2011}. Un selector que es el id de un elemento es mucho más específico que un selector que es el nombre de la etiqueta de un elemento, ya que al dar el id del elemento se está diciendo exactamente cual, sin embargo al dar el nombre de la etiqueta del elemento se está refiriendo a todos los elementos que estén conformados por esa etiqueta.
+%\item{Definición:} Es una tupla atributo-valor que específica aspectos como el largo o ancho, color,tipo de letra, etc., sobre el objeto que especifica el selector al que pertenecen.
+%\end{itemize}
+
+  %Inclusión de una imágen en el texto
+%\begin{figure}[hbtp]
+%\centering
+%\fbox{\includegraphics[scale=0.7]{img/CSS_structure.jpg}}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Señalamiento de los componentes de una regla CSS}\label{CSS_structure}
+%\end{figure}
+
+
+%\subsubsection{Modelo DOM}
+%\noindent El modelo DOM\footnote{Siglas del inglés \textit{Documento Object Model}.} es una API ideada para la representación de un documento que permite accesar y manipular el contenido de este, al se utilizado en HTML permite accesar a los elementos HTML al ver todo el código como una estructura de datos arborescente, como se muestra en la figura \ref{dom_example}, aunque tambien es posible utilizarlo con el lenguaje XML \cite{webdesign:4:niederst}.
+
+%Este modelo ámpliamente utilizado en el ámbito web, el lenguaje CSS hace uso de este al igual que JavaScript, siendo este último el que hace el uso más sobresaliente, sin embargo no se encuentra limitado a ser utilizado solo en el ámbiente web, muchos lenguajes como Java, PHP y C\# lo utilizan para la creación de parsers\footnote{Programas que toman información en cierto formato y crean una estructura de datos con ella.} de información usualmente intercambiada en formato XML.
+
+  %Inclusión de una imágen en el texto
+%\begin{figure}[hbtp]
+%\centering
+%\fbox{\includegraphics[scale=0.7]{img/dom_example.jpg}}
+%\captionsetup{justification=centering,margin=2cm}
+%\caption{Código HTML y su representación en el modelo DOM}\label{dom_example}
+%\end{figure}
+
+%\subsubsection{JavaScript}
+%\noindent JavaScript es un lenguaje de programación que permite a los programadores y diseñadores web agregar animaciones, interactividad y efectos visuales dinámicos a las páginas web \cite{JAVASCRIPT:JQUERY:SAWYER:2014}. Declarado como el lenguaje de programación para el lado del cliente de aplicaciones basadas en la web estandar de facto debido a su alto nivel de portabilidad \cite{INTERNETWWW:DEITEL:2012}.
+
+%Una de las cualidades principales de este lenguaje es el conjunto de acciones inmediatas que provee, permite que las páginas web respondan instantaneamente a acciones como un click sobre una liga a otra página web, el llenado de un formulario o incluso el simple hecho de mover el cursor sobre la pantalla, alterando de manera dinámica o \textit{al vuelo} el contenido de la página, su estilo o incluso la forma en la que el explorador web actúa \cite{webdesign:4:niederst}. Todo el dinamismo aportado tiene su razón de ser en el hecho de que este lenguaje no depende de la conexión al servidor como el caso de PHP, si no que es un lenguaje que se ejecuta del lado del cliente.
+
+%
+%\paragraph{WebWorkers}
+%\noindent INCOMPLETE
+%
+
+%\subsubsection{JQuery}
+%\noindent Es la librería de JavaScript más popular a la fecha, implementada en más de la mitad de los 10,000 sitios web más visitados \cite{webdesign:4:niederst}. Al igual que el resto de las librerías de JavaScript, uno de los objetivos principales de JQuery es estandarizar la forma en la que los exploradores web interpretan el código JavaScript, problema conocido como \textit{cross-browser problem}\footnote{Referente al problema de interpretación del código escrito en JavaScript que provoca que módulos que funcionan en un explorador dejen de funcionar en otro.} \cite{JAVASCRIPT:JQUERY:SAWYER:2014}.
+
+%El uso base de esta librería consiste en la adición de interesantes efectos visuales a los elementos del documento HTML, como calendarios, animaciones listas expandibles entre otros, de una manera sencilla, ya que muchas de estas adiciones requerirían de grandes cantidades de código JavaScript para ser logradas, en cambion con JQuery es posible hacerlas hasta con una sola línea de código.
+
+%Existe una versión de JQuery orientada al desarrollo web para exploradores de dispositivos móviles, la cual implementa componentes y efectos gráficos pensados para funcionar correctamente en smarthphones y tablets.
+
+%--------------------------------------------------
+
+
+%\subsection{Conceptos asociados a la implementación de la versión móvil del cliente}
+%\noindent BUSCANDO INFORMACIÓN OFICIAL DETALLADA
+
+%\subsubsection{Android}
+%\noindent BUSCANDO INFORMACIÓN OFICIAL DETALLADA
+
+%\paragraph{Broadcast}
+%\noindent BUSCANDO INFORMACIÓN OFICIAL DETALLADA
+
+%\paragraph{Servicio}
+%\noindent BUSCANDO INFORMACIÓN OFICIAL DETALLADA
+
+%\subsubsection{SAX Parser}
+%\noindent BUSCANDO INFORMACIÓN OFICIAL DETALLADA
+
+
+

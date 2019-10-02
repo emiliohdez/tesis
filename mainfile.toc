@@ -1,0 +1,104 @@
+\babel@toc {spanish}{}
+\contentsline {chapter}{\numberline {1}Marco Metodol\IeC {\'o}gico}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Antecedentes}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Planteamiento del problema}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Objetivos}{4}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Objetivo general}{4}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Objetivos espec\IeC {\'\i }ficos}{4}{subsection.1.3.2}
+\contentsline {section}{\numberline {1.4}Justificaci\IeC {\'o}n}{5}{section.1.4}
+\contentsline {section}{\numberline {1.5}Hip\IeC {\'o}tesis}{5}{section.1.5}
+\contentsline {section}{\numberline {1.6}Alcances y limitaciones}{6}{section.1.6}
+\contentsline {chapter}{\numberline {2}Marco Te\IeC {\'o}rico}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Conceptos y herramientas geogr\IeC {\'a}ficas}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}GPS}{8}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Geoposicionamiento y t\IeC {\'e}cnicas para dispositivos m\IeC {\'o}viles}{9}{subsection.2.1.2}
+\contentsline {subsubsection}{Consultas al sistema GPS}{10}{section*.9}
+\contentsline {subsubsection}{Geolocalizaci\IeC {\'o}n por Wi-Fi}{10}{section*.10}
+\contentsline {subsubsection}{Uso de antenas de telefon\IeC {\'\i }a m\IeC {\'o}vil}{10}{section*.11}
+\contentsline {subsection}{\numberline {2.1.3}Sistemas de informaci\IeC {\'o}n geogr\IeC {\'a}fica}{10}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}Sistemas distribuidos}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Definici\IeC {\'o}n y elementos}{12}{subsection.2.2.1}
+\contentsline {subsubsection}{Servidor}{12}{section*.15}
+\contentsline {subsubsection}{Cliente}{13}{section*.16}
+\contentsline {subsection}{\numberline {2.2.2}Modelos arquitect\IeC {\'o}nicos para sistemas distribuidos}{13}{subsection.2.2.2}
+\contentsline {subsubsection}{Cliente-Servidor}{14}{section*.17}
+\contentsline {subsubsection}{Arquitectura de tres capas}{14}{section*.18}
+\contentsline {subsubsection}{Arquitectura multicapas}{14}{section*.19}
+\contentsline {subsubsection}{Arquitectura Peer-to-Peer}{15}{section*.20}
+\contentsline {section}{\numberline {2.3}Protocolos de comunicaci\IeC {\'o}n}{16}{section.2.3}
+\contentsline {paragraph}{Capa de enlace y acceso a la red:}{16}{section*.23}
+\contentsline {paragraph}{Capa de internet:}{17}{section*.24}
+\contentsline {paragraph}{Capa de transporte:}{17}{section*.25}
+\contentsline {paragraph}{Capa de aplicaci\IeC {\'o}n:}{17}{section*.26}
+\contentsline {subsection}{\numberline {2.3.1}IP como protocolo de la capa de red}{17}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Protocolos de la capa de transporte}{18}{subsection.2.3.2}
+\contentsline {subsubsection}{TCP}{18}{section*.27}
+\contentsline {subsubsection}{UDP}{19}{section*.28}
+\contentsline {subsubsection}{Sockets}{19}{section*.29}
+\contentsline {subsection}{\numberline {2.3.3}Protocolos de la capa de aplicaci\IeC {\'o}n}{20}{subsection.2.3.3}
+\contentsline {subsubsection}{HTTP}{20}{section*.31}
+\contentsline {subsubsection}{HTTPS}{21}{section*.33}
+\contentsline {subsubsection}{WebSocket}{22}{section*.34}
+\contentsline {section}{\numberline {2.4}Paradigmas, arquitecturas y patrones de dise\IeC {\~n}o de software.}{22}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Paradigma orientado a servicios}{22}{subsection.2.4.1}
+\contentsline {subsubsection}{Servicios web}{24}{section*.36}
+\contentsline {subsubsection}{SOAP}{24}{section*.37}
+\contentsline {subsubsection}{RESTful}{25}{section*.38}
+\contentsline {subsection}{\numberline {2.4.2}Patrones arquitect\IeC {\'o}nicos}{25}{subsection.2.4.2}
+\contentsline {subsubsection}{Modelo-Vista-Controlador}{26}{section*.39}
+\contentsline {subsubsection}{Modelo-Vista-Presentador}{27}{section*.41}
+\contentsline {subsection}{\numberline {2.4.3}Patrones de dise\IeC {\~n}o}{28}{subsection.2.4.3}
+\contentsline {subsubsection}{Singleton}{29}{section*.43}
+\contentsline {subsubsection}{Factory method}{29}{section*.45}
+\contentsline {subsubsection}{Observer}{30}{section*.47}
+\contentsline {section}{\numberline {2.5}Base de datos}{31}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Definici\IeC {\'o}n y objetivo}{31}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Tipos de bases de datos}{32}{subsection.2.5.2}
+\contentsline {subsubsection}{Bases de datos relacionales}{32}{section*.49}
+\contentsline {subsubsection}{Bases de datos no-relacionales}{33}{section*.52}
+\contentsline {section}{\numberline {2.6}Lenguajes y tecnolog\IeC {\'\i }as}{35}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Sistema Android}{35}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Java}{36}{subsection.2.6.2}
+\contentsline {subsubsection}{Servlet}{36}{section*.56}
+\contentsline {subsubsection}{JSP}{37}{section*.58}
+\contentsline {subsection}{\numberline {2.6.3}XML}{37}{subsection.2.6.3}
+\contentsline {subsubsection}{Analizador SAX\footnote {Acr\IeC {\'o}nimo de \textit {Simple API for XML}.}}{38}{section*.60}
+\contentsline {subsubsection}{Analizador DOM}{39}{section*.61}
+\contentsline {subsubsection}{KML}{39}{section*.63}
+\contentsline {subsection}{\numberline {2.6.4}Formato JSON}{40}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}HTML}{40}{subsection.2.6.5}
+\contentsline {subsubsection}{CSS}{41}{section*.65}
+\contentsline {subsubsection}{JavaScript}{42}{section*.66}
+\contentsline {section}{\numberline {2.7}Comentarios finales}{42}{section.2.7}
+\contentsline {chapter}{\numberline {3}An\IeC {\'a}lisis y Dise\IeC {\~n}o del Sistema}{43}{chapter.3}
+\contentsline {section}{\numberline {3.1}Requerimientos de desarrollo}{43}{section.3.1}
+\contentsline {subsubsection}{Especificaciones derivadas}{44}{section*.69}
+\contentsline {section}{\numberline {3.2}Abstracci\IeC {\'o}n del modelo de datos}{45}{section.3.2}
+\contentsline {section}{\numberline {3.3}M\IeC {\'o}dulos principales del sistema}{47}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Recolecci\IeC {\'o}n de datos geogr\IeC {\'a}ficos}{48}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}L\IeC {\'o}gica del servidor}{50}{subsection.3.3.2}
+\contentsline {subsubsection}{Interfaz REST}{50}{section*.76}
+\contentsline {subsubsection}{Validaci\IeC {\'o}n de datos}{51}{section*.78}
+\contentsline {subsubsection}{Distribuci\IeC {\'o}n de la informaci\IeC {\'o}n}{51}{section*.79}
+\contentsline {subsubsection}{Manejo de conexiones}{51}{section*.81}
+\contentsline {subsection}{\numberline {3.3.3}Visualizaci\IeC {\'o}n de la informaci\IeC {\'o}n}{53}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Comentarios finales}{54}{section.3.4}
+\contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n del M\IeC {\'o}dulo de Visualizaci\IeC {\'o}n (M\IeC {\'o}vil y Web)}{56}{chapter.4}
+\contentsline {section}{\numberline {4.1}Interacci\IeC {\'o}n con el usuario final}{56}{section.4.1}
+\contentsline {section}{\numberline {4.2}Obtenci\IeC {\'o}n de los datos}{58}{section.4.2}
+\contentsline {section}{\numberline {4.3}Arquitectura de la aplicaci\IeC {\'o}n m\IeC {\'o}vil}{60}{section.4.3}
+\contentsline {subsubsection}{Gestor de conexi\IeC {\'o}n persistente}{61}{section*.89}
+\contentsline {subsubsection}{Administrador de estructuras de control}{62}{section*.90}
+\contentsline {subsubsection}{Administrador de alertas}{62}{section*.91}
+\contentsline {subsubsection}{Manejador de la interfaz de usuario}{63}{section*.93}
+\contentsline {subsection}{\numberline {4.3.1}Flujo de datos basado en eventos}{65}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}Implementaci\IeC {\'o}n en el ambiente web}{65}{section.4.4}
+\contentsline {section}{\numberline {4.5}Implementaci\IeC {\'o}n del m\IeC {\'o}dulo de visualizaci\IeC {\'o}n (m\IeC {\'o}vil y web)}{67}{section.4.5}
+\contentsline {subsubsection}{Selecci\IeC {\'o}n de ciudad/poblaci\IeC {\'o}n}{68}{section*.97}
+\contentsline {subsubsection}{Selecci\IeC {\'o}n de ruta deseada}{69}{section*.99}
+\contentsline {subsubsection}{Despliegue de la ruta}{70}{section*.101}
+\contentsline {subsubsection}{Informaci\IeC {\'o}n y opciones de un parab\IeC {\'u}s}{71}{section*.103}
+\contentsline {subsubsection}{Despliegue de la alerta}{72}{section*.105}
+\contentsline {section}{\numberline {4.6}Comentarios finales}{72}{section.4.6}
+\contentsline {chapter}{Conclusiones}{74}{chapter*.107}
+\contentsline {chapter}{Referencias Bibliogr\IeC {\'a}ficas}{76}{section*.108}

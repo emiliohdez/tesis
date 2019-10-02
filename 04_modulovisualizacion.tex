@@ -1,0 +1,266 @@
+\chapter{Implementación del Módulo de Visualización (Móvil y Web)}
+
+\noindent A continuación se explican detalladamente aspectos clave para el desarrollo de la aplicación móvil que sirve al usuario final como visor de información de interés, algunos de estos son el modelo lógico seguido para su interacción con el usuario, el esquema de conexión e intercambio de información con módulo de Lógica del Servidor y su arquitectura interna. Cabe mencionar que la arquitectura presentada contempla la restricción impuesta por el Sistema Operativo Android en la que se designa al hilo o proceso principal como el único capaz de alterar la interfaz gráfica \cite{android:ref}.
+
+Posterior a esto se habla acerca de la implementación de la interfaz para la web, la cuál se construye bajo los mismos lineamientos de funcionalidad e interacción
+
+
+\section{Interacción con el usuario final}
+\noindent Como se mencionó anteriormente, el objetivo del módulo de visualización de datos es proveer al usuario final con información de interés, cubriendo los siguientes requerimientos:
+
+\begin{itemize}
+\item El usuario podrá conocer si el sistema de monitoreo está activo en su ciudad o localidad.
+\item Podrá saber cuales son las rutas habilitadas para su ciudad, en caso de que ésta esté dada de alta en el sistema.
+\item Podrá acceder a información acerca de las rutas activas y sobre los autobuses o unidades de transporte que las circulan.
+\item Podrá activar una alerta que le indicará cuando una unidad de transporte esté por pasar un determinado parabús.
+\end{itemize}
+
+Para ello se diseñó un esquema de interacción (figura \ref{diagrama_interaccion_movil}) compuesto por solamente tres escenas principales que promueven la facilidad de uso y comprensión por parte del usuario.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.58]{images/esquema_interaccion_movil.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema de interacción entre la aplicación móvil y el usuario final.}\label{diagrama_interaccion_movil}
+\end{figure}
+
+
+\begin{figure}[hbtp]
+\centering
+
+\begin{subfigure}{0.28\textwidth}
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/wireframe_ciudades.png}}
+\caption{Selección de la ciudad objetivo.}\label{wireframe_ciudades}
+\end{subfigure}\hspace{0.11\textwidth}
+\begin{subfigure}{0.28\textwidth}
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/wireframe_rutas.png}}
+\caption{Selección de ruta a visualizar.}\label{wireframe_rutas}
+ \end{subfigure}
+ 
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Esquemas \textit{Wireframe} móviles que plasman el contenido y estructura de las primeras escenas para el usuario.}
+\label{wireframes_listas}
+\end{figure}
+
+
+Derivado del esquema de interacción, se tiene que el usuario debe establecer la ruta que quiere ver antes de iniciar con la transmisión de datos en tiempo-real, cuyas vistas se muestran en la figura \ref{wireframes_listas}.
+
+La pantalla de inicio  de la aplicación incluye un listado de las ciudades (figura \ref{wireframe_ciudades}) que se encuentran registradas en la plataforma, al seleccionar una ciudad se transita a la vista en la que se muestran las rutas urbanas disponibles en la ciudad seleccionada (figura \ref{wireframe_rutas}).
+
+Una vez seleccionada la ruta a visualizar, el dispositivo móvil despliega en pantalla la última escena de interacción (figuras \ref{wireframes_principales}). Esta escena muestra la estructura de la ruta seleccionada (los parabuses que incluye y los caminos que los conectan) y la información dinámica que proviene de los autobuses o unidades en circulación (figura \ref{wireframe_rutaenpantalla}).
+
+\begin{figure}[hbtp]
+\centering
+\begin{subfigure}{0.33\textwidth}
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/wireframe_mapa.png}}
+\caption{Estructura de la ruta.}\label{wireframe_rutaenpantalla}
+\end{subfigure}\hspace{0.16\textwidth}
+\begin{subfigure}{0.33\textwidth}
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/wireframe_mapa_parabusevent.png}}
+\caption{Información de un parabús.}\label{wireframe_informaciondeparabus}
+ \end{subfigure}
+ 
+ \begin{subfigure}{0.33\textwidth}
+\centering
+\vspace{0.08\textwidth}
+\fbox{\includegraphics[width=\linewidth]{images/wireframe_mapa_alertevent.png}}
+\caption{Alerta de aproximación.}\label{wireframe_activaciondealerta}
+\end{subfigure}
+ \captionsetup{justification=centering,margin=2cm}
+ \caption{Esquemas \textit{Wireframe} móviles que representan el contenido de la última escena de interacción con el usuario.}
+\label{wireframes_principales}
+\end{figure}
+
+Otra de los objetivos de esta escena es mostrar información bajo demanda al usuario respecto a cada uno de los parabuses que conforman la ruta (figura \ref{wireframe_informaciondeparabus}), tal como su nombre y la distancia y tiempo de llegada estimados de las tres unidades de transporte que se encuentran más cercanas, tomando como cercanía la distancia que les falta por recorrer siguiendo el sentido de la ruta.
+
+Finalmente también habilita al usuario para activar alertas en los parabuses que él desee con la finalidad de ser notificado cuando una unidad de transporte esté próxima a pasar por ellos (figura \ref{wireframe_activaciondealerta}).
+
+\section{Obtención de los datos}
+\noindent Para lograr mostrar información de interés en la pantalla del dispositivo móvil, la lógica que rige la aplicación móvil necesita obtener algunos datos provenientes del módulo de Lógica del Servidor. Esto se logra a través del uso de dos canales de comunicación: Peticiones HTTP a servicios web y una conexión persistente con el protocolo WebSocket.
+
+Las peticiones a servicios web se emplean para obtener aquellos bloques de datos que no necesitan ser actualizados constantemente, tal es el caso de la lista de ciudades que se encuentran registradas en la base de datos, el listado de rutas de transporte urbano por ciudad, el conjunto de autobuses registrados y la ruta que circulan, y la estructura de una ruta específica.
+
+Por otra parte, la conexión persistente WebSocket sirve como canal para aquella información que surge en tiempo-real, como el caso de una actualización en la información de las rutas y ciudades o, por supuesto, las actualizaciones de posición GPS de los autobuses que circulan una ruta determinada.
+
+Una de las opciones que se revisaron para lograr la funcionalidad de tiempo-real fue el esquema AJAX, sin embargo éste se descartó debido a la sobrecarga de peticiones HTTP que presenta y a que es más lento para transmitir datos en comparación con el protocolo WebSocket, puesto que este último establece un solo canal bidireccional en lugar de abrir muchas conexiones consecutivas. 
+
+El protocolo WebSocket también trae consigo una desventaja al ser utilizado bajo un esquema de conexión intermitente, caso de los dispositivos móviles. Un dispositivo móvil que utiliza internet emplea constantemente un algoritmo para estar siempre conectado a la antena celular más cercana con base en el cálculo de triangulaciones, por lo que el dispositivo realiza el cambio de conexión si sale del rango de una u otra ofrece mayor calidad de señal. Cuando esto sucede, el protocolo WebSocket indica que el dispositivo debe terminar la conexión establecida e intentar enlazarse al EndPoint (servidor) con una conexión nueva.
+
+La situación anterior genera una conexión zombie en el servidor que, en combinación con la espera programada que el protocolo TCP tiene, utiliza un espacio y recursos por un tiempo indefinido y usualmente prolongado. Una forma de reducir el problema fue la reducción del buffer de escritura para cada conexión WebSocket, así el paso continuo de paquetes lo satura y la excepción arrojada deja en claro que conexión está caída y se procede a la liberación de recursos.
+
+
+\section{Arquitectura de la aplicación móvil}
+\noindent A pesar de que por el momento los controles ofrecidos al usuario en la aplicación móvil no son muy complejos, internamente se siguió una arquitectura de desarrollo basada en un modelo monolítica de datos y su interacción con otros tres módulos de control y procesamiento de datos, mostrada en la figura \ref{arquitectura_movil}.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.6]{images/arquitectura_movil.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Arquitectura de la aplicación móvil.}\label{arquitectura_movil}
+\end{figure}
+
+
+El sistema operativo ya cuenta con una restricción en cuanto al uso del proceso principal, la cual indica dos puntos muy importantes que evitan que la interfaz gráfica se vea lenta o congelada en algún momento, estos son:
+
+\begin{itemize}
+	\item El proceso o hilo principal no puede ejecutar tareas relacionadas a operaciones I/O\footnote{Expresión utilizada en inglés (\textit{Input/Output}) para señalar operaciones externas de entrada y salida de datos.} locales o en red.
+	\item Tampoco es recomendable que ejecute procesos que involucren muchos cálculos o llamados a funciones en pilas grandes.
+\end{itemize}
+
+Por ello, el módulo Administrador de Alertas y el Manejador de la Interfaz de Usuario son separados en procesos secundarios que se ejecutan en segundo plano. Estos subprocesos fueron implementados utilizando la biblioteca \textit{Services} definida en el núcleo de Android, ya que esto aporta la valiosa característica de poder continuar en ejecución aunque el usuario cambie de aplicación. 
+
+De acuerdo al orden de activación de procesos (figura \ref{ciclodevida_movil}), cuando el usuario entra a la vista en la que se despliega la información de los autobuses el proceso principal se encarga de activar los servicios que se ejecutan en segundo plano. Al concluir el uso de esta vista, el sistema recibe la señal de destrucción de la escena o actividad y ésta ordena la destrucción de los servicios ligados.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.58]{images/ciclodevida_movil.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Esquema que plasma el proceso de activación de procesos de acuerdo a los eventos disparados por el ciclo de vida definido por Android.}\label{ciclodevida_movil}
+\end{figure}
+
+\subsubsection{Gestor de conexión persistente}
+\noindent El Servicio Gestor de la Conexión es el encargado de iniciar y mantener un enlace persistente entre el dispositivo móvil y la lógica del servidor utilizando el protocolo WebSocket, actuando en caso de errores en la conexión causados principalmente por la pérdida de conexión móvil. Su tarea principal es recibir y verificar los paquetes de datos recibidos para almacenarlos posteriormente.
+
+\subsubsection{Administrador de estructuras de control}
+\noindent Son las estructuras tabulares centrales que se encargan de almacenar la información estructural de la ruta y los datos provenientes de la conexión WebSocket. También se encargan de notificar actualizaciones a los procesos de Administración de Alarmas y al proceso de Manejo de la Interfaz para que calculen cercanías y actualicen los componentes gráficos, respectivamente. Es importante destacar que estas instancias manejan una referencia estática para simular un repositorio de datos que puede ser consultado independientemente del proceso.
+
+\subsubsection{Administrador de alertas}
+\noindent Es el proceso en segundo plano que se encarga, en primera instancia, de registrar y eliminar alarmas según la interacción del usuario con la interfaz gráfica. Conforme se registran actualizaciones en las tablas de datos centrales, el proceso calcula si hay una cercanía esperada por el usuario entre alguna alerta y algún autobús, en caso de haberla envía una señal al proceso principal para que se lo muestre en pantalla al usuario.
+
+Para decidir si un Autobús se encuentra próximo a un parabús con alerta, el algoritmo \ref{test_alert} plantea el flujo de operaciones seguidas para obtener una distancia entre el autobús y el parabús al que se le asigno la alerta, si está los suficientes metros cerca, ésta se activará. Es de mencionar que para calcular dicha distancia existen tres casos (figura \ref{calcula_distancia}):
+
+\begin{algorithm}
+\caption{Con cada actualización de la tabla observada se ejecuta el cálculo de proximidad}\label{test_alert}
+\begin{algorithmic}[1]
+\Procedure{notificarActualizacion}{$autobus$}\Comment{Notifica en caso de proximidad.}
+\State $alertas$ \Comment{Una tabla con las alertas programadas.}
+\For{$alerta : alertas$}
+\State $distacia\gets calcDistanciaTotal\left(alerta, autobus\right)$
+\If{$distancia \le 80$}
+\State $enviarAlerta\left(alerta, autobus\right)$ \Comment{Envía al proceso principal.}
+\State$\textbf{return}$
+\EndIf
+\EndFor
+\EndProcedure
+
+\Procedure{calcDistanciaTotal}{$alerta, autobus$}\Comment{Calcula proximidad en ruta.}
+\State $distacia\gets 0$
+\State $alertS\gets alerta.sentido$
+\State $alertI\gets alerta.indice$
+\State $busS\gets autobus.sentido$
+\State $busI\gets autobus.indice$
+\If{$busS = alertS \land busI \ge alertI$}
+\State $distacia += calcDistanciaSentido(busS, busI, null)$
+\State $busI\gets 0$
+\EndIf
+\If{$busS \neq alertS$}
+\State $distacia += calcDistanciaSentido(alertS, busI, null)$
+\State $busI\gets 0$
+\EndIf
+\State $distacia += calcDistanciaSentido(busS, busI, alertI)$
+\State \textbf{return} $distancia$
+\EndProcedure
+
+\Procedure{calcDistanciaSentido}{$sentido, inicio, fin$}\Comment{Calcula longitud de segmento.}
+\If{$fin == null$}
+\State $fin \gets 0$
+\EndIf
+\State $d \gets 0$ \Comment Distancia calculada por sentido.
+\State $segmentos = sentidos[sentido]$
+\For{$i \gets inicio, fin$}
+\State $d += \sum_{i=0}^{n-1}haversine((\varphi_i, \lambda_i), (\varphi_{i+1}, \lambda_{i+1}))$
+\EndFor
+\State \textbf{return} $d$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.8]{images/calcula_distancia.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Casos a tomar en cuenta al calcular la distancia desde la posición de un autobús a un parabús con alerta.}\label{calcula_distancia}
+\end{figure}
+
+\begin{itemize}
+	\item El autobús está en el mismo sentido que el parabús de alerta, pero se encuentra después en el orden (caso 1 de la figura \ref{calcula_distancia}) por lo que para llegar debe recorrer el circuito casi por completo.
+	\item El autobús se encuentra en algún punto del sentido contrario al parabús (caso 2 de la figura \ref{calcula_distancia}), debe completar el sentido actual, y luego recorrer el contrario hasta llegar al parabús.
+	\item El autobús se encuentra en el mismo sentido que el parabús y antes de éste (caso 3 de la figura \ref{calcula_distancia}), solo debe llegar al parabús de alerta.
+\end{itemize}
+
+
+
+
+
+\subsubsection{Manejador de la interfaz de usuario}
+\noindent Este proceso es ejecutado por el hilo principal de la aplicación. Se encarga primeramente de mostrar en pantalla los componentes gráficos que describen la estructura de la ruta de autobuses, es decir, los parabuses y las conexiones entre estos que la describen. También es el encargado de mostrar componentes gráficos dinámicos que representen a los autobuses en circulación, cambiando su ubicación y orientación de acuerdo a las actualizaciones registradas en las tablas de datos. Finalmente se encarga de mostrar alertas en pantalla respecto a notificaciones de conexión o activación de alertas de proximidad.
+
+\subsection{Flujo de datos basado en eventos}
+\noindent Con el objetivo de lograr un buen desempeño de la aplicación móvil en tiempo de ejecución, la comunicación entre la administración de las tablas de datos y los procesos de Administración de Alertas y Manejo de la Interfaz de Usuario se implementó bajo del patrón de diseño Observer-Observable (figura \ref{modelo_basado_en_eventos}), teniendo al primero como una entidad independiente y a los otros como dependientes.
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.6]{images/modelo_basado_en_eventos.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Comunicación entre procesos basada en el patrón de diseño Observer-Observable.}\label{modelo_basado_en_eventos}
+\end{figure}
+
+Al diseñarlo así, cada que llega un nuevo paquete de datos y es almacenado en las tablas se dispara un evento que notifica una actualización a los procesos dependientes para que estos realicen las acciones pertinentes. 
+
+
+
+\section{Implementación en el ambiente web}
+\noindent El desarrollo de una versión web de esta aplicación surgió con la idea de abarcar el mayor número de usuarios posibles, lo cual incluye aquellos casos en los que por cualquier razón el usuario no cuenta con un dispositivo móvil, pero es un usuario frencuente del transporte urbano y, por ende, el sistema de rastreo le sería de gran utilidad, y los casos en los que el usuario no puede instalar el aplicativo por no contar con sistema operativo Android o por falta de espacio en memoria.
+
+La versión web está basada en las tecnologías estándar HTML5, CSS3 y JavaScript con la biblioteca JQuery, y utiliza técnicamente el mismo mecanismo de funcionamiento que la versión móvil, sin embargo el diagrama de interacción de ésta con el usuario es más sencillo porque toda la pre-configuración se realiza en la misma página o escena (figura \ref{wireframe_web}), pero implementando transiciones para llevar orden en la pre-configuración. 
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.6]{images/wireframe_web.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Modelo wireframe básico de la interfaz web equivalente a la aplicación móvil.}\label{wireframe_web}
+\end{figure}
+
+En cuanto al diseño arquitectónico de esta versión web, el manejo de los componentes o interactores en pantalla está definido por una combinación entre el modelo DOM y el patrón de diseño Observer-Observable, la cual se explica a continuación:
+
+
+El modelo DOM maneja dos árboles lógicos, uno de éstos es la representación estructural (HTML) de la interfaz web, en la que el usuario final interactúa con menús, botones y barras de desplazamiento para ordenar cambios y obtener información. El otro árbol que DOM maneja es el que representa la estructura KML de la ruta de autobuses solicitada por el usuario (figura \ref{dom_ruta_urbana}), teniendo nodos para los parabuses y ligas para los caminos. 
+
+\begin{figure}[hbtp]
+\centering
+\fbox{
+\includegraphics[scale=0.39]{images/dom_ruta_urbana.png}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Arbol generado por el modelo DOM al procesar el archivo descriptor KML.}\label{dom_ruta_urbana}
+\end{figure}
+
+El patrón Observer es el que funge como código de enlace o \textit{pegamento} entre ambos árboles lógicos, definiendo eventos en sus nodos que al dispararse ordenan cambios en la información que se le pide al servidor y que se despliega al cliente. Tal es el caso del evento disparado por un click sobre un nodo parabús, que ordena un cambio en el componente gráfico de la barra de desplazamiento.
+
+
+Una de las ventajas que la versión web presenta es la baja probabilidad de pérdida de conexión, ya que un equipo de cómputo, tanto de escritorio como portátil, está usualmente conectado a una red Wi-Fi fija y no suele salir del alcance de ésta, por lo que un cambio de red no es tan frecuente con en el caso de los dispotivos con internet móvil. Esta característica trae consigo que los clientes web no generan el mismo número de conexiones zombie que los clientes móviles.
+
+
+También, debido a que el estándar WebSocket fue originalmente desarrollado en conjunto con la versión 5 del lenguaje HTML, la biblioteca WebSocket presenta mayor estabilidad en el entorno web en comparación con su adaptación a su entorno móvil. Aunado a esto, JavaScript facilita mucho el desarrollo debido a que el uso de procesos paralelos es casi automático, siendo innecesario tener que especificar diferentes hilos y mecanismos de comunicación entre ellos.
+
+
+
+
+
+
+
+
+
+
+
+

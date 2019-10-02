@@ -1,0 +1,76 @@
+
+<survey version="3">
+
+	<title>SURVEY TITLE</title>
+	<description>The description f the survey</description>
+	<sections>
+		<section id="1">
+			<title>SECTION TITLE</title>
+			<note>Here is a general note for the whole section</note>
+			<questions>
+
+				<!-- Short open question (not mandatory... so people can press skip button) -->
+				<question id="1" type="short-text" mandatory="0">
+					<note>You can specify a note for this question in here</note>
+					<text>¿What's your name?</text>
+				</question>
+
+				<!-- Yes/No question (mandatory, so people cannot continue until answer) -->
+				<question id="2" type="multioption" mandatory="1">
+					<text>Are you OK?</text>
+					<options>
+						<option>yes</option>
+						<option goto="4">no</option>
+						<option goto="2:3">idk</option>
+					</options>	
+				</question>
+
+				<!-- Long open question (mandatory, so people cannot continue until answer) -->
+				<question id="3" type="long-text" mandatory="1">
+					<note>You can specify a note for this question in here</note>
+					<text>Write about your personal situation</text>
+				</question>
+
+				<question id="4" type="likert" mandatory="0">
+					<text>From 1 to 10, how would you rate your pain</text>
+					<note>Where 1 is nothing and 10 is too much pain...</note>
+				</question>
+
+			</questions>
+
+		</section>
+		<section id="2">
+			<title>SECTION TITLE</title>
+			<note>Here is a general note for the whole section</note>
+			<questions>
+
+				<!-- Short open question (not mandatory... so people can press skip button) -->
+				<question id="1" type="short-text" mandatory="0">
+					<note>You can specify a note for this question in here</note>
+					<text>¿What's your name?</text>
+				</question>
+
+				<!-- Long open question (mandatory, so people cannot continue until answer) -->
+				<question id="2" type="long-text" mandatory="1">
+					<note>You can specify a note for this question in here</note>
+					<text>Write about your personal situation</text>
+				</question>
+
+				<!-- Yes/No question (mandatory, so people cannot continue until answer) -->
+				<question id="3" type="multioption" mandatory="1">
+					<text>Are you OK?</text>
+					<options>
+						<option>yes</option>
+						<option>no</option>
+						<option>idk</option>
+					</options>	
+				</question>
+
+				<question id="4" type="likert" mandatory="0">
+					<text>From 1 to 10, how would you rate your pain</text>
+					<note>Where 1 is nothing and 10 is too much pain...</note>
+				</question>
+			</questions>
+		</section>
+	</sections>
+</survey>

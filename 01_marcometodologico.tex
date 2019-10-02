@@ -1,0 +1,96 @@
+\chapter{Marco Metodológico}
+
+\section{Antecedentes}
+\noindent La tecnología GPS fue en un inicio diseñada con fines exclusivamente militares durante la época de la Guerra Fría para proveer a los sistemas de navegación de las flotas estadounidenses con estimaciones de la posición y la velocidad de los objetos que eran de interés. En el año de 1980 fue liberada de dicha exclusividad permitiendo a grupos de otras áreas experimentar y crear aplicaciones basadas en ella \cite{MIOGPSDESCRIPTION}.
+
+En la actualidad el uso más común que ésta tiene se encuentra en los sistemas de navegación que se emplean en todo tipo de medios de transporte (terrestres, marinos y aéreos), permitiendo a cualquiera que cuente con un receptor GPS calcular la velocidad a la que se desplaza y la posición en la que se encuentra con gran precisión. También permite a los conductores que cuentan en su vehículo con un dispositivo de navegación, como el de la figura \ref{sistNavGPS}, calcular y seguir una ruta entre dos puntos y encontrar rutas alternas \cite{PAPINSKI2011434}, entre otras funcionalidades. Un claro ejemplo de su uso se encuentra en la plataforma Google Maps, la cual permite realizar muchas de las tareas antes mencionadas \cite{6141544}.
+
+% . . . . IMAGEN . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=3]{img/sistema_de_navegacion_gps.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Sistema de navegación GPS de un vehículo.}\label{sistNavGPS}
+\end{figure}
+
+De las diversas aplicaciones de esta tecnología destacan aquellas orientadas a la preservación del medio ambiente, al transporte y al entretenimiento. En cuanto a la preservación del medio ambiente se ha implementado para poder llevar a cabo estudios aéreos de zonas de difícil acceso, logrando así evaluar su flora y fauna, topografía e infraestructura humana \cite{GPSGOVOFFICIAL} y poder atender casos como la deforestación y la sobrepoblación de zonas específicas (figura \ref{app1_Deforestacion}). También existen receptores instalados en boyas capaces seguir el movimiento y expansión de los derrames de petróleo en el mar (figura \ref{app2_Petroleo}) \cite{Yu2018}, y hay helicópteros que la aplican para determinar el perímetro de los incendios forestales de modo que el uso de los recursos contra incendios sea eficiente \cite{JO:2018:FORESTFIRE}.
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.26]{img/gpsApp1-deforestacion.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Comparativa de la deforestación del medio ambiente con el paso del tiempo.}\label{app1_Deforestacion}
+\end{figure}
+
+% . . . . Inclusión de una imagen . . . .
+\begin{figure}[hbtp]
+\centering
+\fbox{\includegraphics[scale=0.35]{img/gpsApp2-derrames.jpg}}
+\captionsetup{justification=centering,margin=2cm}
+\caption{Detección de derrames de petroleo sobre superficies marinas utilizando información GPS.}\label{app2_Petroleo}
+\end{figure}
+
+El uso del GPS ha sido adoptada por una gran variedad de áreas de estudio y solución de problemas como se mencionó en las lineas anteriores, sin embargo no solo existen implementaciones para lograr la solución de problemáticas, si no que también las hay con fines recreativos como es el caso del popular juego \textit{Geocaching} \cite{Neustaedter2013}, en el que los jugadores utilizan el GPS de los dispositivos móviles para encontrar contenedores que son escondidos por otros jugadores en ciertos lugares de interés alrededor del mundo. Además, las personas cuyo pasatiempo es el excursionismo hacen uso de esta tecnología de manera similar a como lo hacen los vehículos, ya que les ayuda a asegurarse de que están siguiendo la ruta correcta y puedan marcar puntos de reunión o descanso durante el trayecto \cite{TACZANOWSKA2014184}.
+
+Finalmente, en cuanto al transporte, el GPS es utilizado para el monitoreo de unidades que transportan diversos intereses, asegurando que la unidad sigue la dirección correcta y la mejor ruta posible, enfatizando temas de logística y seguridad.
+
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+\section{Planteamiento del problema}
+\noindent En la rutina diaria de la mayoría de las personas se encuentra el desplazarse de un lugar a otro, ya sea desde su hogar hasta el lugar en el que trabajan o en el que estudian, para lo cual un gran porcentaje de ellos utilizan un transporte urbano, éste puede ser un autobús, un microbús e incluso un auto modelo Combi.
+
+El uso de estos medios de transporte público presenta muchas ventajas que van desde la reducción del tráfico al no haber tantos autos particulares circulando en las calles, hasta ventajas ecológicas ya que un solo autobús puede transportar de 40 a 70 pasajeros que están evitando utilizar un auto particular y así reduciendo en gran medida las emisiones de gases contaminantes al medio ambiente. Sin embargo, este servicio de transporte presenta también ciertos inconvenientes, donde la insuficiencia en el número de unidades por ruta es uno de los más comunes, razón por la cual para el usuario es sumamente difícil predecir el momento en el que el autobús pasará por el lugar en el que él se encuentra, concluyendo en retrasos y pérdida de tiempo, ya que solo cuenta con una hora aproximada que no involucra variables como el tráfico que haya en el momento, los accidentes automovilísticos en la ruta que el autobús sigue o un cambio repentino en la ruta a causa de algún evento.
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+\section{Objetivos}
+\noindent A continuación se plantean los objetivos, tanto general como específicos, que se siguen en el desarrollo del proyecto.
+
+\subsection{Objetivo general}
+\noindent Desarrollar el software necesario para lograr rastrear las unidades de transporte urbano de una localidad y proporcionar información de interés sobre éstas y las rutas que siguen a lo usuarios que cuenten con un dispositivo móvil Android o acceso a un portal de internet, para que puedan tomar mejores decisiones respecto a la planificación de su tiempo y traslado.
+
+\subsection{Objetivos específicos}
+\begin{itemize}
+
+\item Mostrar de manera gráfica la ruta de interés indicando la ubicación de las paradas oficiales registradas y el camino que el autobús sigue en la ruta completa.
+
+\item Permitir al usuario la visualización de los autobuses activos en tiempo real de la ruta que seleccione.
+
+\item Dar a los usuarios la capacidad de activar alarmas sobre las paradas oficiales para que se les notifique cuando un autobús de la ruta seleccionada está cerca de ella.
+
+\item Mostrar al usuario información aproximada de los tres autobuses más cercanos a la parada oficial de su elección, tal como la distancia a las que se encuentran de dicha parada, la velocidad a la que se están desplazando y el tiempo en el que llegaran.
+
+\item Implementar un buen diseño de los interfaces para el usuario utilizando las tendencias actuales para el diseño y desarrollo de software.
+\end{itemize}
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+\section{Justificación}
+%\doublespacing
+\spacing{1.5}
+\noindent El servicio de transporte urbano es uno de los más utilizados en todas las poblaciones del país, sin embargo, a pesar de que este servicio comenzó a ser implementado hace ya muchos años, sigue presentando algunas deficiencias para sus usuarios, la principal de ellas es el tiempo que los usuarios invierten a la espera de la unidad que los llevará a su destino. Es muy usual que no haya suficientes autobuses por cada ruta en la ciudad o población, por lo que resultan muy frecuentes los retrasos por factores como el tráfico, derivando así en pérdida de tiempo por parte de los usuarios.
+
+El problema mencionado ya ha sido el foco de atención en algunos países de primer mundo, como Japón, Suiza, Estados Unidos y Alemania, en donde el sistema de transporte se encuentra lo suficientemente automatizado como para ofrecer a los usuarios una precisión de segundos. Sin embargo, ese no es el caso de muchas poblaciones mexicanas pequeñas.
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+\section{Hipótesis}
+\spacing{1.5}
+\noindent La hipótesis que se establece como base del desarrollo planteado en este trabajo de tesis es
+la siguiente:
+
+\begin{itemize}
+
+\item \textit{\quotes{El desarrollo del sistema de rastreo propuesto reducirá el tiempo de espera de todas aquellas personas que utilizan el servicio de transporte urbano para trasladarse diariamente.}}
+
+\end{itemize}
+
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+\section{Alcances y limitaciones}
+
+\noindent El alcance de este proyecto es el desarrollo de un sistema que facilite la rutina de las personas que utilizan el servicio de transporte urbano de manera constante, dándoles información confiable acerca del estado del autobús que esperan con respecto a la parada oficial o parabús de su preferencia.
+
+Dentro de las limitaciones que se tomaron en cuenta durante el desarrollo del proyecto se encuentra el hecho de que en ciertas ciudades (como en la ciudad de Guanajuato) no se tiene acceso libre a algún mapa que ya tenga trazados los datos necesarios acerca de las rutas de autobuses, como lo son las paradas oficiales con nombres y los lugares por los que los autobuses pasan. También es importante mencionar que otra limitante puede ser la estructura de algunas ciudades y pueblos, puesto que los receptores GPS pierden mucha precisión al pasar por zonas con muchos árboles o bajo túneles.
+% ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
